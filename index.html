@@ -75,6 +75,16 @@ input,select,textarea{font-family:inherit}
 .nav-pill{margin-left:auto;font-size:10.5px;background:rgba(255,255,255,.08);color:#fff;padding:1px 7px;border-radius:99px;font-weight:500}
 .nav-pill.warn{background:rgba(245,158,11,.20);color:#fde08a}
 .nav-pill.err{background:rgba(239,68,68,.22);color:#ffb1ad}
+.nav-sub{display:flex;align-items:center;gap:9px;padding:6px 10px 6px 38px;color:#9aa7b7;font-size:12.5px;cursor:pointer;border-radius:6px;margin:1px 6px;transition:background .12s,color .12s}
+.nav-sub:hover{background:rgba(255,255,255,.04);color:#e6edf3}
+.nav-sub.active{background:rgba(255,255,255,.06);color:#fff;font-weight:500}
+.nav-sub-dot{width:4px;height:4px;border-radius:50%;background:#5b6b7e;flex-shrink:0}
+.nav-sub.active .nav-sub-dot{background:var(--ws-accent)}
+body.sb-collapsed .nav-sub{display:none}
+.kpi-seg{display:inline-flex;gap:0;margin-top:8px;border:1px solid var(--line);border-radius:6px;overflow:hidden;width:fit-content}
+.kpi-seg span{padding:3px 10px;font-size:11px;cursor:pointer;color:var(--ink-2);background:var(--paper);user-select:none}
+.kpi-seg span.active{background:var(--ws-accent);color:#fff}
+.kpi-seg span:not(.active):hover{background:var(--paper-2)}
 
 .sidebar-foot{margin-top:18px;padding:14px 8px 6px;border-top:1px solid rgba(255,255,255,.07);font-size:12px;color:#7a90a8}
 .sidebar-foot .row{display:flex;align-items:center;gap:9px}
@@ -122,7 +132,8 @@ input,select,textarea{font-family:inherit}
 .up{color:var(--ok)}.down{color:var(--err)}.flat{color:var(--muted)}
 
 /* ===== CARD / PANELS ===== */
-.grid-2{display:grid;grid-template-columns:2fr 1fr;gap:18px;margin-bottom:18px}
+.grid-2{display:grid;grid-template-columns:2fr 1fr;gap:18px;margin-bottom:18px;align-items:start}
+.grid-2-eq,.grid-3{align-items:start}
 .grid-2-eq{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:18px}
 .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:18px}
 .card{background:var(--paper);border:1px solid var(--line);border-radius:var(--r-lg);box-shadow:var(--shadow-sm);overflow:hidden}
@@ -148,6 +159,7 @@ input,select,textarea{font-family:inherit}
 .tag.copper{background:rgba(184,115,51,.12);color:var(--copper-dim)}
 .tag.sage{background:rgba(122,155,118,.15);color:#496a47}
 .tag.plum{background:rgba(124,91,138,.14);color:#5d4068}
+.tag.dark{background:rgba(0,0,0,.85);color:#fff}
 .dot{width:8px;height:8px;border-radius:50%;display:inline-block;background:var(--muted)}
 .dot.ok{background:var(--ok)} .dot.warn{background:var(--warn)} .dot.err{background:var(--err)} .dot.copper{background:var(--copper)}
 
@@ -1154,12 +1166,14 @@ const ICONS = { dashboard:'i-home', copilot:'i-bot', integraciones:'i-data', rep
   pacientes:'i-stetho', citas:'i-cal', protocolos:'i-pill', inventario:'i-pkg', portal:'i-users', booking:'i-cal',
   proyectos:'i-house', cotizaciones:'i-doc', tickets:'i-ticket', vendors:'i-vendor', iot:'i-data',
   miembros:'i-users', contenido:'i-msg', cohortes:'i-grid', scoring:'i-target',
+  club:'i-users', redes:'i-msg', productos:'i-cart',
   grants:'i-flask', estudios:'i-data', datasets:'i-data', propuestas:'i-doc', protocols:'i-flow' };
 
 const LABELS = { dashboard:'Dashboard', copilot:'AI Copilot', integraciones:'Integraciones', reportes:'Reportes', compliance:'Compliance', pipeline:'Pipeline', calendario:'Calendario', finanzas:'Finanzas', personal:'Personal', analitica:'Analítica',
   pacientes:'Pacientes', citas:'Citas', protocolos:'Protocolos', inventario:'Inventario', portal:'Portal paciente', booking:'Booking widget',
   proyectos:'Proyectos', cotizaciones:'Cotizaciones', tickets:'Tickets', vendors:'Vendors', iot:'IoT en vivo',
   miembros:'Miembros', contenido:'Contenido', cohortes:'Cohortes', scoring:'Lead scoring',
+  club:'Club Privado', redes:'Redes Sociales', productos:'Productos',
   grants:'Grants', estudios:'Estudios', datasets:'Datasets', propuestas:'Propuestas', protocols:'Study builder' };
 
 const WORKSPACES = {
@@ -1185,10 +1199,32 @@ const WORKSPACES = {
   },
   ecommerce: {
     mark:'E', name:'E-Commerce', sub:'Sub-cuenta · Comunidad', accent:'#3b82f6',
-    description:'Educación · club Skool · contenido · audiencia',
+    description:'Club privado · redes sociales · productos (artículos · patrocinios · eventos)',
     lead:'Tommy Real', leadRole:'Director Comunidad',
-    modules:['dashboard','miembros','pipeline','contenido','cohortes','scoring','finanzas','personal','analitica'],
-    badges:{ scoring:'12' }
+    modules:['dashboard','club','redes','productos','finanzas','personal'],
+    subs:{
+      club:[
+        {k:'overview',label:'Overview'},
+        {k:'miembro',label:'Miembros'},
+        {k:'fundador',label:'Fundadores'},
+        {k:'embajador',label:'Embajadores'},
+        {k:'mentor',label:'Mentores'}
+      ],
+      redes:[
+        {k:'overview',label:'Overview'},
+        {k:'tiktok',label:'TikTok'},
+        {k:'instagram',label:'Instagram'},
+        {k:'linkedin',label:'LinkedIn'},
+        {k:'youtube',label:'YouTube'},
+        {k:'calendario',label:'Calendario'}
+      ],
+      productos:[
+        {k:'articulos',label:'Artículos'},
+        {k:'patrocinadores',label:'Patrocinadores'},
+        {k:'eventos',label:'Eventos'}
+      ]
+    },
+    badges:{}
   },
   rd: {
     mark:'R&D', name:'R&D', sub:'Sub-cuenta · Investigación', accent:'#c9a96e',
@@ -1199,7 +1235,7 @@ const WORKSPACES = {
   }
 };
 
-let state = { ws:'holding', module:'dashboard', calFilter:null };
+let state = { ws:'holding', module:'dashboard', calFilter:null, socialTab:'overview', productosTab:'articulos', clubTab:'overview', churnMode:'duro', clubTierFilter:'todos' };
 
 /* ============= NAV + WORKSPACE SWITCHER ============= */
 function renderWsMenu(){
@@ -1248,11 +1284,30 @@ function renderNav(){
         if (typeof badge === 'string') pill = `<span class="nav-pill">${badge}</span>`;
         else pill = `<span class="nav-pill ${badge.cls||''}">${badge.text}</span>`;
       }
-      return `<div class="nav-item ${m===state.module?'active':''}" onclick="go('${m}')">
+      const isActive = m === state.module;
+      const subs = w.subs?.[m];
+      let subList = '';
+      if (subs && isActive) {
+        const activeSub = getActiveSub(m);
+        subList = subs.map(s => `<div class="nav-sub ${s.k===activeSub?'active':''}" onclick="event.stopPropagation();goSub('${m}','${s.k}')"><span class="nav-sub-dot"></span><span>${s.label}</span></div>`).join('');
+      }
+      return `<div class="nav-item ${isActive?'active':''}" onclick="go('${m}')">
         <svg><use href="#${ICONS[m]||'i-grid'}"/></svg><span>${LABELS[m]||m}</span>${pill}
-      </div>`;
+      </div>${subList}`;
     }).join('');
   document.getElementById('nav').innerHTML = html;
+}
+function getActiveSub(module){
+  if (module === 'club') return state.clubTab || 'overview';
+  if (module === 'redes') return state.socialTab || 'overview';
+  if (module === 'productos') return state.productosTab || 'articulos';
+  return null;
+}
+function goSub(module, sub){
+  if (module === 'club') state.clubTab = sub;
+  else if (module === 'redes') state.socialTab = sub;
+  else if (module === 'productos') state.productosTab = sub;
+  go(module);
 }
 function go(module){
   state.module = module;
@@ -1437,14 +1492,14 @@ function tpl_finanzas(){
     holding:{ ingresos:'$ 184.250', gastos:'$ 92.380', margen:'49,9 %', pendiente:'$ 14.6 K', extra:'P&L consolidado del holding' },
     clinica:{ ingresos:'$ 62.400', gastos:'$ 28.150', margen:'54,9 %', pendiente:'$ 1.9 K', extra:'Pacientes + productos peptidos' },
     residences:{ ingresos:'$ 84.600', gastos:'$ 51.200', margen:'39,5 %', pendiente:'$ 8.4 K', extra:'Cobros por hitos · proyectos largos' },
-    ecommerce:{ ingresos:'$ 38.400', gastos:'$ 9.180', margen:'76,1 %', pendiente:'$ 0', extra:'MRR · suscripciones Skool' },
+    ecommerce:{ ingresos:'$ 38.400', gastos:'$ 9.180', margen:'76,1 %', pendiente:'$ 8.3 K', extra:'Productos · artículos + patrocinadores + eventos' },
     rd:{ ingresos:'$ 35.000', gastos:'$ 18.220', margen:'48,0 %', pendiente:'$ 4.3 K', extra:'Tramos de grants ejecutados' }
   }[state.ws];
   const facts = {
-    holding:[['F-2026-0184','Villa Mallorca · Cliente','Instalación luz roja','$ 18.400','ok','Cobrada','—'],['F-2026-0182','Carla Méndez · Paciente','Protocolo BPC-157','$ 1.480','ok','Cobrada','—'],['F-2026-0181','Casa Andorra · Cliente','30 % cotización','$ 4.200','err','Vencida 32 d.','2 abr'],['F-2026-0179','Skool subscriptions','MRR mayo','$ 38.400','ok','Cobrada','—'],['F-2026-0178','HBOTech · Vendor','Mantenimiento cámara','$ 1.840','warn','Revisar OCR','10 may']],
+    holding:[['F-2026-0184','Villa Mallorca · Cliente','Instalación luz roja','$ 18.400','ok','Cobrada','—'],['F-2026-0182','Carla Méndez · Paciente','Protocolo BPC-157','$ 1.480','ok','Cobrada','—'],['F-2026-0181','Casa Andorra · Cliente','30 % cotización','$ 4.200','err','Vencida 32 d.','2 abr'],['F-2026-0179','Productos E-Commerce','Mix mayo (patrocinios + artículos + eventos)','$ 38.400','ok','Cobrada','—'],['F-2026-0178','HBOTech · Vendor','Mantenimiento cámara','$ 1.840','warn','Revisar OCR','10 may']],
     clinica:[['F-2026-0182','Carla Méndez','BPC-157 trim.','$ 1.480','ok','Cobrada','—'],['F-2026-0177','Jorge Cabré','Glutatión IV trim.','$ 980','warn','Pendiente','8 may'],['F-2026-0175','Sara Ibáñez','Hiperbárica 10 sesiones','$ 1.250','ok','Cobrada','—'],['F-2026-0173','Pedro Vila','Fisio recurrente','$ 620','ok','Cobrada','—'],['F-2026-0180','BiotechLab','BPC-157 · 30 unid','$ 3.750','ok','Pagada','—']],
     residences:[['F-2026-0184','Villa Mallorca','Instalación luz roja','$ 18.400','ok','Cobrada','—'],['F-2026-0181','Casa Andorra','30 % cotización','$ 4.200','err','Vencida 32 d.','2 abr'],['F-2026-0183','RedLight Pro','Paneles 6 unid','$ 12.250','warn','Pendiente','15 may'],['F-2026-0178','HBOTech','Mantenimiento cámara','$ 1.840','warn','Revisar OCR','10 may'],['F-2026-0170','Casa Madrid','Hito 1 contrato','$ 39.000','ok','Cobrada','—']],
-    ecommerce:[['F-2026-0179','Skool subscriptions','MRR mayo','$ 38.400','ok','Cobrada','—'],['F-2026-0166','Stripe payouts','Comisiones abr','$ 1.840','ok','Pagada','—'],['F-2026-0162','Ads Meta','Campañas abril','$ 4.200','ok','Pagada','—'],['F-2026-0158','Influencer ABC','Colab abril','$ 2.500','ok','Pagada','—']],
+    ecommerce:[['F-2026-0179','Productos · Patrocinadores','Oura + Eight Sleep + Levels · mayo','$ 15.300','ok','Cobrada','—'],['F-2026-0180','Productos · Artículos','Ventas mayo (Kit + Curso + Manual)','$ 14.800','ok','Cobrada','—'],['F-2026-0181','Productos · Eventos','Workshop NAD+ · entradas','$ 8.300','warn','Pendiente','15 jun'],['F-2026-0166','Stripe payouts','Comisiones abr','$ 1.840','ok','Pagada','—'],['F-2026-0162','Ads Meta','Campañas abril','$ 4.200','ok','Pagada','—'],['F-2026-0158','Influencer ABC','Colab abril','$ 2.500','ok','Pagada','—']],
     rd:[['G-2026-0007','CDTI Salud Digital','Tramo 2 ejecutado','$ 22.000','ok','Recibida','—'],['G-2026-0006','ICEX 2025','Tramo final','$ 12.500','ok','Recibida','—'],['F-2026-0190','Lab UNAV','Servicio analítico','$ 4.300','warn','Pendiente','22 may'],['G-2026-0005','Junta CyL','Anticipo','$ 8.500','ok','Recibida','—']]
   }[state.ws] || [];
   return pageHead(`Finanzas · ${w.name}`, fin.extra, `<button class="btn"><svg class="ic"><use href="#i-doc"/></svg>OCR factura</button><button class="btn btn-primary"><svg class="ic"><use href="#i-plus"/></svg>Nueva factura</button>`) + `
@@ -1471,6 +1526,98 @@ function tpl_finanzas(){
     <div class="card-b flush"><table class="table">
       <thead><tr><th>Nº</th><th>Concepto</th><th>Detalle</th><th>Importe</th><th>Estado</th><th>Vencim.</th></tr></thead>
       <tbody>${facts.map(([n,c,d,i,cls,e,v]) => { const isEx = /Vendor|Lab|HBOTech|RedLight|BiotechLab|Stripe|Ads Meta|Influencer|UNAV/i.test(c+d); const colorCls = isEx ? 'expense' : 'income'; return `<tr class="clickable" onclick="this.classList.toggle('row-active')"><td>${n}</td><td><strong>${c}</strong></td><td class="muted">${d}</td><td class="${colorCls}">${isEx?'−':'+'}${i.replace('$','$ ')}</td><td><span class="tag ${cls}">${e}</span></td><td>${v}</td></tr>`; }).join('')}</tbody>
+    </table></div>
+  </div>`;
+}
+
+function ecommerce_finanzas(){
+  return pageHead('Finanzas · E-Commerce', 'Patrocinios + artículos + eventos · margen 76,1 % · ARR contratado $ 184 K', `<button class="btn"><svg class="ic"><use href="#i-doc"/></svg>OCR factura</button><button class="btn btn-primary"><svg class="ic"><use href="#i-plus"/></svg>Nueva factura</button>`) + `
+  <div class="kpi-grid">
+    <div class="kpi clickable income-card" onclick="kpiToggle(this)"><div class="kpi-label">Ingresos mes</div><div class="kpi-value">$ 38,4 K</div><div class="kpi-trend up">▲ 8,1 % vs mes ant.</div></div>
+    <div class="kpi clickable" onclick="kpiToggle(this)"><div class="kpi-label">Recurrente mes</div><div class="kpi-value">$ 15,3 K</div><div class="kpi-trend up">patrocinios / 12</div></div>
+    <div class="kpi clickable" onclick="kpiToggle(this)"><div class="kpi-label">Margen</div><div class="kpi-value">76,1 %</div><div class="kpi-trend up">▲ 2 pp</div></div>
+    <div class="kpi clickable expense-card" onclick="kpiToggle(this)"><div class="kpi-label">Pendiente cobro</div><div class="kpi-value">$ 8,3 K</div><div class="kpi-trend warn">Workshop · 15 jun</div></div>
+    <div class="kpi clickable" onclick="kpiToggle(this)"><div class="kpi-label">ARR contratado</div><div class="kpi-value">$ 184 K</div><div class="kpi-trend up">6 patrocinios activos</div></div>
+    <div class="kpi clickable" onclick="kpiToggle(this)"><div class="kpi-label">CAC blended</div><div class="kpi-value">$ 62</div><div class="kpi-trend down">▼ 8 % vs mes ant.</div></div>
+  </div>
+
+  <div class="grid-2-eq" style="display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:14px;align-items:start">
+    <div class="card"><div class="card-h"><h3>Ingresos por fuente · 6 meses</h3><span class="meta">Stacked · patrocinios + artículos + eventos</span></div>
+      <div class="card-b"><div style="position:relative;height:260px;width:100%"><canvas id="ch-ec-fin-stack"></canvas></div></div>
+    </div>
+    <div class="card"><div class="card-h"><h3>Mix de ingresos · mayo</h3></div>
+      <div class="card-b"><div style="position:relative;height:260px;width:100%"><canvas id="ch-ec-fin-mix"></canvas></div></div>
+    </div>
+  </div>
+
+  <div class="grid-2-eq" style="display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:14px;align-items:start">
+    <div class="card"><div class="card-h"><h3>Forecast 6 m</h3><span class="meta">Contratos firmados + eventos planificados</span></div>
+      <div class="card-b"><div style="position:relative;height:240px;width:100%"><canvas id="ch-ec-fin-forecast"></canvas></div></div>
+    </div>
+    <div class="card"><div class="card-h"><h3>Próximos cobros · 90 d</h3></div>
+      <div class="card-b flush"><table class="table">
+        <thead><tr><th>Fuente</th><th>Concepto</th><th>Importe</th><th>Vence</th></tr></thead>
+        <tbody>
+          <tr><td><span class="tag warn">Eventos</span></td><td>Workshop metabolismo · entradas</td><td>$ 8.300</td><td>15 jun</td></tr>
+          <tr><td><span class="tag info">Eventos</span></td><td>Retreat Sierra · entradas</td><td>$ 32.560</td><td>14 jun</td></tr>
+          <tr><td><span class="tag copper">Patrocinios</span></td><td>Oura Ring · renovación anual</td><td>$ 32.000</td><td>15 jun</td></tr>
+          <tr><td><span class="tag copper">Patrocinios</span></td><td>Eight Sleep · renovación anual</td><td>$ 24.000</td><td>4 jul</td></tr>
+          <tr><td><span class="tag copper">Patrocinios</span></td><td>Levels · renovación anual</td><td>$ 18.000</td><td>28 jul</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </div>
+
+  <div class="grid-2-eq" style="display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:14px;align-items:start">
+    <div class="card"><div class="card-h"><h3>Margen por categoría</h3><span class="meta">Bruto por tipo de producto</span></div>
+      <div class="card-b"><div style="position:relative;height:220px;width:100%"><canvas id="ch-ec-fin-margin"></canvas></div></div>
+    </div>
+    <div class="card"><div class="card-h"><h3>CAC por canal · 30 d</h3><span class="meta">Coste por nuevo miembro del club</span></div>
+      <div class="card-b"><div style="position:relative;height:220px;width:100%"><canvas id="ch-ec-fin-cac"></canvas></div></div>
+    </div>
+  </div>
+
+  <div class="grid-2-eq" style="display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:14px;align-items:start">
+    <div class="card"><div class="card-h"><h3>Aportación por tier del club</h3><span class="meta">Cross-ref Club Privado · LTV × miembros</span></div>
+      <div class="card-b flush"><table class="table">
+        <thead><tr><th>Tier</th><th>Miembros</th><th>LTV medio</th><th>Aportación total</th><th>% del total</th></tr></thead>
+        <tbody>
+          <tr><td><span class="tag info">Miembro</span></td><td>2.100</td><td>$ 186</td><td>$ 390.600</td><td>27,1 %</td></tr>
+          <tr><td><span class="tag copper">Fundador</span></td><td>24</td><td>$ 2.840</td><td>$ 68.160</td><td>4,7 %</td></tr>
+          <tr><td><span class="tag plum">Embajador</span></td><td>48</td><td>$ 1.420</td><td>$ 68.160</td><td>4,7 %</td></tr>
+          <tr><td><span class="tag sage">Mentor</span></td><td>12</td><td>$ 940</td><td>$ 11.280</td><td>0,8 %</td></tr>
+          <tr><td><strong>Patrocinios anuales</strong></td><td>6</td><td>—</td><td><strong>$ 184.000</strong></td><td>12,8 %</td></tr>
+          <tr><td><strong>Eventos anuales (est.)</strong></td><td>~12</td><td>—</td><td><strong>$ 720.000</strong></td><td>49,9 %</td></tr>
+          <tr><td><strong>Total ARR estimado</strong></td><td>—</td><td>—</td><td><strong>$ 1,44 M</strong></td><td>100 %</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+    <div class="card"><div class="card-h"><h3>Gastos del mes</h3><span class="meta">Mayo 2026 · $ 9.180 total</span></div>
+      <div class="card-b flush"><table class="table">
+        <thead><tr><th>Concepto</th><th>Importe</th><th>Categoría</th></tr></thead>
+        <tbody>
+          <tr><td>Ads Meta · campañas</td><td class="expense">−$ 4.200</td><td><span class="tag warn">Marketing</span></td></tr>
+          <tr><td>Influencer ABC · colab</td><td class="expense">−$ 2.500</td><td><span class="tag warn">Marketing</span></td></tr>
+          <tr><td>Stripe · comisiones payouts</td><td class="expense">−$ 1.840</td><td><span class="tag info">Plataforma</span></td></tr>
+          <tr><td>Tools (Notion · Skool · Slack)</td><td class="expense">−$ 380</td><td><span class="tag info">SaaS</span></td></tr>
+          <tr><td>Producción contenido</td><td class="expense">−$ 260</td><td><span class="tag plum">Contenido</span></td></tr>
+          <tr><td><strong>Total</strong></td><td class="expense"><strong>−$ 9.180</strong></td><td>—</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </div>
+
+  <div class="card"><div class="card-h"><h3>Facturas recientes</h3><span class="meta">Mayo · ingresos y gastos</span></div>
+    <div class="card-b flush"><table class="table">
+      <thead><tr><th>Nº</th><th>Concepto</th><th>Detalle</th><th>Importe</th><th>Estado</th><th>Vencim.</th></tr></thead>
+      <tbody>
+        <tr class="clickable" onclick="this.classList.toggle('row-active')"><td>F-2026-0179</td><td><strong>Productos · Patrocinadores</strong></td><td class="muted">Oura + Eight Sleep + Levels · mayo</td><td class="income">+$ 15.300</td><td><span class="tag ok">Cobrada</span></td><td>—</td></tr>
+        <tr class="clickable" onclick="this.classList.toggle('row-active')"><td>F-2026-0180</td><td><strong>Productos · Artículos</strong></td><td class="muted">Ventas mayo (Kit + Curso + Manual)</td><td class="income">+$ 14.800</td><td><span class="tag ok">Cobrada</span></td><td>—</td></tr>
+        <tr class="clickable" onclick="this.classList.toggle('row-active')"><td>F-2026-0181</td><td><strong>Productos · Eventos</strong></td><td class="muted">Workshop metabolismo · entradas</td><td class="income">+$ 8.300</td><td><span class="tag warn">Pendiente</span></td><td>15 jun</td></tr>
+        <tr class="clickable" onclick="this.classList.toggle('row-active')"><td>F-2026-0166</td><td><strong>Stripe payouts</strong></td><td class="muted">Comisiones abril</td><td class="expense">−$ 1.840</td><td><span class="tag ok">Pagada</span></td><td>—</td></tr>
+        <tr class="clickable" onclick="this.classList.toggle('row-active')"><td>F-2026-0162</td><td><strong>Ads Meta</strong></td><td class="muted">Campañas abril</td><td class="expense">−$ 4.200</td><td><span class="tag ok">Pagada</span></td><td>—</td></tr>
+        <tr class="clickable" onclick="this.classList.toggle('row-active')"><td>F-2026-0158</td><td><strong>Influencer ABC</strong></td><td class="muted">Colab abril</td><td class="expense">−$ 2.500</td><td><span class="tag ok">Pagada</span></td><td>—</td></tr>
+      </tbody>
     </table></div>
   </div>`;
 }
@@ -1540,13 +1687,13 @@ function holding_analitica(){
       <div class="card"><div class="card-h"><h3>Origen de leads</h3></div><div class="card-b"><div style="position:relative;height:210px;width:100%"><canvas id="ch-an3"></canvas></div></div></div>
     </div>
     <div class="grid-2">
-      <div class="card"><div class="card-h"><h3>Customer journey cross-unidad</h3><span class="meta">Skool → Clínica → Residences</span></div>
+      <div class="card"><div class="card-h"><h3>Customer journey cross-unidad</h3><span class="meta">Club → Clínica → Residences</span></div>
         <div class="card-b">
           <table class="table">
-            <thead><tr><th>Origen</th><th>→ Skool</th><th>→ Clínica</th><th>→ Residences</th><th>LTV</th></tr></thead>
+            <thead><tr><th>Origen</th><th>→ Club</th><th>→ Clínica</th><th>→ Residences</th><th>LTV</th></tr></thead>
             <tbody>
               <tr><td><strong>IG orgánico</strong></td><td>284</td><td>42</td><td>3</td><td>$ 2.140</td></tr>
-              <tr><td><strong>Skool referidos</strong></td><td>—</td><td>68</td><td>11</td><td>$ 4.820</td></tr>
+              <tr><td><strong>Club · referidos miembros</strong></td><td>—</td><td>68</td><td>11</td><td>$ 4.820</td></tr>
               <tr><td><strong>Web SEO</strong></td><td>112</td><td>22</td><td>2</td><td>$ 1.680</td></tr>
               <tr><td><strong>Referidos pacientes</strong></td><td>34</td><td>58</td><td>14</td><td>$ 6.420</td></tr>
               <tr><td><strong>Eventos / podcast</strong></td><td>92</td><td>18</td><td>4</td><td>$ 3.240</td></tr>
@@ -1571,7 +1718,7 @@ function holding_analitica(){
         <div class="card-b flush"><table class="table">
           <tr><td><strong>Instalación luz roja</strong><div class="muted">Residences</div></td><td>$ 84,2 K</td><td><span class="tag copper">Top</span></td></tr>
           <tr><td><strong>Protocolo BPC-157</strong><div class="muted">Clínica</div></td><td>$ 42,1 K</td><td><span class="tag sage">Steady</span></td></tr>
-          <tr><td><strong>Suscripciones Skool</strong><div class="muted">E-Commerce</div></td><td>$ 38,4 K</td><td><span class="tag info">MRR</span></td></tr>
+          <tr><td><strong>Productos · E-Commerce</strong><div class="muted">Artículos + patrocinadores + eventos</div></td><td>$ 38,4 K</td><td><span class="tag info">Mix</span></td></tr>
           <tr><td><strong>Cámara hiperbárica</strong><div class="muted">Clínica</div></td><td>$ 28,6 K</td><td><span class="tag sage">Steady</span></td></tr>
           <tr><td><strong>Sistemas de cobre</strong><div class="muted">Residences</div></td><td>$ 24,8 K</td><td><span class="tag copper">Up</span></td></tr>
           <tr><td><strong>NAD+ IV</strong><div class="muted">Clínica</div></td><td>$ 18,2 K</td><td><span class="tag info">New</span></td></tr>
@@ -1609,9 +1756,9 @@ function holding_finanzas(){
       </div>
       <div class="card clickable" onclick="setWs('ecommerce');setTimeout(()=>go('finanzas'),50)"><div class="card-h"><div class="ws-mark" style="width:24px;height:24px;font-size:11px;background:linear-gradient(135deg,#3b82f6,#1e51b8)">E</div><h3>E-Commerce</h3><span class="meta right">→</span></div>
         <div class="card-b">
-          <div class="kpi-label">MRR / Margen</div>
+          <div class="kpi-label">Ingresos / Margen</div>
           <div class="split" style="margin-top:6px"><span class="v">$ 38,4 K</span><span class="right tag ok">76,1 %</span></div>
-          <div class="muted" style="margin-top:8px">2.184 miembros · churn 3,2%</div>
+          <div class="muted" style="margin-top:8px">2.184 miembros · 4 tiers · mix de productos</div>
         </div>
       </div>
     </div>
@@ -1660,7 +1807,7 @@ function holding_finanzas(){
           <tr class="clickable" onclick="this.classList.toggle('row-active')"><td>F-2026-0184</td><td><span class="tag copper">Residences</span></td><td>Villa Mallorca</td><td>Instalación luz roja</td><td class="income">+$ 18.400</td><td><span class="tag ok">Cobrada</span></td><td>—</td></tr>
           <tr class="clickable" onclick="this.classList.toggle('row-active')"><td>F-2026-0182</td><td><span class="tag sage">Clínica</span></td><td>Carla Méndez</td><td>BPC-157 trimestral</td><td class="income">+$ 1.480</td><td><span class="tag ok">Cobrada</span></td><td>—</td></tr>
           <tr class="clickable" onclick="this.classList.toggle('row-active')"><td>F-2026-0181</td><td><span class="tag copper">Residences</span></td><td>Casa Andorra</td><td>30 % cotización</td><td class="income">+$ 4.200</td><td><span class="tag err">Vencida 32 d.</span></td><td>2 abr</td></tr>
-          <tr class="clickable" onclick="this.classList.toggle('row-active')"><td>F-2026-0179</td><td><span class="tag info">E-Commerce</span></td><td>Skool subscriptions</td><td>MRR mayo</td><td class="income">+$ 38.400</td><td><span class="tag ok">Cobrada</span></td><td>—</td></tr>
+          <tr class="clickable" onclick="this.classList.toggle('row-active')"><td>F-2026-0179</td><td><span class="tag info">E-Commerce</span></td><td>Productos E-Commerce</td><td>Mix mayo · patrocinios + artículos + eventos</td><td class="income">+$ 38.400</td><td><span class="tag ok">Cobrada</span></td><td>—</td></tr>
           <tr class="clickable" onclick="this.classList.toggle('row-active')"><td>F-2026-0178</td><td><span class="tag copper">Residences</span></td><td>HBOTech</td><td>Mantenimiento cámara</td><td class="expense">−$ 1.840</td><td><span class="tag warn">Revisar OCR</span></td><td>10 may</td></tr>
           <tr class="clickable" onclick="this.classList.toggle('row-active')"><td>G-2026-0007</td><td><span class="tag plum">R&D</span></td><td>CDTI</td><td>Tramo 2 ejecutado</td><td class="income">+$ 22.000</td><td><span class="tag ok">Recibida</span></td><td>—</td></tr>
           <tr class="clickable" onclick="this.classList.toggle('row-active')"><td>F-2026-0177</td><td><span class="tag sage">Clínica</span></td><td>Jorge Cabré</td><td>Glutatión IV</td><td class="income">+$ 980</td><td><span class="tag warn">Pendiente</span></td><td>8 may</td></tr>
@@ -1734,7 +1881,7 @@ const VIEWS = {
       </div>
       <div class="card"><div class="card-h"><h3>Sugerencias</h3></div>
         <div class="card-b spaced">
-          ${['Resumen ejecutivo de la semana','¿Qué pacientes tienen seguimiento pendiente?','Borrador propuesta ICEX','Top 5 leads E-Commerce a contactar','Anomalías de gasto del mes','Tickets Residences abiertos','Comparar margen entre unidades','Estado de grants en drafting'].map(t => `<button class="btn" style="width:100%;justify-content:flex-start" onclick="prefill('${t.replace(/'/g,"\\'")}')"><svg class="ic"><use href="#i-spark"/></svg>${t}</button>`).join('')}
+          ${['Resumen ejecutivo de la semana','¿Qué pacientes tienen seguimiento pendiente?','Borrador propuesta ICEX','Top 5 candidatos del club a promover','Anomalías de gasto del mes','Tickets Residences abiertos','Comparar margen entre unidades','Estado de grants en drafting'].map(t => `<button class="btn" style="width:100%;justify-content:flex-start" onclick="prefill('${t.replace(/'/g,"\\'")}')"><svg class="ic"><use href="#i-spark"/></svg>${t}</button>`).join('')}
         </div>
       </div>
     </div>`,
@@ -1783,10 +1930,10 @@ const VIEWS = {
           <tr class="clickable" onclick="this.classList.toggle('row-active')"><td><strong>Luis Romero</strong><div class="muted">Lisboa · IG</div></td><td>45</td><td><span class="tag sage">Hiperbárica</span></td><td>—</td><td>Hoy 11:30</td><td>—</td><td>$ 0</td></tr>
           <tr class="clickable" onclick="this.classList.toggle('row-active')"><td><strong>Sara Ibáñez</strong><div class="muted">Barcelona · web</div></td><td>52</td><td><span class="tag info">Luz roja</span></td><td>3 may</td><td>Hoy 12:30</td><td>10</td><td>$ 6.840</td></tr>
           <tr class="clickable" onclick="this.classList.toggle('row-active')"><td><strong>Pedro Vila</strong><div class="muted">Valencia · referido</div></td><td>29</td><td><span class="tag copper">Fisio</span></td><td>1 may</td><td>Hoy 16:00</td><td>8</td><td>$ 1.920</td></tr>
-          <tr class="clickable" onclick="this.classList.toggle('row-active')"><td><strong>Marta Ríos</strong><div class="muted">Bilbao · Skool</div></td><td>61</td><td><span class="tag info">NAD+ IV</span></td><td>30 abr</td><td>Mañana 09:30</td><td>9</td><td>$ 3.100</td></tr>
+          <tr class="clickable" onclick="this.classList.toggle('row-active')"><td><strong>Marta Ríos</strong><div class="muted">Bilbao · Club</div></td><td>61</td><td><span class="tag info">NAD+ IV</span></td><td>30 abr</td><td>Mañana 09:30</td><td>9</td><td>$ 3.100</td></tr>
           <tr class="clickable" onclick="this.classList.toggle('row-active')"><td><strong>Jorge Cabré</strong><div class="muted">Madrid · referido</div></td><td>34</td><td><span class="tag sage">Glutatión</span></td><td>28 abr</td><td>Mié 11:00</td><td>7</td><td>$ 980</td></tr>
           <tr class="clickable" onclick="this.classList.toggle('row-active')"><td><strong>Helena Gil</strong><div class="muted">Valencia · IG</div></td><td>47</td><td><span class="tag copper">TB-500</span></td><td>26 abr</td><td>Vie 10:00</td><td>8</td><td>$ 2.140</td></tr>
-          <tr class="clickable" onclick="this.classList.toggle('row-active')"><td><strong>Andrés Vega</strong><div class="muted">Madrid · Skool</div></td><td>52</td><td><span class="tag info">Hiperbárica</span></td><td>22 abr</td><td>Jue 16:30</td><td>9</td><td>$ 5.620</td></tr>
+          <tr class="clickable" onclick="this.classList.toggle('row-active')"><td><strong>Andrés Vega</strong><div class="muted">Madrid · Club</div></td><td>52</td><td><span class="tag info">Hiperbárica</span></td><td>22 abr</td><td>Jue 16:30</td><td>9</td><td>$ 5.620</td></tr>
         </tbody>
       </table></div>
     </div>`,
@@ -1811,7 +1958,7 @@ const VIEWS = {
       <div class="card-b">
         <div class="kanban">
           <div class="kan-col"><div class="kan-h">Lead <span class="count">28</span></div>
-            ${['Luis Romero · IG','Helena Gil · web','Iván Soler · Skool','Patricia Vega · referido'].map(t=>`<div class="kan-card"><div class="t">${t.split(' · ')[0]}</div><div class="m"><span>${t.split(' · ')[1]}</span><span class="dot"></span></div></div>`).join('')}
+            ${['Luis Romero · IG','Helena Gil · web','Iván Soler · Club','Patricia Vega · referido'].map(t=>`<div class="kan-card"><div class="t">${t.split(' · ')[0]}</div><div class="m"><span>${t.split(' · ')[1]}</span><span class="dot"></span></div></div>`).join('')}
           </div>
           <div class="kan-col"><div class="kan-h">Primera visita <span class="count">9</span></div>
             ${['Andrés Vega · hoy','Marina Coll · mañana','Pablo Ruiz · 6 may'].map(t=>`<div class="kan-card"><div class="t">${t.split(' · ')[0]}</div><div class="m"><span>${t.split(' · ')[1]}</span><span class="tag warn">Pendiente</span></div></div>`).join('')}
@@ -2010,102 +2157,378 @@ const VIEWS = {
   'residences.analitica': tpl_analitica,
 
   /* ============ E-COMMERCE ============ */
-  'ecommerce.dashboard': () => pageHead('E-Commerce · Dashboard', 'Comunidad Skool · contenido · cohortes · liderado por Tommy Real', `<button class="btn"><svg class="ic"><use href="#i-target"/></svg>Lead scoring</button><button class="btn btn-primary" onclick="go('contenido')"><svg class="ic"><use href="#i-plus"/></svg>Publicar</button>`) + `
+  'ecommerce.dashboard': () => pageHead('E-Commerce · Dashboard', 'Club privado · redes sociales · productos · liderado por Tommy Real', `<button class="btn" onclick="go('club')"><svg class="ic"><use href="#i-users"/></svg>Invitar miembro</button><button class="btn btn-primary" onclick="goSub('redes','calendario')"><svg class="ic"><use href="#i-plus"/></svg>Publicar</button>`) + `
     <div class="kpi-grid">
-      <div class="kpi clickable" onclick="kpiToggle(this)"><div class="kpi-label">Miembros activos</div><div class="kpi-value">2.184</div><div class="kpi-trend up">▲ 124 este mes</div></div>
-      <div class="kpi clickable" onclick="kpiToggle(this)"><div class="kpi-label">MRR</div><div class="kpi-value">$ 38.4 K</div><div class="kpi-trend up">▲ 8.1 %</div></div>
-      <div class="kpi clickable" onclick="kpiToggle(this)"><div class="kpi-label">Churn 30 d.</div><div class="kpi-value">3,2 %</div><div class="kpi-trend down">▲ 0,4 pp</div></div>
-      <div class="kpi clickable" onclick="kpiToggle(this)"><div class="kpi-label">Engagement</div><div class="kpi-value">68 %</div><div class="kpi-trend up">▲ 5 pp</div></div>
+      <div class="kpi clickable" onclick="kpiToggle(this)"><div class="kpi-label">Miembros del club</div><div class="kpi-value">2.184</div><div class="kpi-trend up">▲ 96 este mes</div></div>
+      <div class="kpi clickable" onclick="kpiToggle(this)"><div class="kpi-label">Ingresos mes</div><div class="kpi-value">$ 38,4 K</div><div class="kpi-trend up">▲ 8,1 %</div></div>
+      <div class="kpi clickable" onclick="kpiToggle(this)"><div class="kpi-label">Alcance redes</div><div class="kpi-value">2,74 M</div><div class="kpi-trend up">▲ 14 % vs mes ant.</div></div>
+      <div class="kpi clickable" onclick="kpiToggle(this)"><div class="kpi-label">Eventos próximos 90 d</div><div class="kpi-value">4</div><div class="kpi-trend up">62 % asistentes son club</div></div>
     </div>
     <div class="grid-2">
-      <div class="card"><div class="card-h"><h3>Crecimiento de miembros</h3></div><div class="card-b"><div style="position:relative;height:210px;width:100%"><canvas id="ch-ec-grow"></canvas></div></div></div>
-      <div class="card"><div class="card-h"><h3>Top miembros · score AI</h3></div>
+      <div class="card clickable" onclick="go('club')"><div class="card-h"><h3>Crecimiento del club</h3><span class="meta right">→</span></div><div class="card-b"><div style="position:relative;height:210px;width:100%"><canvas id="ch-ec-grow"></canvas></div></div></div>
+      <div class="card clickable" onclick="goSub('productos','articulos')"><div class="card-h"><h3>Mix de ingresos · mes</h3><span class="meta right">→</span></div>
         <div class="card-b flush"><table class="table">
-          <tr class="clickable" onclick="this.classList.toggle('row-active')"><td><strong>Marta Ruiz</strong><div class="muted">VIP · 14 m</div></td><td><span class="tag info">94</span></td><td>↗ Residences</td></tr>
-          <tr class="clickable" onclick="this.classList.toggle('row-active')"><td><strong>Igor Petrov</strong><div class="muted">VIP · 8 m</div></td><td><span class="tag info">91</span></td><td>↗ Clínica</td></tr>
-          <tr class="clickable" onclick="this.classList.toggle('row-active')"><td><strong>Laura Bell</strong><div class="muted">Pro · 5 m</div></td><td><span class="tag info">88</span></td><td>↗ Clínica</td></tr>
-          <tr><td><strong>Andrés Vega</strong><div class="muted">Pro · 11 m</div></td><td><span class="tag sage">82</span></td><td>→ Upsell</td></tr>
+          <tr><td><strong>Patrocinadores</strong><div class="muted">6 contratos activos · $ 184 K anuales</div></td><td>$ 15,3 K</td><td><span class="tag info">40 %</span></td></tr>
+          <tr><td><strong>Artículos</strong><div class="muted">18 SKUs · margen 64 %</div></td><td>$ 14,8 K</td><td><span class="tag info">39 %</span></td></tr>
+          <tr><td><strong>Eventos</strong><div class="muted">4 en próximos 90 d</div></td><td>$ 8,3 K</td><td><span class="tag info">21 %</span></td></tr>
+          <tr><td><strong>Total mes</strong></td><td><strong>$ 38,4 K</strong></td><td><span class="tag ok">100 %</span></td></tr>
         </table></div>
       </div>
     </div>`,
 
-  'ecommerce.miembros': () => pageHead('Miembros', '2.184 activos · sync directo desde Skool', `<button class="btn"><svg class="ic"><use href="#i-doc"/></svg>Exportar</button><button class="btn btn-primary"><svg class="ic"><use href="#i-plus"/></svg>Importar</button>`) + `
-    <div class="card"><div class="card-h"><h3>Listado</h3><span class="meta">Top engagement</span></div>
+  // Legacy templates eliminados en Fase 6:
+  //   ecommerce.miembros  → reemplazado por ecommerce.club (tab 'lista')
+  //   ecommerce.pipeline  → reemplazado por ecommerce.club (tab 'pipeline')
+  //   ecommerce.contenido → reemplazado por ecommerce.redes (tab 'calendario')
+  //   ecommerce.cohortes  → reemplazado por ecommerce.club (tab 'cohortes')
+  //   ecommerce.scoring   → reemplazado por ecommerce.club (tab 'candidatos')
+
+  'ecommerce.club': () => {
+    const tab = state.clubTab || 'overview';
+    const filter = state.clubTierFilter || 'todos';
+    const mode = state.churnMode || 'duro';
+    const tagFor = t => ({miembro:'info',fundador:'copper',embajador:'plum',mentor:'sage'})[t];
+    const labelFor = t => ({miembro:'Miembro',fundador:'Fundador',embajador:'Embajador',mentor:'Mentor'})[t];
+    const TIER_DATA = {
+      miembro:{label:'Miembro',plural:'Miembros',color:'#3b82f6',count:2100,change:'▲ 96 este mes',engagement:'61 %',antiguedad:'7 m',ltv:'$ 186',sentence:'Núcleo de la comunidad · mayor base instalada · masa crítica de actividad y principal fuente de ingresos por artículos.',bajasDuro:32,bajasBlando:84,postsAvg:'2,3',geo:[['Madrid',490,23.3],['Barcelona',330,15.7],['Valencia',180,8.6],['Sevilla',160,7.6],['Bilbao',120,5.7],['Málaga',108,5.1],['Resto',712,33.9]]},
+      fundador:{label:'Fundador',plural:'Fundadores',color:'#b87333',count:24,change:'tier cerrado',engagement:'89 %',antiguedad:'22 m',ltv:'$ 2.840',sentence:'Cohorte inicial · invitación directa de Jaime. Tier cerrado, no se aceptan nuevas admisiones. Acceso a eventos exclusivos y co-creación de roadmap.',bajasDuro:0,bajasBlando:2,postsAvg:'5,8',geo:[['Madrid',8,33.3],['Barcelona',5,20.8],['Valencia',3,12.5],['Bilbao',3,12.5],['Internacional',5,20.8]]},
+      embajador:{label:'Embajador',plural:'Embajadores',color:'#7c5b8a',count:48,change:'▲ 4 este Q',engagement:'87 %',antiguedad:'13 m',ltv:'$ 1.420',sentence:'Miembros promovidos por contribución activa · generan contenido propio, traen invitados y representan al club en sus redes.',bajasDuro:1,bajasBlando:4,postsAvg:'8,2',geo:[['Madrid',12,25],['Barcelona',9,18.8],['Valencia',5,10.4],['Bilbao',6,12.5],['Málaga',4,8.3],['Internacional',5,10.4],['Resto',7,14.6]]},
+      mentor:{label:'Mentor',plural:'Mentores',color:'#7a9b76',count:12,change:'▲ 1 este Q',engagement:'94 %',antiguedad:'18 m',ltv:'$ 940',sentence:'Referentes que guían 1:1 a otros miembros · facilitan talleres y supervisión informal. LTV directa moderada pero generan la retención del resto.',bajasDuro:0,bajasBlando:2,postsAvg:'12,4',geo:[['Madrid',4,33.3],['Barcelona',3,25],['Valencia',2,16.7],['Internacional',3,25]]}
+    };
+    const allMembers = [
+      {name:'Laura Bell',tier:'mentor',ant:'18 m',inv:'Jaime (CEO)',eng:96,posts:120,est:'ok'},
+      {name:'Tomás A.',tier:'mentor',ant:'20 m',inv:'Jaime (CEO)',eng:93,posts:142,est:'ok'},
+      {name:'Igor Petrov',tier:'fundador',ant:'22 m',inv:'— (cohorte inicial)',eng:88,posts:92,est:'ok'},
+      {name:'Sara D.',tier:'fundador',ant:'24 m',inv:'— (cohorte inicial)',eng:91,posts:74,est:'ok'},
+      {name:'Marta Ruiz',tier:'embajador',ant:'14 m',inv:'Tommy Real',eng:92,posts:184,est:'ok'},
+      {name:'Helena Ortí',tier:'embajador',ant:'8 m',inv:'Igor Petrov',eng:84,posts:64,est:'ok'},
+      {name:'Carlos Mena',tier:'embajador',ant:'15 m',inv:'Igor Petrov',eng:82,posts:96,est:'ok'},
+      {name:'Andrés Vega',tier:'miembro',ant:'11 m',inv:'Marta Ruiz',eng:71,posts:78,est:'ok'},
+      {name:'Iván Sáez',tier:'miembro',ant:'6 m',inv:'Marta Ruiz',eng:78,posts:42,est:'ok'},
+      {name:'Patricia V.',tier:'miembro',ant:'4 m',inv:'Tommy Real',eng:64,posts:22,est:'ok'},
+      {name:'Diego Lema',tier:'miembro',ant:'2 m',inv:'Helena Ortí',eng:52,posts:14,est:'ok'},
+      {name:'Ruth Sanz',tier:'miembro',ant:'9 m',inv:'Andrés Vega',eng:34,posts:6,est:'err'}
+    ];
+    const filtered = filter==='todos' ? allMembers : allMembers.filter(m => m.tier===filter);
+    const churnVal = mode==='duro' ? '1,5 %' : '4,2 %';
+    const churnSub = mode==='duro' ? '33 bajas formales' : '92 inactivos > 30 d';
+    const churnRows = mode==='duro' ? [
+      ['Miembro','info','2.100','32','1,5 %'],['Fundador','copper','24','0','0,0 %'],['Embajador','plum','48','1','2,1 %'],['Mentor','sage','12','0','0,0 %']
+    ] : [
+      ['Miembro','info','2.100','84','4,0 %'],['Fundador','copper','24','2','8,3 %'],['Embajador','plum','48','4','8,3 %'],['Mentor','sage','12','2','16,7 %']
+    ];
+    // ───────── Tier sub-view (cuando clubTab !== 'overview') ─────────
+    if (tab !== 'overview' && TIER_DATA[tab]) {
+      const d = TIER_DATA[tab];
+      const tierMembers = allMembers.filter(m => m.tier === tab);
+      const bajas = mode==='duro' ? d.bajasDuro : d.bajasBlando;
+      const churnPctTier = (bajas/d.count*100).toFixed(1).replace('.',',') + ' %';
+      return pageHead(`Club Privado · ${d.plural}`, d.sentence, `<button class="btn"><svg class="ic"><use href="#i-doc"/></svg>Exportar</button><button class="btn btn-primary"><svg class="ic"><use href="#i-plus"/></svg>${tab==='fundador'?'Tier cerrado':'Invitar '+d.label.toLowerCase()}</button>`) + `
+    <div class="kpi-grid">
+      <div class="kpi clickable" onclick="kpiToggle(this)"><div class="kpi-label">${d.plural}</div><div class="kpi-value">${d.count.toLocaleString('es-ES')}</div><div class="kpi-trend up">${d.change}</div></div>
+      <div class="kpi clickable" onclick="kpiToggle(this)"><div class="kpi-label">Engagement medio</div><div class="kpi-value">${d.engagement}</div><div class="kpi-trend up">vs total 68 %</div></div>
+      <div class="kpi clickable" onclick="kpiToggle(this)"><div class="kpi-label">Antigüedad media</div><div class="kpi-value">${d.antiguedad}</div><div class="kpi-trend flat">en este tier</div></div>
+      <div class="kpi clickable" onclick="kpiToggle(this)"><div class="kpi-label">LTV estimado</div><div class="kpi-value">${d.ltv}</div><div class="kpi-trend flat">por miembro</div></div>
+      <div class="kpi"><div class="kpi-label">Churn 30 d</div><div class="kpi-value">${churnPctTier}</div><div class="kpi-trend down">${bajas} ${mode==='duro'?'bajas':'inactivos'}</div><div class="kpi-seg"><span class="${mode==='duro'?'active':''}" onclick="setChurnMode('duro')">Duro</span><span class="${mode==='blando'?'active':''}" onclick="setChurnMode('blando')">Blando</span></div></div>
+      <div class="kpi clickable" onclick="kpiToggle(this)"><div class="kpi-label">Posts / miembro · 30 d</div><div class="kpi-value">${d.postsAvg}</div><div class="kpi-trend up">actividad media</div></div>
+    </div>
+
+    <div class="grid-2">
+      <div class="card"><div class="card-h"><h3>Crecimiento · ${d.plural} · 12 m</h3></div><div class="card-b"><div style="position:relative;height:240px;width:100%"><canvas id="ch-club-tier-growth"></canvas></div></div></div>
+      <div class="card"><div class="card-h"><h3>Distribución geográfica</h3><span class="meta">Top ${d.geo.length} · solo ${d.plural.toLowerCase()}</span></div>
+        <div class="card-b">
+          ${d.geo.map(([c,n,p]) => `
+            <div style="display:flex;align-items:center;gap:10px;padding:5px 0;border-bottom:1px solid var(--paper-2)">
+              <div style="width:130px;font-size:13px;font-weight:500">${c}</div>
+              <div style="flex:1;height:8px;background:var(--paper-2);border-radius:4px;overflow:hidden"><div style="width:${Math.min(100,p*3)}%;height:100%;background:${d.color}"></div></div>
+              <div style="width:54px;text-align:right;font-size:12.5px;color:var(--ink-2)">${n}</div>
+              <div style="width:48px;text-align:right;font-size:11.5px;color:var(--muted)">${p} %</div>
+            </div>`).join('')}
+        </div>
+      </div>
+    </div>
+
+    <div class="grid-2" style="margin-top:14px">
+      <div class="card"><div class="card-h"><h3>Demografía · rango de edad</h3><span class="meta">% solo ${d.plural.toLowerCase()}</span></div><div class="card-b"><div style="position:relative;height:220px;width:100%"><canvas id="ch-club-tier-age"></canvas></div></div></div>
+      <div class="card"><div class="card-h"><h3>Listado · ${d.plural}</h3><span class="meta">${tierMembers.length} en este tier</span></div>
+        <div class="card-b flush"><table class="table">
+          <thead><tr><th>Miembro</th><th>Antigüedad</th><th>Invitado por</th><th>Engagement</th><th>Posts</th><th>Estado</th></tr></thead>
+          <tbody>${tierMembers.map(m => `<tr><td><strong>${m.name}</strong></td><td>${m.ant}</td><td>${m.inv}</td><td>${m.eng} %</td><td>${m.posts}</td><td><span class="tag ${m.est}">${m.est==='ok'?'Activa':'Riesgo baja'}</span></td></tr>`).join('')}</tbody>
+        </table></div>
+      </div>
+    </div>`;
+    }
+    // ───────── Overview (default) ─────────
+    return pageHead('Club Privado · Overview', '2.184 miembros · 4 tiers · churn = bajas/total inicio mes × 100', `<button class="btn"><svg class="ic"><use href="#i-doc"/></svg>Exportar</button><button class="btn btn-primary"><svg class="ic"><use href="#i-plus"/></svg>Invitar miembro</button>`) + `
+    <div class="kpi-grid">
+      <div class="kpi clickable" onclick="kpiToggle(this)"><div class="kpi-label">Miembros</div><div class="kpi-value">2.100</div><div class="kpi-trend up">▲ 96 este mes</div></div>
+      <div class="kpi clickable" onclick="kpiToggle(this)"><div class="kpi-label">Fundadores</div><div class="kpi-value">24</div><div class="kpi-trend flat">tier cerrado</div></div>
+      <div class="kpi clickable" onclick="kpiToggle(this)"><div class="kpi-label">Embajadores</div><div class="kpi-value">48</div><div class="kpi-trend up">▲ 4 este Q</div></div>
+      <div class="kpi clickable" onclick="kpiToggle(this)"><div class="kpi-label">Mentores</div><div class="kpi-value">12</div><div class="kpi-trend up">▲ 1 este Q</div></div>
+      <div class="kpi"><div class="kpi-label">Churn 30 d</div><div class="kpi-value">${churnVal}</div><div class="kpi-trend down">${churnSub}</div><div class="kpi-seg"><span class="${mode==='duro'?'active':''}" onclick="setChurnMode('duro')">Duro</span><span class="${mode==='blando'?'active':''}" onclick="setChurnMode('blando')">Blando</span></div></div>
+      <div class="kpi clickable" onclick="kpiToggle(this)"><div class="kpi-label">Engagement medio</div><div class="kpi-value">68 %</div><div class="kpi-trend up">▲ 5 pp</div></div>
+    </div>
+
+    <div class="grid-2">
+      <div class="card"><div class="card-h"><h3>Distribución por tier</h3><span class="meta">Pasa el ratón para ver detalle</span></div><div class="card-b"><div style="position:relative;height:280px;width:100%"><canvas id="ch-club-pie"></canvas></div></div></div>
+      <div class="card"><div class="card-h"><h3>Crecimiento por tier · 12 m</h3><span class="meta">4 series · escala absoluta</span></div><div class="card-b"><div style="position:relative;height:280px;width:100%"><canvas id="ch-club-growth"></canvas></div></div></div>
+    </div>
+
+    <div class="grid-2" style="margin-top:14px">
+      <div class="card"><div class="card-h"><h3>Churn por tier · 30 d</h3><span class="meta">${mode==='duro'?'Modo duro · bajas formales':'Modo blando · inactivos > 30 d'}</span></div>
+        <div class="card-b flush"><table class="table">
+          <thead><tr><th>Tier</th><th>Total</th><th>${mode==='duro'?'Bajas':'Inactivos'}</th><th>% churn</th></tr></thead>
+          <tbody>
+            ${churnRows.map(r => `<tr><td><span class="tag ${r[1]}">${r[0]}</span></td><td>${r[2]}</td><td>${r[3]}</td><td>${r[4]}</td></tr>`).join('')}
+            <tr><td><strong>Total</strong></td><td><strong>2.184</strong></td><td><strong>${mode==='duro'?'33':'92'}</strong></td><td><strong>${churnVal}</strong></td></tr>
+          </tbody>
+        </table></div>
+      </div>
+      <div class="card"><div class="card-h"><h3>LTV estimado por tier</h3><span class="meta">Productos + eventos + patrocinios atribuidos · YTD</span></div><div class="card-b"><div style="position:relative;height:240px;width:100%"><canvas id="ch-club-ltv"></canvas></div></div></div>
+    </div>
+
+    <div class="grid-2" style="margin-top:14px">
+      <div class="card"><div class="card-h"><h3>Top inviters · 90 d</h3><span class="meta">Miembros que más invitan</span></div>
+        <div class="card-b flush"><table class="table">
+          <thead><tr><th>Miembro</th><th>Tier</th><th>Invitaciones</th><th>Aceptadas</th><th>Tasa</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Tommy Real</strong></td><td><span class="tag info">Staff</span></td><td>42</td><td>38</td><td>90 %</td></tr>
+            <tr><td><strong>Igor Petrov</strong></td><td><span class="tag copper">Fundador</span></td><td>18</td><td>14</td><td>78 %</td></tr>
+            <tr><td><strong>Marta Ruiz</strong></td><td><span class="tag plum">Embajador</span></td><td>14</td><td>12</td><td>86 %</td></tr>
+            <tr><td><strong>Helena Ortí</strong></td><td><span class="tag plum">Embajador</span></td><td>8</td><td>7</td><td>88 %</td></tr>
+            <tr><td><strong>Carlos Mena</strong></td><td><span class="tag plum">Embajador</span></td><td>6</td><td>5</td><td>83 %</td></tr>
+          </tbody>
+        </table></div>
+      </div>
+      <div class="card"><div class="card-h"><h3>Antigüedad media por tier</h3><span class="meta">Meses · base actual</span></div><div class="card-b"><div style="position:relative;height:240px;width:100%"><canvas id="ch-club-time"></canvas></div></div></div>
+    </div>
+
+    <div class="card" style="margin-top:14px"><div class="card-h"><h3>Cohortes de retención</h3><span class="meta">% activos M0 → M11 · últimas 12 cohortes</span></div>
+      <div class="card-b" id="clubCohortHost" style="overflow-x:auto;padding:14px 16px"></div>
+    </div>
+
+    <div class="grid-2" style="margin-top:14px">
+      <div class="card"><div class="card-h"><h3>Distribución geográfica</h3><span class="meta">Top 10 · base actual</span></div>
+        <div class="card-b">
+          ${[['Madrid',512,23.4],['Barcelona',342,15.7],['Valencia',184,8.4],['Sevilla',162,7.4],['Bilbao',128,5.9],['Málaga',114,5.2],['Zaragoza',86,3.9],['Mallorca',72,3.3],['Resto España',502,23.0],['Internacional',82,3.8]].map(([c,n,p]) => `
+            <div style="display:flex;align-items:center;gap:10px;padding:5px 0;border-bottom:1px solid var(--paper-2)">
+              <div style="width:130px;font-size:13px;font-weight:500">${c}</div>
+              <div style="flex:1;height:8px;background:var(--paper-2);border-radius:4px;overflow:hidden"><div style="width:${Math.min(100,p*4)}%;height:100%;background:var(--ws-accent)"></div></div>
+              <div style="width:54px;text-align:right;font-size:12.5px;color:var(--ink-2)">${n}</div>
+              <div style="width:48px;text-align:right;font-size:11.5px;color:var(--muted)">${p} %</div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+      <div class="card"><div class="card-h"><h3>Demografía</h3><span class="meta">Edad · género</span></div>
+        <div class="card-b">
+          <div style="display:flex;gap:18px;align-items:flex-start">
+            <div style="flex:1;min-width:0">
+              <div style="font-size:10.5px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;font-weight:600">Por rango de edad</div>
+              <div style="position:relative;height:200px"><canvas id="ch-club-age"></canvas></div>
+            </div>
+            <div style="width:130px;flex-shrink:0">
+              <div style="font-size:10.5px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;font-weight:600">Por género</div>
+              <div style="position:relative;height:180px"><canvas id="ch-club-gender"></canvas></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:14px"><div class="card-h" style="flex-wrap:wrap;gap:10px"><h3>Listado · ${filtered.length} ${filter==='todos'?'totales':'filtrados'}</h3><div class="chip-row" style="margin-left:auto">${['todos','miembro','fundador','embajador','mentor'].map(t => `<span class="chip ${filter===t?'active':''}" onclick="setClubTierFilter('${t}')">${t==='todos'?'Todos':labelFor(t)}</span>`).join('')}</div></div>
       <div class="card-b flush"><table class="table">
-        <thead><tr><th>Miembro</th><th>Plan</th><th>Antigüedad</th><th>Engagement</th><th>Score AI</th><th>Posts</th><th>Estado</th></tr></thead>
+        <thead><tr><th>Miembro</th><th>Tier</th><th>Antigüedad</th><th>Invitado por</th><th>Engagement</th><th>Posts</th><th>Estado</th></tr></thead>
+        <tbody>${filtered.map(m => `<tr><td><strong>${m.name}</strong></td><td><span class="tag ${tagFor(m.tier)}">${labelFor(m.tier)}</span></td><td>${m.ant}</td><td>${m.inv}</td><td>${m.eng} %</td><td>${m.posts}</td><td><span class="tag ${m.est}">${m.est==='ok'?'Activa':'Riesgo baja'}</span></td></tr>`).join('')}</tbody>
+      </table></div>
+    </div>`;
+  },
+
+  'ecommerce.redes': () => {
+    const tab = state.socialTab || 'overview';
+    const subLabel = {overview:'Overview',tiktok:'TikTok',instagram:'Instagram',linkedin:'LinkedIn',youtube:'YouTube',calendario:'Calendario'}[tab] || 'Overview';
+    const data = {
+      tiktok:{ followers:'84,2 K', alcance:'1,2 M', engagement:'8,4 %', conv:'38', chart:'ch-tt', subtitle:'Crecimiento más rápido · audiencia 18-34 · foco en virales cortos',
+        posts:[['Mitos longevidad · 60 s','240 K views','18 K likes','1,2 K shares'],['Mi rutina matutina','184 K views','12 K likes','920 shares'],['Tour del club','96 K views','7,4 K likes','420 shares']] },
+      instagram:{ followers:'152 K', alcance:'980 K', engagement:'4,2 %', conv:'52', chart:'ch-ig', subtitle:'Mayor base instalada · principal canal de conversión al club',
+        posts:[['Reel: Protocolo mañanas','84 K reach','6,8 K likes','340 saves'],['Carrusel: Top 10 marcadores longevidad','42 K reach','4,2 K likes','1,8 K saves'],['Post Jaime · 1 año del club','28 K reach','2,1 K likes','180 saves']] },
+      linkedin:{ followers:'18,4 K', alcance:'142 K', engagement:'6,1 %', conv:'28', chart:'ch-li', subtitle:'Audiencia B2B · perfil ejecutivo · captación de fundadores y embajadores del club',
+        posts:[['Artículo Jaime · Los próximos 10 años','24 K views','612 reacts','84 reposts'],['Post · Buscamos Director Comunidad','12 K views','184 reacts','22 reposts'],['Carousel · Métricas que importan en el club','8 K views','142 reacts','38 reposts']] },
+      youtube:{ followers:'64,8 K subs', alcance:'420 K', engagement:'AVD 12 m', conv:'18', chart:'ch-yt', subtitle:'Long-form · fondo de funnel · mayor LTV por miembro convertido',
+        posts:[['Podcast · Longevidad práctica','84 K views','2,4 K likes','AVD 18 m'],['Behind the scenes del club','42 K views','1,8 K likes','AVD 14 m'],['Short · Verdad sobre suplementos','184 K views','4,2 K likes','AVD 45 s']] }
+    };
+    const headers = { tiktok:['Pieza','Views','Likes','Shares'], instagram:['Pieza','Reach','Likes','Saves'], linkedin:['Pieza','Views','Reacts','Reposts'], youtube:['Pieza','Views','Likes','AVD'] };
+    let body;
+    if (tab === 'overview') {
+      body = `
+    <div class="kpi-grid">
+      <div class="kpi clickable" onclick="kpiToggle(this)"><div class="kpi-label">Followers totales</div><div class="kpi-value">319 K</div><div class="kpi-trend up">▲ 8,4 % mes</div></div>
+      <div class="kpi clickable" onclick="kpiToggle(this)"><div class="kpi-label">Alcance mensual</div><div class="kpi-value">2,74 M</div><div class="kpi-trend up">▲ 14 %</div></div>
+      <div class="kpi clickable" onclick="kpiToggle(this)"><div class="kpi-label">Engagement medio</div><div class="kpi-value">5,7 %</div><div class="kpi-trend flat">ponderado por followers</div></div>
+      <div class="kpi clickable" onclick="kpiToggle(this)"><div class="kpi-label">Conv. al club / mes</div><div class="kpi-value">136</div><div class="kpi-trend up">▲ 18 %</div></div>
+    </div>
+    <div class="card"><div class="card-h"><h3>Followers · 4 redes · 6 m</h3><span class="meta">Números absolutos · misma escala (K)</span></div><div class="card-b"><div style="position:relative;height:340px;width:100%"><canvas id="ch-social-all"></canvas></div></div></div>
+    <div class="card" style="margin-top:14px"><div class="card-h"><h3>Resumen por red</h3><span class="meta">Click en una red en el sidebar para ver detalle</span></div>
+      <div class="card-b flush"><table class="table">
+        <thead><tr><th>Red</th><th>Followers</th><th>Alcance / mes</th><th>Engagement</th><th>Conv. club / mes</th></tr></thead>
         <tbody>
-          <tr><td><strong>Marta Ruiz</strong></td><td><span class="tag copper">VIP</span></td><td>14 m</td><td>92 %</td><td>94</td><td>184</td><td><span class="tag ok">Activa</span></td></tr>
-          <tr><td><strong>Igor Petrov</strong></td><td><span class="tag copper">VIP</span></td><td>8 m</td><td>88 %</td><td>91</td><td>92</td><td><span class="tag ok">Activa</span></td></tr>
-          <tr><td><strong>Laura Bell</strong></td><td><span class="tag info">Pro</span></td><td>5 m</td><td>76 %</td><td>88</td><td>54</td><td><span class="tag ok">Activa</span></td></tr>
-          <tr><td><strong>Andrés Vega</strong></td><td><span class="tag info">Pro</span></td><td>11 m</td><td>71 %</td><td>82</td><td>78</td><td><span class="tag ok">Activa</span></td></tr>
-          <tr class="clickable" onclick="this.classList.toggle('row-active')"><td><strong>Helena Ortí</strong></td><td><span class="tag info">Pro</span></td><td>3 m</td><td>74 %</td><td>78</td><td>22</td><td><span class="tag ok">Activa</span></td></tr>
-          <tr class="clickable" onclick="this.classList.toggle('row-active')"><td><strong>Diego Lema</strong></td><td><span class="tag sage">Free</span></td><td>2 m</td><td>52 %</td><td>62</td><td>14</td><td><span class="tag warn">Trial</span></td></tr>
-          <tr class="clickable" onclick="this.classList.toggle('row-active')"><td><strong>Ruth Sanz</strong></td><td><span class="tag info">Pro</span></td><td>9 m</td><td>34 %</td><td>41</td><td>6</td><td><span class="tag err">Riesgo churn</span></td></tr>
+          <tr><td><strong>Instagram</strong></td><td>152 K</td><td>980 K</td><td>4,2 %</td><td>52</td></tr>
+          <tr><td><strong>TikTok</strong></td><td>84,2 K</td><td>1,2 M</td><td>8,4 %</td><td>38</td></tr>
+          <tr><td><strong>YouTube</strong></td><td>64,8 K</td><td>420 K</td><td>AVD 12 m</td><td>18</td></tr>
+          <tr><td><strong>LinkedIn</strong></td><td>18,4 K</td><td>142 K</td><td>6,1 %</td><td>28</td></tr>
         </tbody>
       </table></div>
-    </div>`,
-
-  'ecommerce.pipeline': () => pageHead('Member journey', 'Free → Trial → Paid → VIP → Churn · forecast incluido', '') + pipelineForecast({
-    unit:'miembros',
-    formatVal: v => v.toLocaleString('es-ES') + ' m.',
-    weights:[
-      {stage:'Free', count:1420, value:1420, prob:.13},
-      {stage:'Trial', count:186, value:186, prob:.42},
-      {stage:'Paid Pro', count:462, value:462, prob:.94},
-      {stage:'VIP', count:116, value:116, prob:.99},
-      {stage:'Riesgo / Churn', count:24, value:24, prob:.10}
-    ],
-    horizons:[
-      {label:'+ Pro 30 días', value:78, count:78, trend:'up'},
-      {label:'+ MRR 30 días', value:'$ 4,2 K', count:'+11 %', trend:'up'},
-      {label:'Riesgo cierre', value:24, count:24, trend:'down'}
-    ],
-    chartId:'ch-fc-ecommerce'
-  }) + `
-    <div class="card"><div class="card-b">
-      <div class="kanban">
-        <div class="kan-col"><div class="kan-h">Free <span class="count">1.420</span></div>${['Diego L.','Ruth S.','Carmen B.'].map(n=>`<div class="kan-card"><div class="t">${n}</div><div class="m"><span>Free</span><span class="dot"></span></div></div>`).join('')}</div>
-        <div class="kan-col"><div class="kan-h">Trial <span class="count">186</span></div>${['Iván S.','Patricia V.'].map(n=>`<div class="kan-card"><div class="t">${n}</div><div class="m"><span>7 días</span><span class="tag warn">Trial</span></div></div>`).join('')}</div>
-        <div class="kan-col"><div class="kan-h">Paid Pro <span class="count">462</span></div>${['Helena O.','Andrés V.','Diego L.'].map(n=>`<div class="kan-card"><div class="t">${n}</div><div class="m"><span>Pro</span><span class="dot ok"></span></div></div>`).join('')}</div>
-        <div class="kan-col"><div class="kan-h">VIP <span class="count">116</span></div>${['Marta R.','Igor P.'].map(n=>`<div class="kan-card"><div class="t">${n}</div><div class="m"><span>VIP</span><span class="tag copper">VIP</span></div></div>`).join('')}</div>
-        <div class="kan-col"><div class="kan-h">Riesgo / Churn <span class="count">24</span></div>${['Ruth S.','Pablo M.'].map(n=>`<div class="kan-card"><div class="t">${n}</div><div class="m"><span>Engagement bajo</span><span class="tag err">!</span></div></div>`).join('')}</div>
-      </div>
-    </div></div>`,
-
-  'ecommerce.contenido': () => pageHead('Calendar de contenido', 'Multi-canal · IG · Skool · Email · 1 fuente → todos los canales', `<button class="btn btn-primary"><svg class="ic"><use href="#i-plus"/></svg>Nueva pieza</button>`) + `
-    <div class="card"><div class="card-h"><h3>Próximos 7 días</h3></div>
+    </div>`;
+    } else if (tab === 'calendario') {
+      body = `
+    <div class="card"><div class="card-h"><h3>Calendario de contenido · próximos 7 días</h3><span class="meta">1 fuente → multi-canal · alimentará <code>content_calendar</code></span></div>
       <div class="card-b flush"><table class="table">
         <thead><tr><th>Fecha</th><th>Pieza</th><th>Canales</th><th>Owner</th><th>Estado</th></tr></thead>
         <tbody>
-          <tr><td>Hoy 18:00</td><td><strong>Reel: 5 mitos sobre peptidos</strong></td><td><span class="tag info">IG</span> <span class="tag sage">Skool</span></td><td>Tommy</td><td><span class="tag ok">Listo</span></td></tr>
-          <tr><td>Mar 11:00</td><td><strong>Newsletter: NAD+ y energía</strong></td><td><span class="tag copper">Email</span> <span class="tag sage">Skool</span></td><td>Claude AI</td><td><span class="tag warn">Revisar</span></td></tr>
-          <tr><td>Mié 19:00</td><td><strong>Live: Q&A con Jaime</strong></td><td><span class="tag info">IG</span></td><td>Tommy + Jaime</td><td><span class="tag info">Programado</span></td></tr>
-          <tr><td>Jue 10:00</td><td><strong>Carrusel: residences tour</strong></td><td><span class="tag info">IG</span></td><td>Claude AI</td><td><span class="tag warn">Borrador</span></td></tr>
-          <tr><td>Vie 17:00</td><td><strong>Podcast clip: longevidad</strong></td><td><span class="tag info">IG</span> <span class="tag plum">YT Shorts</span></td><td>Nora</td><td><span class="tag info">Edición</span></td></tr>
+          <tr><td>Hoy 18:00</td><td><strong>Reel: 5 mitos sobre longevidad</strong></td><td><span class="tag info">IG</span> <span class="tag dark">TikTok</span></td><td>Tommy</td><td><span class="tag ok">Listo</span></td></tr>
+          <tr><td>Mar 11:00</td><td><strong>Carrusel: Protocolo mañanas</strong></td><td><span class="tag info">IG</span> <span class="tag info">LinkedIn</span></td><td>Nora + Claude AI</td><td><span class="tag warn">Revisar</span></td></tr>
+          <tr><td>Mié 19:00</td><td><strong>Live: Q&A con Jaime</strong></td><td><span class="tag info">IG Live</span> <span class="tag err">YT Live</span></td><td>Tommy + Jaime</td><td><span class="tag info">Programado</span></td></tr>
+          <tr><td>Jue 10:00</td><td><strong>Carrusel: Residences tour</strong></td><td><span class="tag info">IG</span> <span class="tag info">LinkedIn</span></td><td>Claude AI</td><td><span class="tag warn">Borrador</span></td></tr>
+          <tr><td>Vie 17:00</td><td><strong>Podcast clip: longevidad</strong></td><td><span class="tag dark">TikTok</span> <span class="tag err">YT Shorts</span></td><td>Nora</td><td><span class="tag info">Edición</span></td></tr>
+          <tr><td>Sáb 12:00</td><td><strong>Artículo: AI aplicada a longevidad</strong></td><td><span class="tag info">LinkedIn</span></td><td>Jaime</td><td><span class="tag info">Programado</span></td></tr>
         </tbody>
       </table></div>
-    </div>`,
+    </div>`;
+    } else {
+      const d = data[tab];
+      const hd = headers[tab];
+      body = `
+    <div class="kpi-grid">
+      <div class="kpi clickable" onclick="kpiToggle(this)"><div class="kpi-label">Followers</div><div class="kpi-value">${d.followers}</div><div class="kpi-trend up">▲ últimos 30 d</div></div>
+      <div class="kpi clickable" onclick="kpiToggle(this)"><div class="kpi-label">Alcance / mes</div><div class="kpi-value">${d.alcance}</div><div class="kpi-trend up">▲ vs mes ant.</div></div>
+      <div class="kpi clickable" onclick="kpiToggle(this)"><div class="kpi-label">Engagement</div><div class="kpi-value">${d.engagement}</div><div class="kpi-trend flat">benchmark sector</div></div>
+      <div class="kpi clickable" onclick="kpiToggle(this)"><div class="kpi-label">Conv. al club / mes</div><div class="kpi-value">${d.conv}</div><div class="kpi-trend up">nuevos miembros</div></div>
+    </div>
+    <div class="muted" style="margin:-4px 0 14px 0">${d.subtitle}</div>
+    <div class="grid-2">
+      <div class="card"><div class="card-h"><h3>Crecimiento de followers · 6 m</h3></div><div class="card-b"><div style="position:relative;height:210px;width:100%"><canvas id="${d.chart}"></canvas></div></div></div>
+      <div class="card"><div class="card-h"><h3>Top posts del mes</h3></div>
+        <div class="card-b flush"><table class="table">
+          <thead><tr>${hd.map(h=>`<th>${h}</th>`).join('')}</tr></thead>
+          <tbody>${d.posts.map(p=>`<tr><td><strong>${p[0]}</strong></td><td>${p[1]}</td><td>${p[2]}</td><td>${p[3]}</td></tr>`).join('')}</tbody>
+        </table></div>
+      </div>
+    </div>`;
+    }
+    return pageHead('Redes Sociales · ' + subLabel, '4 canales · alcance · engagement · conversión al club · calendario unificado', `<button class="btn"><svg class="ic"><use href="#i-spark"/></svg>Recalcular métricas</button><button class="btn btn-primary"><svg class="ic"><use href="#i-plus"/></svg>Nueva pieza</button>`) + body;
+  },
 
-  'ecommerce.cohortes': () => pageHead('Análisis de cohortes', 'Retención por mes de alta', '') + `
-    <div class="grid-2-eq">
-      <div class="card"><div class="card-h"><h3>Retención por cohorte</h3></div><div class="card-b"><div style="position:relative;height:240px;width:100%"><canvas id="ch-coh1"></canvas></div></div></div>
-      <div class="card"><div class="card-h"><h3>LTV por cohorte</h3></div><div class="card-b"><div style="position:relative;height:240px;width:100%"><canvas id="ch-coh2"></canvas></div></div></div>
-    </div>`,
-
-  'ecommerce.scoring': () => pageHead('Lead scoring AI', 'Top 10 % de miembros con mayor probabilidad de upsell · Claude analiza engagement, posts y patrones', `<button class="btn"><svg class="ic"><use href="#i-spark"/></svg>Re-calcular scores</button>`) + `
-    <div class="card"><div class="card-h"><h3>Top 12 a contactar</h3></div>
+  'ecommerce.productos': () => {
+    const tab = state.productosTab || 'articulos';
+    const subLabel = {articulos:'Artículos',patrocinadores:'Patrocinadores',eventos:'Eventos'}[tab] || 'Artículos';
+    let body;
+    if (tab === 'articulos') {
+      body = `
+    <div class="kpi-grid">
+      <div class="kpi clickable" onclick="kpiToggle(this)"><div class="kpi-label">SKUs activos</div><div class="kpi-value">18</div><div class="kpi-trend up">▲ 3 nuevos</div></div>
+      <div class="kpi clickable" onclick="kpiToggle(this)"><div class="kpi-label">Ingresos mes</div><div class="kpi-value">$ 14,8 K</div><div class="kpi-trend up">▲ 22 %</div></div>
+      <div class="kpi clickable" onclick="kpiToggle(this)"><div class="kpi-label">Margen medio</div><div class="kpi-value">64 %</div><div class="kpi-trend up">▲ 2 pp</div></div>
+      <div class="kpi clickable" onclick="kpiToggle(this)"><div class="kpi-label">Stock crítico</div><div class="kpi-value">2</div><div class="kpi-trend warn">SKUs &lt; umbral</div></div>
+    </div>
+    <div class="grid-2">
+      <div class="card"><div class="card-h"><h3>Ventas mensuales · 6 m</h3><span class="meta">Stacked · por categoría</span></div><div class="card-b"><div style="position:relative;height:230px;width:100%"><canvas id="ch-prod-art"></canvas></div></div></div>
+      <div class="card"><div class="card-h"><h3>Top sellers · mes</h3></div>
+        <div class="card-b flush"><table class="table">
+          <thead><tr><th>Artículo</th><th>SKU</th><th>Unidades</th><th>Ingresos</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Kit Biohacker</strong></td><td>KIT-BH-01</td><td>14</td><td>$ 6.720</td></tr>
+            <tr><td><strong>Curso Longevidad práctica</strong></td><td>CRS-LP-01</td><td>18</td><td>$ 5.220</td></tr>
+            <tr><td><strong>Manual Reto Health</strong></td><td>BK-MRH-01</td><td>32</td><td>$ 1.536</td></tr>
+            <tr><td><strong>Suplemento exclusivo club</strong></td><td>SUP-CLB-01</td><td>14</td><td>$ 1.120</td></tr>
+            <tr><td><strong>Merch · camiseta</strong></td><td>MRC-TS-01</td><td>6</td><td>$ 210</td></tr>
+          </tbody>
+        </table></div>
+      </div>
+    </div>
+    <div class="card" style="margin-top:14px"><div class="card-h"><h3>Inventario</h3><span class="meta">Alimentará tabla <code>product_articles</code></span></div>
       <div class="card-b flush"><table class="table">
-        <thead><tr><th>Miembro</th><th>Score</th><th>Recomendación</th><th>Razón</th><th>Acción</th></tr></thead>
+        <thead><tr><th>SKU · Artículo</th><th>Categoría</th><th>Stock</th><th>Precio</th><th>Margen</th><th>Estado</th></tr></thead>
         <tbody>
-          <tr><td><strong>Marta Ruiz</strong></td><td><span class="tag info">94</span></td><td>↗ Residences</td><td>Posts sobre biohack en casa · ingresos altos</td><td><button class="btn">Contactar</button></td></tr>
-          <tr><td><strong>Igor Petrov</strong></td><td><span class="tag info">91</span></td><td>↗ Clínica VIP</td><td>Pregunta repetidas sobre peptidos</td><td><button class="btn">Contactar</button></td></tr>
-          <tr><td><strong>Laura Bell</strong></td><td><span class="tag info">88</span></td><td>↗ Clínica</td><td>Engagement con contenido protocolos</td><td><button class="btn">Contactar</button></td></tr>
-          <tr><td><strong>Andrés Vega</strong></td><td><span class="tag sage">82</span></td><td>→ VIP plan</td><td>11 m antigüedad · alta retención</td><td><button class="btn">Contactar</button></td></tr>
+          <tr><td><strong>KIT-BH-01</strong> · Kit Biohacker</td><td>Hardware</td><td>22</td><td>$ 480</td><td>52 %</td><td><span class="tag ok">OK</span></td></tr>
+          <tr><td><strong>CRS-LP-01</strong> · Curso Longevidad</td><td>Digital</td><td>∞</td><td>$ 290</td><td>92 %</td><td><span class="tag ok">OK</span></td></tr>
+          <tr><td><strong>BK-MRH-01</strong> · Manual Reto Health</td><td>Libro</td><td>148</td><td>$ 48</td><td>74 %</td><td><span class="tag ok">OK</span></td></tr>
+          <tr><td><strong>SUP-CLB-01</strong> · Suplemento exclusivo</td><td>Suplementos</td><td>8</td><td>$ 80</td><td>62 %</td><td><span class="tag warn">Bajo stock</span></td></tr>
+          <tr><td><strong>MRC-TS-01</strong> · Camiseta</td><td>Merch</td><td>4</td><td>$ 35</td><td>58 %</td><td><span class="tag err">Crítico</span></td></tr>
         </tbody>
       </table></div>
-    </div>`,
+    </div>`;
+    } else if (tab === 'patrocinadores') {
+      body = `
+    <div class="kpi-grid">
+      <div class="kpi clickable" onclick="kpiToggle(this)"><div class="kpi-label">Activos</div><div class="kpi-value">6</div><div class="kpi-trend up">▲ 2 firmados Q2</div></div>
+      <div class="kpi clickable" onclick="kpiToggle(this)"><div class="kpi-label">Valor anual</div><div class="kpi-value">$ 184 K</div><div class="kpi-trend up">▲ 38 %</div></div>
+      <div class="kpi clickable" onclick="kpiToggle(this)"><div class="kpi-label">Renovaciones 90 d</div><div class="kpi-value">3</div><div class="kpi-trend warn">revisar</div></div>
+      <div class="kpi clickable" onclick="kpiToggle(this)"><div class="kpi-label">Pipeline</div><div class="kpi-value">$ 64 K</div><div class="kpi-trend up">4 prospectos</div></div>
+    </div>
+    <div class="grid-2">
+      <div class="card"><div class="card-h"><h3>Valor contratado · 6 m</h3></div><div class="card-b"><div style="position:relative;height:210px;width:100%"><canvas id="ch-prod-spo"></canvas></div></div></div>
+      <div class="card"><div class="card-h"><h3>Próximas renovaciones</h3></div>
+        <div class="card-b flush"><table class="table">
+          <thead><tr><th>Marca</th><th>Vence</th><th>Valor</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Oura Ring</strong></td><td>15 jun</td><td>$ 32 K</td></tr>
+            <tr><td><strong>Eight Sleep</strong></td><td>4 jul</td><td>$ 24 K</td></tr>
+            <tr><td><strong>Levels</strong></td><td>28 jul</td><td>$ 18 K</td></tr>
+          </tbody>
+        </table></div>
+      </div>
+    </div>
+    <div class="card" style="margin-top:14px"><div class="card-h"><h3>Contratos activos</h3><span class="meta">Alimentará tabla <code>product_sponsors</code></span></div>
+      <div class="card-b flush"><table class="table">
+        <thead><tr><th>Marca</th><th>Sector</th><th>Inicio</th><th>Fin</th><th>Valor</th><th>Entregables</th><th>Estado</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Oura Ring</strong></td><td>Wearables</td><td>jun 25</td><td>jun 26</td><td>$ 32 K</td><td>4 reels + 1 podcast + tracking</td><td><span class="tag warn">Renovar</span></td></tr>
+          <tr><td><strong>Eight Sleep</strong></td><td>Sueño</td><td>jul 25</td><td>jul 26</td><td>$ 24 K</td><td>2 reviews + integración protocolos</td><td><span class="tag ok">Activo</span></td></tr>
+          <tr><td><strong>Levels</strong></td><td>CGM</td><td>jul 25</td><td>jul 26</td><td>$ 18 K</td><td>Webinar + casos miembros</td><td><span class="tag ok">Activo</span></td></tr>
+          <tr><td><strong>Magic Mind</strong></td><td>Nootrópicos</td><td>ene 26</td><td>ene 27</td><td>$ 36 K</td><td>Discount code + 6 piezas</td><td><span class="tag ok">Activo</span></td></tr>
+          <tr><td><strong>Hyperice</strong></td><td>Recovery</td><td>mar 26</td><td>mar 27</td><td>$ 42 K</td><td>Equipos en residencias + 8 piezas</td><td><span class="tag ok">Activo</span></td></tr>
+          <tr><td><strong>InsideTracker</strong></td><td>Analíticas</td><td>abr 26</td><td>abr 27</td><td>$ 32 K</td><td>Tests bonificados miembros + estudio</td><td><span class="tag ok">Activo</span></td></tr>
+        </tbody>
+      </table></div>
+    </div>`;
+    } else {
+      body = `
+    <div class="kpi-grid">
+      <div class="kpi clickable" onclick="kpiToggle(this)"><div class="kpi-label">Próximos 90 d</div><div class="kpi-value">4</div><div class="kpi-trend up">▲ 1 nuevo</div></div>
+      <div class="kpi clickable" onclick="kpiToggle(this)"><div class="kpi-label">Aforo total</div><div class="kpi-value">634</div><div class="kpi-trend flat">65 % ocupado</div></div>
+      <div class="kpi clickable" onclick="kpiToggle(this)"><div class="kpi-label">Ingresos esperados</div><div class="kpi-value">$ 96 K</div><div class="kpi-trend up">entradas + sponsors</div></div>
+      <div class="kpi clickable" onclick="kpiToggle(this)"><div class="kpi-label">Asistentes ↔ club</div><div class="kpi-value">62 %</div><div class="kpi-trend up">son miembros</div></div>
+    </div>
+    <div class="grid-2">
+      <div class="card"><div class="card-h"><h3>Ingresos por evento · histórico</h3></div><div class="card-b"><div style="position:relative;height:210px;width:100%"><canvas id="ch-prod-evt"></canvas></div></div></div>
+      <div class="card"><div class="card-h"><h3>Próximos eventos</h3></div>
+        <div class="card-b flush"><table class="table">
+          <thead><tr><th>Evento</th><th>Fecha</th><th>Vendidas</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Retreat Sierra · 3 días</strong></td><td>14 jun</td><td>22 / 30</td></tr>
+            <tr><td><strong>Workshop metabolismo · Madrid</strong></td><td>28 jun</td><td>54 / 80</td></tr>
+            <tr><td><strong>Summit Longevidad 26</strong></td><td>12 sep</td><td>312 / 500</td></tr>
+            <tr><td><strong>Cena fundadores · cerrado</strong></td><td>4 oct</td><td>24 / 24</td></tr>
+          </tbody>
+        </table></div>
+      </div>
+    </div>
+    <div class="card" style="margin-top:14px"><div class="card-h"><h3>Eventos planificados</h3><span class="meta">Alimentará tabla <code>product_events</code> + relación con <code>members</code></span></div>
+      <div class="card-b flush"><table class="table">
+        <thead><tr><th>Evento</th><th>Fecha</th><th>Lugar</th><th>Aforo</th><th>Vendidas</th><th>Precio</th><th>Sponsors</th><th>Acceso</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Retreat Sierra · 3 días</strong></td><td>14-16 jun</td><td>Sierra de Madrid</td><td>30</td><td>22</td><td>$ 1.480</td><td>Oura · Eight Sleep</td><td><span class="tag copper">Solo club</span></td></tr>
+          <tr><td><strong>Workshop metabolismo y glucosa</strong></td><td>28 jun</td><td>Madrid</td><td>80</td><td>54</td><td>$ 280</td><td>Levels</td><td><span class="tag info">Público</span></td></tr>
+          <tr><td><strong>Summit Longevidad 26</strong></td><td>12-13 sep</td><td>Madrid (IFEMA)</td><td>500</td><td>312</td><td>$ 180</td><td>Oura · Hyperice · InsideTracker</td><td><span class="tag info">Público</span></td></tr>
+          <tr><td><strong>Cena fundadores</strong></td><td>4 oct</td><td>Reto Residences</td><td>24</td><td>24</td><td>—</td><td>—</td><td><span class="tag copper">Solo fundadores</span></td></tr>
+        </tbody>
+      </table></div>
+    </div>`;
+    }
+    return pageHead('Productos · ' + subLabel, '3 categorías · artículos · patrocinadores · eventos · alimenta Finanzas', `<button class="btn"><svg class="ic"><use href="#i-doc"/></svg>Exportar</button><button class="btn btn-primary"><svg class="ic"><use href="#i-plus"/></svg>Nuevo producto</button>`) + body;
+  },
 
-  'ecommerce.finanzas': tpl_finanzas,
+  'ecommerce.finanzas': ecommerce_finanzas,
   'ecommerce.personal': tpl_personal,
   'ecommerce.analitica': tpl_analitica,
 
@@ -2217,7 +2640,7 @@ const VIEWS = {
 
   'rd.estudios': () => pageHead('Estudios', 'Investigación activa con datos clínicos anonimizados', `<button class="btn btn-primary"><svg class="ic"><use href="#i-plus"/></svg>Nuevo estudio</button>`) + `
     <div class="grid-2">
-      ${[['HRV y biohacking integrado','Correlación entre rutinas de luz roja, peptidos y variabilidad cardíaca','Activo','4.280','12 sem'],['Inflamación crónica','Marcadores en pacientes de protocolos NAD+','Activo','2.145','8 sem'],['Adherencia protocolos','Patrones de cumplimiento por cohorte','Activo','1.920','24 sem'],['Engagement comunidad','Predictores de retención en Skool','Análisis','12.480','—']].map(([t,d,e,r,dur])=>`
+      ${[['HRV y biohacking integrado','Correlación entre rutinas de luz roja, peptidos y variabilidad cardíaca','Activo','4.280','12 sem'],['Inflamación crónica','Marcadores en pacientes de protocolos NAD+','Activo','2.145','8 sem'],['Adherencia protocolos','Patrones de cumplimiento por cohorte','Activo','1.920','24 sem'],['Engagement del club','Predictores de retención del club privado · 4 tiers','Análisis','12.480','—']].map(([t,d,e,r,dur])=>`
         <div class="card clickable" onclick="this.classList.toggle('card-active')"><div class="card-b">
           <div class="ws-badge">Estudio</div>
           <h3 style="font-family:var(--display);font-weight:600;font-size:18px;margin:6px 0 4px">${t}</h3>
@@ -2228,17 +2651,17 @@ const VIEWS = {
         </div></div>`).join('')}
     </div>`,
 
-  'rd.datasets': () => pageHead('Datasets', '12 datasets vivos · ETL diaria desde Clínica + Skool + Residences', '') + `
+  'rd.datasets': () => pageHead('Datasets', '12 datasets vivos · ETL diaria desde Clínica + Club + Residences', '') + `
     <div class="card"><div class="card-b flush">
       <table class="table">
         <thead><tr><th>Dataset</th><th>Origen</th><th>Registros</th><th>Última carga</th><th>Estado</th></tr></thead>
         <tbody>
           <tr class="clickable" onclick="this.classList.toggle('row-active')"><td>HRV biohacking</td><td>Clínica</td><td>4 280</td><td>Hoy 03:00</td><td><span class="tag ok">Sync OK</span></td></tr>
           <tr class="clickable" onclick="this.classList.toggle('row-active')"><td>Inflamación marcadores</td><td>Clínica</td><td>2 145</td><td>Ayer</td><td><span class="tag ok">Sync OK</span></td></tr>
-          <tr class="clickable" onclick="this.classList.toggle('row-active')"><td>Adherencia protocolos</td><td>Clínica + Skool</td><td>1 920</td><td>Ayer</td><td><span class="tag ok">Sync OK</span></td></tr>
-          <tr class="clickable" onclick="this.classList.toggle('row-active')"><td>Engagement comunidad</td><td>Skool</td><td>12 480</td><td>Hoy 03:00</td><td><span class="tag ok">Sync OK</span></td></tr>
+          <tr class="clickable" onclick="this.classList.toggle('row-active')"><td>Adherencia protocolos</td><td>Clínica + Club</td><td>1 920</td><td>Ayer</td><td><span class="tag ok">Sync OK</span></td></tr>
+          <tr class="clickable" onclick="this.classList.toggle('row-active')"><td>Engagement del club</td><td>Club</td><td>12 480</td><td>Hoy 03:00</td><td><span class="tag ok">Sync OK</span></td></tr>
           <tr class="clickable" onclick="this.classList.toggle('row-active')"><td>Telemetría Residences</td><td>Residences</td><td>820</td><td>Hoy 02:00</td><td><span class="tag ok">Sync OK</span></td></tr>
-          <tr class="clickable" onclick="this.classList.toggle('row-active')"><td>Wearables sample</td><td>Skool · opt-in</td><td>340</td><td>4 may</td><td><span class="tag warn">Anomalía</span></td></tr>
+          <tr class="clickable" onclick="this.classList.toggle('row-active')"><td>Wearables sample</td><td>Club · opt-in</td><td>340</td><td>4 may</td><td><span class="tag warn">Anomalía</span></td></tr>
         </tbody>
       </table>
     </div></div>`,
@@ -2268,7 +2691,7 @@ function unitCard(k){
   const data = {
     clinica:{ kpi:'$ 62.4 K', kpiLabel:'Ingresos', sub:'312 pacientes · NPS 72' },
     residences:{ kpi:'$ 1,28 M', kpiLabel:'Pipeline', sub:'2 instalaciones activas' },
-    ecommerce:{ kpi:'$ 38.4 K', kpiLabel:'MRR', sub:'2.184 miembros · churn 3,2%' },
+    ecommerce:{ kpi:'$ 38.4 K', kpiLabel:'Ingresos', sub:'2.184 miembros · 4 tiers · 3 productos' },
     rd:{ kpi:'$ 420 K', kpiLabel:'Grants activos', sub:'3 en drafting · 2 submitted' }
   }[k];
   return `<div class="card" onclick="setWs('${k}')" style="cursor:pointer">
@@ -2347,7 +2770,7 @@ function initWidgets(){
     data:{ labels:['Pacientes','Productos','Servicios','Otros'], datasets:[{data:[42,28,22,8], backgroundColor:[accent,'#7a9b76','#3b82f6','#c9a96e'], borderWidth:0}] },
     options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{position:'bottom'}} }
   });
-  if (document.getElementById('ch-an3')) charts.an3 = barChart('ch-an3', ['IG','Skool','Web','Ref.'], [42,38,28,12], accent);
+  if (document.getElementById('ch-an3')) charts.an3 = barChart('ch-an3', ['IG','Club','Web','Ref.'], [42,38,28,12], accent);
   if (document.getElementById('ch-an4')) charts.an4 = barChart('ch-an4', ['Lead','Visita','Activo','VIP'], [184,98,76,14], accent);
   if (document.getElementById('ch-an5')) charts.an5 = lineChart('ch-an5', ['M1','M2','M3','M4','M5','M6'], [100,82,68,54,46,42], accent);
 
@@ -2461,6 +2884,195 @@ function initWidgets(){
   });
   if (document.getElementById('ch-coh1')) charts.coh1 = lineChart('ch-coh1', ['M0','M1','M2','M3','M4','M5','M6'], [100,82,71,64,58,54,52], '#3b82f6');
   if (document.getElementById('ch-coh2')) charts.coh2 = barChart('ch-coh2', ['Ene','Feb','Mar','Abr','May'], [124,142,168,184,198], '#3b82f6');
+  // Social networks · follower growth (6 m)
+  if (document.getElementById('ch-tt')) charts.tt = lineChart('ch-tt', ['Dic','Ene','Feb','Mar','Abr','May'], [28,38,48,62,74,84], '#000000');
+  if (document.getElementById('ch-ig')) charts.ig = lineChart('ch-ig', ['Dic','Ene','Feb','Mar','Abr','May'], [124,132,138,142,148,152], '#e1306c');
+  if (document.getElementById('ch-li')) charts.li = lineChart('ch-li', ['Dic','Ene','Feb','Mar','Abr','May'], [14.0,14.8,15.6,16.4,17.4,18.4], '#0a66c2');
+  if (document.getElementById('ch-yt')) charts.yt = lineChart('ch-yt', ['Dic','Ene','Feb','Mar','Abr','May'], [38,44,50,55,60,64.8], '#ff0000');
+  // Productos
+  if (document.getElementById('ch-prod-art')) charts.prodArt = new Chart(document.getElementById('ch-prod-art'), {
+    type:'bar',
+    data:{ labels:['Dic','Ene','Feb','Mar','Abr','May'], datasets:[
+      {label:'Hardware (Kit, gadgets)', data:[3.8,4.2,4.8,5.6,6.0,6.7], backgroundColor:'#3b82f6', stack:'a', borderRadius:4},
+      {label:'Digital (cursos)', data:[2.4,2.8,3.4,4.0,4.6,5.2], backgroundColor:'#7c5b8a', stack:'a', borderRadius:4},
+      {label:'Libros', data:[1.0,1.2,1.3,1.4,1.5,1.5], backgroundColor:'#b87333', stack:'a', borderRadius:4},
+      {label:'Suplementos', data:[0.8,1.0,1.1,1.2,1.2,1.2], backgroundColor:'#7a9b76', stack:'a', borderRadius:4},
+      {label:'Merch', data:[0.2,0.2,0.2,0.2,0.2,0.2], backgroundColor:'#c9a96e', stack:'a', borderRadius:4}
+    ]},
+    options:{ responsive:true, maintainAspectRatio:false,
+      plugins:{ legend:{position:'bottom',labels:{padding:10,boxWidth:12,font:{size:11}}}, tooltip:{callbacks:{label:c=>`${c.dataset.label}: $ ${c.parsed.y.toFixed(1)} K`}} },
+      scales:{ x:{stacked:true,grid:{display:false}}, y:{stacked:true,beginAtZero:true,ticks:{callback:v=>'$ '+v+' K'}} } }
+  });
+  if (document.getElementById('ch-prod-spo')) charts.prodSpo = barChart('ch-prod-spo', ['Dic','Ene','Feb','Mar','Abr','May'], [124,132,142,158,168,184], '#3b82f6');
+  if (document.getElementById('ch-prod-evt')) charts.prodEvt = barChart('ch-prod-evt', ['Mar 25','Jun 25','Sep 25','Dic 25','Mar 26','Jun 26*'], [24,38,62,18,32,44], '#3b82f6');
+  // Club Privado · 4 charts + cohort heatmap
+  const TIER_C = {miembro:'#3b82f6', fundador:'#b87333', embajador:'#7c5b8a', mentor:'#7a9b76'};
+  if (document.getElementById('ch-club-pie')) {
+    const meta = {
+      'Miembros':'engagement 61 % · antigüedad 7 m · LTV $186',
+      'Fundadores':'engagement 89 % · antigüedad 22 m · LTV $2.840',
+      'Embajadores':'engagement 87 % · antigüedad 13 m · LTV $1.420',
+      'Mentores':'engagement 94 % · antigüedad 18 m · LTV $940'
+    };
+    charts.clubPie = new Chart(document.getElementById('ch-club-pie'), {
+      type:'doughnut',
+      data:{ labels:['Miembros','Fundadores','Embajadores','Mentores'],
+        datasets:[{data:[2100,24,48,12], backgroundColor:[TIER_C.miembro,TIER_C.fundador,TIER_C.embajador,TIER_C.mentor], borderWidth:0, hoverOffset:8}] },
+      options:{ responsive:true, maintainAspectRatio:false, cutout:'58%',
+        plugins:{ legend:{position:'bottom',labels:{padding:14,boxWidth:12,font:{size:12}}},
+          tooltip:{ callbacks:{ label:(ctx)=>{
+            const total=2184, v=ctx.parsed, pct=(v/total*100).toFixed(1);
+            return [`${ctx.label}: ${v.toLocaleString('es-ES')} (${pct} %)`, meta[ctx.label]];
+          } } }
+        } }
+    });
+  }
+  if (document.getElementById('ch-club-growth')) {
+    const months12 = ['Jun 25','Jul','Ago','Sep','Oct','Nov','Dic','Ene 26','Feb','Mar','Abr','May'];
+    charts.clubGrowth = new Chart(document.getElementById('ch-club-growth'), {
+      type:'line',
+      data:{ labels:months12, datasets:[
+        {label:'Miembros', data:[1380,1480,1560,1640,1720,1810,1890,1960,2010,2040,2068,2100], borderColor:TIER_C.miembro, backgroundColor:TIER_C.miembro+'15', tension:.35, borderWidth:2, pointRadius:2, yAxisID:'y'},
+        {label:'Embajadores', data:[28,32,35,38,40,42,43,44,44,45,47,48], borderColor:TIER_C.embajador, backgroundColor:TIER_C.embajador+'15', tension:.35, borderWidth:2, pointRadius:2, yAxisID:'y1'},
+        {label:'Fundadores', data:[24,24,24,24,24,24,24,24,24,24,24,24], borderColor:TIER_C.fundador, backgroundColor:TIER_C.fundador+'15', tension:.35, borderWidth:2, pointRadius:2, yAxisID:'y1'},
+        {label:'Mentores', data:[6,7,8,8,9,10,10,11,11,11,11,12], borderColor:TIER_C.mentor, backgroundColor:TIER_C.mentor+'15', tension:.35, borderWidth:2, pointRadius:2, yAxisID:'y1'}
+      ] },
+      options:{ responsive:true, maintainAspectRatio:false,
+        plugins:{ legend:{position:'bottom',labels:{padding:12,boxWidth:12,font:{size:11.5}}} },
+        scales:{ y:{position:'left',title:{display:true,text:'Miembros',font:{size:10}}}, y1:{position:'right',title:{display:true,text:'Tiers superiores',font:{size:10}}, grid:{drawOnChartArea:false}} } }
+    });
+  }
+  if (document.getElementById('ch-club-ltv')) charts.clubLtv = new Chart(document.getElementById('ch-club-ltv'), {
+    type:'bar',
+    data:{ labels:['Miembro','Fundador','Embajador','Mentor'],
+      datasets:[{label:'LTV $', data:[186,2840,1420,940], backgroundColor:[TIER_C.miembro,TIER_C.fundador,TIER_C.embajador,TIER_C.mentor], borderRadius:6}] },
+    options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>'LTV $ '+c.parsed.y.toLocaleString('es-ES')}}}, scales:{y:{beginAtZero:true,ticks:{callback:v=>'$ '+v}}} }
+  });
+  if (document.getElementById('ch-club-time')) charts.clubTime = new Chart(document.getElementById('ch-club-time'), {
+    type:'bar',
+    data:{ labels:['Miembro','Fundador','Embajador','Mentor'],
+      datasets:[{label:'Antigüedad media (meses)', data:[7,22,13,18], backgroundColor:[TIER_C.miembro,TIER_C.fundador,TIER_C.embajador,TIER_C.mentor], borderRadius:6}] },
+    options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>c.parsed.y+' meses'}}}, scales:{y:{beginAtZero:true,ticks:{callback:v=>v+' m'}}} }
+  });
+  if (document.getElementById('ch-club-age')) charts.clubAge = new Chart(document.getElementById('ch-club-age'), {
+    type:'bar',
+    data:{ labels:['25-34','35-44','45-54','55-64','65+'],
+      datasets:[{label:'% miembros', data:[28,42,22,6,2], backgroundColor:'#3b82f6', borderRadius:5}] },
+    options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>c.parsed.y+' %'}}}, scales:{y:{beginAtZero:true,ticks:{callback:v=>v+'%'}}} }
+  });
+  if (document.getElementById('ch-club-gender')) charts.clubGen = new Chart(document.getElementById('ch-club-gender'), {
+    type:'doughnut',
+    data:{ labels:['Hombre','Mujer','Otro / NS'],
+      datasets:[{data:[58,38,4], backgroundColor:['#3b82f6','#e1306c','#9aa7b7'], borderWidth:0}] },
+    options:{ responsive:true, maintainAspectRatio:false, cutout:'55%', plugins:{legend:{position:'bottom',labels:{padding:8,boxWidth:10,font:{size:10.5}}},tooltip:{callbacks:{label:c=>c.label+': '+c.parsed+' %'}}} }
+  });
+  if (document.getElementById('clubCohortHost')) renderClubCohorts();
+  // Club Privado · tier sub-view dynamic charts (only render when on tier sub-page)
+  if (document.getElementById('ch-club-tier-growth')) {
+    const t = state.clubTab;
+    const TIER_INIT = {
+      miembro:{c:'#3b82f6',data:[1380,1480,1560,1640,1720,1810,1890,1960,2010,2040,2068,2100]},
+      fundador:{c:'#b87333',data:[24,24,24,24,24,24,24,24,24,24,24,24]},
+      embajador:{c:'#7c5b8a',data:[28,32,35,38,40,42,43,44,44,45,47,48]},
+      mentor:{c:'#7a9b76',data:[6,7,8,8,9,10,10,11,11,11,11,12]}
+    }[t];
+    if (TIER_INIT) charts.clubTierGrowth = lineChart('ch-club-tier-growth', ['Jun 25','Jul','Ago','Sep','Oct','Nov','Dic','Ene 26','Feb','Mar','Abr','May'], TIER_INIT.data, TIER_INIT.c);
+  }
+  // E-Commerce · Finanzas
+  if (document.getElementById('ch-ec-fin-stack')) charts.ecFinStack = new Chart(document.getElementById('ch-ec-fin-stack'), {
+    type:'bar',
+    data:{ labels:['Dic','Ene','Feb','Mar','Abr','May'], datasets:[
+      {label:'Patrocinios', data:[12.0,13.5,14.0,14.8,15.3,15.3], backgroundColor:'#b87333', stack:'a', borderRadius:4},
+      {label:'Artículos', data:[8.2,9.4,10.8,12.4,13.5,14.8], backgroundColor:'#3b82f6', stack:'a', borderRadius:4},
+      {label:'Eventos', data:[2.5,4.2,6.8,2.1,5.6,8.3], backgroundColor:'#7c5b8a', stack:'a', borderRadius:4}
+    ]},
+    options:{ responsive:true, maintainAspectRatio:false,
+      plugins:{ legend:{position:'bottom',labels:{padding:10,boxWidth:12,font:{size:11}}}, tooltip:{callbacks:{label:c=>`${c.dataset.label}: $ ${c.parsed.y.toFixed(1)} K`}} },
+      scales:{ x:{stacked:true,grid:{display:false}}, y:{stacked:true,beginAtZero:true,ticks:{callback:v=>'$ '+v+' K'}} } }
+  });
+  if (document.getElementById('ch-ec-fin-mix')) charts.ecFinMix = new Chart(document.getElementById('ch-ec-fin-mix'), {
+    type:'doughnut',
+    data:{ labels:['Patrocinios','Artículos','Eventos'],
+      datasets:[{data:[15.3,14.8,8.3], backgroundColor:['#b87333','#3b82f6','#7c5b8a'], borderWidth:0, hoverOffset:8}] },
+    options:{ responsive:true, maintainAspectRatio:false, cutout:'58%',
+      plugins:{ legend:{position:'bottom',labels:{padding:14,boxWidth:12,font:{size:12}}},
+        tooltip:{ callbacks:{ label:(ctx)=>{
+          const total=38.4, v=ctx.parsed, pct=(v/total*100).toFixed(1);
+          return `${ctx.label}: $ ${v.toFixed(1)} K (${pct} %)`;
+        } } }
+      } }
+  });
+  if (document.getElementById('ch-ec-fin-forecast')) charts.ecFinForecast = new Chart(document.getElementById('ch-ec-fin-forecast'), {
+    type:'line',
+    data:{ labels:['Jun','Jul','Ago','Sep','Oct','Nov'], datasets:[
+      {label:'Comprometido', data:[88,46,33.5,15.3,15.3,15.3], borderColor:'#0a6b3f', backgroundColor:'rgba(10,107,63,.10)', tension:.3, fill:true, borderWidth:2, pointRadius:3},
+      {label:'Estimado total', data:[88,52,42,98,28,32], borderColor:'#b87333', borderDash:[5,4], backgroundColor:'rgba(184,115,51,.06)', tension:.3, fill:false, borderWidth:2, pointRadius:3}
+    ]},
+    options:{ responsive:true, maintainAspectRatio:false,
+      plugins:{ legend:{position:'bottom',labels:{padding:12,boxWidth:12,font:{size:11.5}}}, tooltip:{callbacks:{label:c=>`${c.dataset.label}: $ ${c.parsed.y} K`}} },
+      scales:{ y:{beginAtZero:true, ticks:{callback:v=>'$ '+v+' K'}} } }
+  });
+  if (document.getElementById('ch-ec-fin-margin')) charts.ecFinMargin = new Chart(document.getElementById('ch-ec-fin-margin'), {
+    type:'bar',
+    data:{ labels:['Patrocinios','Digital (cursos)','Libros','Suplementos','Hardware','Merch','Eventos'],
+      datasets:[{label:'Margen %', data:[92,92,74,62,52,58,45], backgroundColor:['#b87333','#7c5b8a','#7c5b8a','#7a9b76','#3b82f6','#c9a96e','#7c5b8a'], borderRadius:5}] },
+    options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>c.parsed.y+' %'}}}, scales:{y:{beginAtZero:true,max:100,ticks:{callback:v=>v+'%'}}} }
+  });
+  if (document.getElementById('ch-ec-fin-cac')) charts.ecFinCac = new Chart(document.getElementById('ch-ec-fin-cac'), {
+    type:'bar',
+    data:{ labels:['Club · referido','SEO web','LinkedIn','YouTube','Instagram','TikTok','IG Ads'],
+      datasets:[{label:'CAC $', data:[8,28,42,68,84,96,184], backgroundColor:['#7a9b76','#7a9b76','#0a66c2','#ff0000','#e1306c','#000000','#e1306c'], borderRadius:5}] },
+    options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>'$ '+c.parsed.y+' por miembro'}}}, scales:{y:{beginAtZero:true,ticks:{callback:v=>'$ '+v}}} }
+  });
+  if (document.getElementById('ch-club-tier-age')) {
+    const t = state.clubTab;
+    const AGE = {miembro:[30,42,20,6,2],fundador:[8,42,38,8,4],embajador:[20,46,26,6,2],mentor:[8,38,42,10,2]}[t];
+    const COL = {miembro:'#3b82f6',fundador:'#b87333',embajador:'#7c5b8a',mentor:'#7a9b76'}[t];
+    if (AGE) charts.clubTierAge = new Chart(document.getElementById('ch-club-tier-age'), {
+      type:'bar',
+      data:{ labels:['25-34','35-44','45-54','55-64','65+'], datasets:[{label:'% del tier', data:AGE, backgroundColor:COL, borderRadius:5}] },
+      options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>c.parsed.y+' %'}}}, scales:{y:{beginAtZero:true,ticks:{callback:v=>v+'%'}}} }
+    });
+  }
+  // Social · consolidated chart (Overview tab)
+  if (document.getElementById('ch-social-all')) charts.socAll = new Chart(document.getElementById('ch-social-all'), {
+    type:'line',
+    data:{ labels:['Dic','Ene','Feb','Mar','Abr','May'], datasets:[
+      {label:'Instagram', data:[124,132,138,142,148,152], borderColor:'#e1306c', backgroundColor:'rgba(225,48,108,.06)', tension:.35, borderWidth:2, pointRadius:3},
+      {label:'TikTok', data:[28,38,48,62,74,84.2], borderColor:'#000000', backgroundColor:'rgba(0,0,0,.06)', tension:.35, borderWidth:2, pointRadius:3},
+      {label:'YouTube', data:[38,44,50,55,60,64.8], borderColor:'#ff0000', backgroundColor:'rgba(255,0,0,.06)', tension:.35, borderWidth:2, pointRadius:3},
+      {label:'LinkedIn', data:[14.0,14.8,15.6,16.4,17.4,18.4], borderColor:'#0a66c2', backgroundColor:'rgba(10,102,194,.06)', tension:.35, borderWidth:2, pointRadius:3}
+    ] },
+    options:{ responsive:true, maintainAspectRatio:false,
+      plugins:{ legend:{position:'bottom',labels:{padding:14,boxWidth:12,font:{size:12}}}, tooltip:{callbacks:{label:c=>`${c.dataset.label}: ${c.parsed.y} K`}} },
+      scales:{ y:{beginAtZero:false, ticks:{callback:v=>v+' K'}} } }
+  });
+}
+
+function renderClubCohorts(){
+  const host = document.getElementById('clubCohortHost'); if (!host) return;
+  const cohorts = ['Jun 25','Jul 25','Ago 25','Sep 25','Oct 25','Nov 25','Dic 25','Ene 26','Feb 26','Mar 26','Abr 26','May 26'];
+  const data = {};
+  cohorts.forEach((c, i) => {
+    data[c] = [];
+    const monthsActive = 12 - i;
+    let v = 100;
+    for (let m = 0; m < monthsActive; m++){
+      if (m === 0) v = 100;
+      else v = Math.max(58, Math.round(v - 3 - Math.random()*4));
+      data[c].push(v);
+    }
+  });
+  const months = ['M0','M1','M2','M3','M4','M5','M6','M7','M8','M9','M10','M11'];
+  const colorScale = (v) => {
+    const t = v / 100;
+    const r = Math.round(184 - t*60), g = Math.round(115 + t*40), b = Math.round(51 + t*70);
+    return `rgb(${r},${g},${b})`;
+  };
+  host.innerHTML = `<table class="coh-table">
+    <thead><tr><th class="label">Cohorte</th>${months.map(m => `<th>${m}</th>`).join('')}</tr></thead>
+    <tbody>${cohorts.map(c => `<tr><td class="label">${c}</td>${data[c].map(v => `<td><span class="coh-cell" style="background:${colorScale(v)}">${v} %</span></td>`).join('')}${months.slice(data[c].length).map(()=>'<td></td>').join('')}</tr>`).join('')}</tbody>
+  </table>`;
 }
 
 function lineChart(id, labels, data, color){
@@ -2517,9 +3129,9 @@ function kpiDetailHTML(label, value){
     if (l.includes('paciente')) return [['Activos','312','100 %'],['Recurrentes','82','26 %'],['VIP','14','4 %'],['Primera vez','9','3 %']];
     if (l.includes('pipeline')) return [['Lead','4','$ 635 K'],['Cotización','3','$ 580 K'],['Contrato','2','$ 295 K'],['Instalación','2','$ 370 K']];
     if (l.includes('grant')) return [['CDTI 2025','$ 220 K','Activo'],['Junta CyL','$ 140 K','Activo'],['ICEX 2025','$ 60 K','Activo']];
-    if (l.includes('mrr')) return [['Free → Trial','186','+12 %'],['Pro','462','+8 %'],['VIP','116','+18 %'],['Churn','24','3,2 %']];
+    if (l.includes('mrr') || l.includes('ingres')) return [['Patrocinadores','$ 15,3 K','+12 %'],['Artículos','$ 14,8 K','+22 %'],['Eventos','$ 8,3 K','+18 %'],['Total mes','$ 38,4 K','+8,1 %']];
     if (l.includes('cita')) return [['Confirmadas','4','67 %'],['Pendientes','2','33 %'],['Canceladas','0','—'],['No-show','0','—']];
-    if (l.includes('cac')) return [['IG ads','$ 184','-8 %'],['Skool referido','$ 42','+2 %'],['SEO web','$ 96','-12 %'],['Eventos','$ 320','+4 %']];
+    if (l.includes('cac')) return [['IG ads','$ 184','-8 %'],['Club · referido','$ 42','+2 %'],['SEO web','$ 96','-12 %'],['Eventos','$ 320','+4 %']];
     if (l.includes('ltv')) return [['Clínica','$ 4.280','+12 %'],['Residences','$ 18.500','+9 %'],['E-Commerce','$ 612','+5 %']];
     if (l.includes('margen')) return [['Clínica','55 %','+2 pp'],['Residences','39 %','-1 pp'],['E-Commerce','76 %','+3 pp'],['R&D','48 %','+8 pp']];
     if (l.includes('cash')) return [['Operativa','$ 280 K','68 %'],['Reserva','$ 92 K','22 %'],['Inversión','$ 40 K','10 %']];
@@ -2527,11 +3139,11 @@ function kpiDetailHTML(label, value){
     if (l.includes('protocolo')) return [['Peptidos','24','50 %'],['Hiperbárica','11','23 %'],['Luz roja','9','19 %'],['IV terapia','4','8 %']];
     if (l.includes('ticket')) return [['Urgente','1','20 %'],['En curso','2','40 %'],['Asignado','2','40 %']];
     if (l.includes('sla')) return [['< 4 h','3','60 %'],['4–24 h','1','20 %'],['+24 h','1','20 %']];
-    if (l.includes('miembro')) return [['Free','1.420','65 %'],['Pro','462','21 %'],['VIP','116','5 %'],['Trial','186','9 %']];
-    if (l.includes('churn')) return [['Riesgo alto','12','0,5 %'],['Riesgo medio','24','1,1 %'],['Cancelados 30 d.','38','1,7 %']];
+    if (l.includes('miembro')) return [['Miembro','2.100','96,2 %'],['Embajador','48','2,2 %'],['Fundador','24','1,1 %'],['Mentor','12','0,5 %']];
+    if (l.includes('churn') || l.includes('baja') || l.includes('riesgo')) return [['Riesgo alto · miembros','12','0,5 %'],['Riesgo medio · miembros','24','1,1 %'],['Bajas 30 d.','38','1,7 %']];
     if (l.includes('drafting')) return [['ICEX','80 %','6 d.'],['FECYT','45 %','14 d.'],['Ramón y Cajal','30 %','28 d.']];
     if (l.includes('éxito')||l.includes('exito')) return [['Won','3','Q1'],['Lost','1','Q1'],['Submitted','2','en revisión']];
-    if (l.includes('dataset')) return [['Clínica','3 datasets','7.345 reg.'],['Skool','5 datasets','12.480 reg.'],['Residences','1 dataset','820 reg.']];
+    if (l.includes('dataset')) return [['Clínica','3 datasets','7.345 reg.'],['Club','5 datasets','12.480 reg.'],['Residences','1 dataset','820 reg.']];
     if (l.includes('forecast') || l.includes('ponderado')) return [['30 días','$ 285 K','42 %'],['60 días','$ 420 K','28 %'],['90 días','$ 575 K','22 %'],['+90 días','$ 180 K','8 %']];
     if (l.includes('gastos')) return [['Personal','$ 41,2 K','45 %'],['Inventario','$ 18,4 K','20 %'],['Marketing','$ 12,8 K','14 %'],['Operaciones','$ 19,9 K','21 %']];
     if (l.includes('pendiente') || l.includes('cobro')) return [['< 30 días','$ 8,2 K','56 %'],['30-60 días','$ 4,1 K','28 %'],['60-90 días','$ 1,8 K','12 %'],['+90 días · alerta','$ 0,5 K','4 %']];
@@ -2562,6 +3174,8 @@ document.addEventListener('click', e => {
 });
 
 function setCalFilter(k){ state.calFilter = k || null; renderView(); }
+function setClubTierFilter(t){ state.clubTierFilter = t || 'todos'; renderView(); }
+function setChurnMode(m){ state.churnMode = m || 'duro'; renderView(); }
 
 function toggleTheme(){
   const html = document.documentElement;
@@ -2595,10 +3209,10 @@ const SEARCH_INDEX = [
   // Facturas
   {type:'invoice', name:'F-2026-0184', meta:'Villa Mallorca · $ 18.400 · Cobrada', ws:'residences', icon:'i-doc', data:{cliente:'Villa Mallorca',concepto:'Instalación luz roja',importe:'$ 18.400',estado:'Cobrada'}},
   {type:'invoice', name:'F-2026-0181', meta:'Casa Andorra · $ 4.200 · Vencida 32 d.', ws:'residences', icon:'i-doc', data:{cliente:'Casa Andorra',concepto:'30 % cotización',importe:'$ 4.200',estado:'Vencida 32 d.'}},
-  {type:'invoice', name:'F-2026-0179', meta:'Skool subs · $ 38.400 · Cobrada', ws:'ecommerce', icon:'i-doc', data:{cliente:'Skool subscriptions',concepto:'MRR mayo',importe:'$ 38.400',estado:'Cobrada'}},
+  {type:'invoice', name:'F-2026-0179', meta:'Productos E-Commerce · $ 38.400 · Cobrada', ws:'ecommerce', icon:'i-doc', data:{cliente:'Productos E-Commerce',concepto:'Mix mayo · patrocinios + artículos + eventos',importe:'$ 38.400',estado:'Cobrada'}},
   // Miembros
-  {type:'member', name:'Marta Ruiz', meta:'VIP · 14 m · score 94', ws:'ecommerce', icon:'i-users', data:{plan:'VIP',antiguedad:'14 m',score:94,recomendacion:'↗ Residences'}},
-  {type:'member', name:'Igor Petrov', meta:'VIP · 8 m · score 91', ws:'ecommerce', icon:'i-users', data:{plan:'VIP',antiguedad:'8 m',score:91,recomendacion:'↗ Clínica'}},
+  {type:'member', name:'Marta Ruiz', meta:'Embajador · 14 m · score 94', ws:'ecommerce', icon:'i-users', data:{tier:'Embajador',antiguedad:'14 m',score:94,recomendacion:'↗ Mentor del club'}},
+  {type:'member', name:'Igor Petrov', meta:'Fundador · 22 m · score 91', ws:'ecommerce', icon:'i-users', data:{tier:'Fundador',antiguedad:'22 m',score:91,recomendacion:'↗ Mentor del club'}},
   // Empleados
   {type:'employee', name:'Jaime Casado', meta:'CEO · Holding', ws:'holding', icon:'i-users', data:{rol:'CEO · Fisio principal',email:'jaime@retohealth.com',antiguedad:'4 a 2 m'}},
   {type:'employee', name:'Jessica Pardo', meta:'Lead Fisio · Clínica', ws:'clinica', icon:'i-users', data:{rol:'Lead Fisio',email:'jessica@retohealth.com',antiguedad:'2 a 8 m'}},
@@ -2871,7 +3485,7 @@ const NOTIFICATIONS = [
   {id:2, t:'Ticket urgente · Andorra', m:'Conectividad sistema · SLA 2 h', ic:'i-ticket', cls:'err', time:'hace 12 min', unread:true, link:{ws:'residences',mod:'tickets'}},
   {id:3, t:'Grant ICEX cierra en 6 días', m:'Borrador AI 80 % completado', ic:'i-flask', cls:'warn', time:'hace 1 h', unread:true, link:{ws:'rd',mod:'propuestas'}},
   {id:4, t:'Stock BPC-157 crítico', m:'3 unidades · reorden urgente', ic:'i-pkg', cls:'warn', time:'hace 2 h', unread:false, link:{ws:'clinica',mod:'inventario'}},
-  {id:5, t:'+18 miembros nuevos al club', m:'Cohorte mayo · sync Skool OK', ic:'i-cart', cls:'ok', time:'hace 3 h', unread:false, link:{ws:'ecommerce',mod:'miembros'}},
+  {id:5, t:'+18 miembros nuevos al club', m:'Cohorte mayo · onboarding completo', ic:'i-cart', cls:'ok', time:'hace 3 h', unread:false, link:{ws:'ecommerce',mod:'club'}},
   {id:6, t:'Anomalía Ads Meta', m:'Gasto +38 % vs media · revisar', ic:'i-dollar', cls:'warn', time:'hace 5 h', unread:false, link:{ws:'ecommerce',mod:'finanzas'}},
   {id:7, t:'CDTI tramo Q2 ejecutado', m:'$ 22 K recibidos · sync QB OK', ic:'i-flask', cls:'ok', time:'ayer', unread:false, link:{ws:'rd',mod:'grants'}},
 ];
@@ -3012,7 +3626,7 @@ const NEW_FORMS = {
   ],
   lead:[
     {k:'nombre',l:'Nombre',req:true},
-    {k:'origen',l:'Origen',type:'select',options:['IG','Skool','Web','Referido','Eventos']},
+    {k:'origen',l:'Origen',type:'select',options:['IG','TikTok','LinkedIn','YouTube','Club · referido','Web','Eventos']},
     {k:'email',l:'Email',type:'email'},
     {k:'telefono',l:'Teléfono'},
     {k:'interes',l:'Interés inicial'}
@@ -3040,7 +3654,7 @@ const NEW_FORMS = {
   pieza:[
     {k:'titulo',l:'Título',req:true},
     {k:'fecha',l:'Fecha publicación',type:'date',req:true},
-    {k:'canales',l:'Canales',type:'select',options:['IG','Skool','Email','Web','Multi-canal']},
+    {k:'canales',l:'Canales',type:'select',options:['IG','TikTok','LinkedIn','YouTube','Club','Email','Web','Multi-canal']},
     {k:'owner',l:'Owner',type:'select',options:['Tommy Real','Nora Vidal','Claude AI']}
   ],
   producto:[
@@ -3058,7 +3672,7 @@ const NEW_FORMS = {
   estudio:[
     {k:'titulo',l:'Título del estudio',req:true},
     {k:'descripcion',l:'Descripción',type:'textarea'},
-    {k:'origen',l:'Origen de datos',type:'select',options:['Clínica','Skool','Residences','Mixto']},
+    {k:'origen',l:'Origen de datos',type:'select',options:['Clínica','Club','Residences','Mixto']},
     {k:'duracion',l:'Duración estimada'}
   ],
   propuesta:[
@@ -3201,17 +3815,17 @@ function renderRiskBanner(){
         </div>
       </div>
     </div>`;
-  } else if (v === 'ecommerce.dashboard' || v === 'ecommerce.miembros'){
+  } else if (v === 'ecommerce.dashboard' || v === 'ecommerce.club'){
     banner = `<div class="risk-banner">
       <div class="ic-w"><svg class="ic"><use href="#i-cart"/></svg></div>
       <div class="body">
-        <h4>4 miembros con riesgo de churn alto</h4>
+        <h4>4 miembros con riesgo de baja</h4>
         <div class="sub">Engagement &lt; 40 %, sin posts en 14+ días. Contacta antes de fin de mes.</div>
         <div class="risk-list">
-          <div class="risk-pill" onclick="openRisk('Ruth Sanz', 'member')"><strong>Ruth Sanz</strong><span class="score">88 %</span><span class="muted">Pro · 9 m</span><span class="arr">→</span></div>
-          <div class="risk-pill" onclick="openRisk('Pablo M.', 'member')"><strong>Pablo M.</strong><span class="score">79 %</span><span class="muted">Pro · 4 m</span><span class="arr">→</span></div>
-          <div class="risk-pill" onclick="openRisk('Carmen B.', 'member')"><strong>Carmen B.</strong><span class="score">68 %</span><span class="muted">Free · 6 m</span><span class="arr">→</span></div>
-          <div class="risk-pill" onclick="openRisk('Diego L.', 'member')"><strong>Diego L.</strong><span class="score">62 %</span><span class="muted">Free · 2 m</span><span class="arr">→</span></div>
+          <div class="risk-pill" onclick="openRisk('Ruth Sanz', 'member')"><strong>Ruth Sanz</strong><span class="score">88 %</span><span class="muted">Miembro · 9 m</span><span class="arr">→</span></div>
+          <div class="risk-pill" onclick="openRisk('Pablo M.', 'member')"><strong>Pablo M.</strong><span class="score">79 %</span><span class="muted">Miembro · 4 m</span><span class="arr">→</span></div>
+          <div class="risk-pill" onclick="openRisk('Carmen B.', 'member')"><strong>Carmen B.</strong><span class="score">68 %</span><span class="muted">Miembro · 6 m</span><span class="arr">→</span></div>
+          <div class="risk-pill" onclick="openRisk('Diego L.', 'member')"><strong>Diego L.</strong><span class="score">62 %</span><span class="muted">Miembro · 2 m</span><span class="arr">→</span></div>
         </div>
       </div>
     </div>`;
@@ -3312,11 +3926,12 @@ const PIPELINES = {
     {name:'Entregado',prob:100,owner:'Miguel'}
   ],
   ecommerce:[
-    {name:'Free',prob:13,owner:'Tommy'},
-    {name:'Trial',prob:42,owner:'Tommy'},
-    {name:'Paid Pro',prob:94,owner:'Tommy'},
-    {name:'VIP',prob:99,owner:'Tommy'},
-    {name:'Riesgo / Churn',prob:10,owner:'Tommy'}
+    {name:'Aplicación',prob:18,owner:'Tommy'},
+    {name:'Entrevista',prob:48,owner:'Tommy'},
+    {name:'Invitación',prob:75,owner:'Tommy'},
+    {name:'Onboarding',prob:94,owner:'Tommy'},
+    {name:'Activo · miembro',prob:99,owner:'Tommy'},
+    {name:'Riesgo de baja',prob:10,owner:'Tommy'}
   ],
   rd:[
     {name:'Identificado',prob:10,owner:'Marcos'},
@@ -3612,7 +4227,7 @@ closeNew = function(){ _origCloseNew(); document.getElementById('newModal').clas
 /* ============= 12 · NL SEARCH (upgrade ⌘K) ============= */
 const NL_PATTERNS = [
   {re:/no han venido|sin venir|no asistido|no-show/i, type:'patient', filter:p => /Luis|Jorge|Helena/.test(p.name), label:'Pacientes con riesgo de no-show o sin visita reciente'},
-  {re:/(churn|riesgo|engagement bajo|cancelar)/i, type:'member', filter:m => /Ruth|Pablo|Carmen|Diego/.test(m.name), label:'Miembros en riesgo de churn'},
+  {re:/(churn|baja|riesgo|engagement bajo|cancelar)/i, type:'member', filter:m => /Ruth|Pablo|Carmen|Diego/.test(m.name), label:'Miembros en riesgo de baja'},
   {re:/(vip|alto valor|alto ltv|premium)/i, all:true, filter:it => /VIP|VIP/.test(it.meta) || (it.data?.plan==='VIP') || (it.data?.ltv && parseInt(String(it.data.ltv).replace(/[^0-9]/g,''))>3000), label:'Entidades VIP / alto valor'},
   {re:/(facturas? vencidas?|sin pagar|impagad|pendientes? cobro)/i, type:'invoice', filter:f => /Vencida|Pendiente/.test(f.meta), label:'Facturas vencidas o pendientes'},
   {re:/(grants? cierran?|próximo cierre|deadline cerca)/i, type:'grant', filter:g => /drafting|cierre|6 d/i.test(g.meta), label:'Grants próximos a cerrar'},
@@ -3670,7 +4285,7 @@ openCmdk = function(){
     'Buscar pacientes, proyectos, facturas...',
     'Prueba: "pacientes que no han venido"',
     'Prueba: "facturas vencidas"',
-    'Prueba: "miembros en riesgo de churn"',
+    'Prueba: "miembros en riesgo de baja"',
     'Prueba: "grants que cierran pronto"'
   ];
   if (inp) inp.placeholder = examples[Math.floor(Math.random()*examples.length)];
@@ -3740,7 +4355,7 @@ function getNBA(item){
   }
   if (t === 'member'){
     if (/Ruth|Pablo|Carmen|Diego/.test(item.name)) return {
-      text: `<strong>Save-call de retención</strong>. Score de churn ${item.data?.score || '88'} %. Engagement bajo en últimos 14 días. Sugiere DM personalizado de Tommy ofreciendo sesión 1:1 + descuento 30 % próximos 3 meses.`,
+      text: `<strong>Save-call de retención</strong>. Riesgo de baja ${item.data?.score || '88'} %. Engagement bajo en últimos 14 días. Sugiere DM personalizado de Tommy ofreciendo sesión 1:1 + sesión con mentor del club.`,
       actions:[{l:'Enviar DM personalizado',k:'primary'},{l:'Ofrecer 1:1'},{l:'Aplicar descuento'}]
     };
     if (item.data?.score && item.data.score >= 88) return {
@@ -3931,7 +4546,7 @@ const INTEGRATIONS = [
   {id:'quickbooks', n:'QuickBooks', d:'Contabilidad · sync bidireccional', logo:'Q', color:'#2ca01c', status:'ok', stat:'sync hace 4 min'},
   {id:'gohighlevel', n:'GoHighLevel', d:'CRM y workflows · sub-cuentas por unidad', logo:'G', color:'#3b82f6', status:'ok', stat:'4 sub-cuentas activas'},
   {id:'cal', n:'Cal.com', d:'Agenda unificada · sustituye Calendly + Square scheduling', logo:'C', color:'#0a1929', status:'ok', stat:'186 citas / 30 d'},
-  {id:'skool', n:'Skool', d:'Comunidad e-commerce · sync de miembros', logo:'S', color:'#ff5722', status:'ok', stat:'2.184 miembros · sync OK'},
+  {id:'skool', n:'Skool', d:'Plataforma técnica del club privado · sync de miembros (legacy · evaluar migración)', logo:'S', color:'#ff5722', status:'ok', stat:'2.184 miembros · sync OK'},
   {id:'slack', n:'Slack', d:'Comunicación interna · webhooks de notificación', logo:'#', color:'#4a154b', status:'ok', stat:'12 canales activos'},
   {id:'google', n:'Google Workspace', d:'Drive, Calendar, Mail, Meet · SSO global', logo:'G', color:'#ea4335', status:'ok', stat:'24 cuentas activas'},
   {id:'zoom', n:'Zoom · Telehealth', d:'Videollamadas para citas remotas', logo:'Z', color:'#2d8cf0', status:'ok', stat:'18 sesiones / mes'},
@@ -3944,7 +4559,7 @@ const INTEGRATIONS = [
 const WEBHOOKS = [
   {src:'Square',srcIc:'i-dollar',dst:'QuickBooks',dstIc:'i-doc',trig:'cobro nuevo',action:'crear factura',status:'ok',runs:'42 hoy'},
   {src:'Cal.com',srcIc:'i-cal',dst:'GHL · Slack',dstIc:'i-msg',trig:'cita agendada',action:'crear contact + notif',status:'ok',runs:'186 / 30 d'},
-  {src:'Skool',srcIc:'i-cart',dst:'GHL E-Commerce',dstIc:'i-users',trig:'miembro nuevo',action:'crear contact + tag',status:'ok',runs:'124 / 30 d'},
+  {src:'Club (Skool)',srcIc:'i-cart',dst:'GHL E-Commerce',dstIc:'i-users',trig:'miembro nuevo',action:'crear contact + tag · tier',status:'ok',runs:'124 / 30 d'},
   {src:'GHL',srcIc:'i-flow',dst:'WhatsApp',dstIc:'i-msg',trig:'recordatorio 24h',action:'enviar plantilla',status:'ok',runs:'186 / 30 d'},
   {src:'Web form',srcIc:'i-doc',dst:'Claude → GHL',dstIc:'i-bot',trig:'lead nuevo',action:'triaje + asignar',status:'ok',runs:'68 / 30 d'},
   {src:'Stripe',srcIc:'i-dollar',dst:'QuickBooks',dstIc:'i-doc',trig:'pago confirmado',action:'reconciliar factura',status:'ok',runs:'38 / 30 d'},
@@ -4268,7 +4883,7 @@ VIEWS['holding.reportes'] = () => pageHead('Reportes', 'Reportes scheduled · fo
   <div class="grid-2">
     <div class="card"><div class="card-h"><h3>Forecasting · what-if scenarios</h3><span class="meta">simulación en vivo</span></div>
       <div class="card-b">
-        <p class="muted" style="margin:0 0 10px;font-size:12.5px">Mueve los sliders para simular el impacto en el margen consolidado y MRR del próximo trimestre.</p>
+        <p class="muted" style="margin:0 0 10px;font-size:12.5px">Mueve los sliders para simular el impacto en el margen consolidado y los ingresos del próximo trimestre.</p>
         <div class="wif-grid">
           <div class="wif-card">
             <div class="wif-label"><span>Subida de precios Clínica</span><span class="v" id="wifP1">+0 %</span></div>
@@ -4312,11 +4927,11 @@ VIEWS['holding.reportes'] = () => pageHead('Reportes', 'Reportes scheduled · fo
           <select id="cohMetric" onchange="renderCohort()">
             <option value="retention">Retención (%)</option>
             <option value="ltv">LTV ($)</option>
-            <option value="mrr">MRR ($)</option>
+            <option value="mrr">Ingresos mes ($)</option>
           </select>
           <label>Canal</label>
           <select id="cohChannel" onchange="renderCohort()">
-            <option>Todos</option><option>IG</option><option>Skool</option><option>Web</option><option>Referido</option>
+            <option>Todos</option><option>IG</option><option>TikTok</option><option>LinkedIn</option><option>YouTube</option><option>Club · referido</option><option>Web</option>
           </select>
         </div>
         <div id="cohTable"></div>
@@ -4375,11 +4990,11 @@ const ROLE_WIDGETS = [
   ],
   // Tommy · E-Commerce
   [
-    {h:'Miembros',v:'2.184',sub:'+124 mes'},
-    {h:'MRR',v:'$ 38,4 K',sub:'+8,1 %'},
-    {h:'Churn 30 d',v:'3,2 %',sub:'+0,4 pp'},
-    {h:'Engagement',v:'68 %',sub:'+5 pp'},
-    {h:'Leads top score',v:'12',sub:'a contactar'},
+    {h:'Miembros del club',v:'2.184',sub:'+96 mes · 4 tiers'},
+    {h:'Ingresos mes',v:'$ 38,4 K',sub:'+8,1 %'},
+    {h:'Alcance redes',v:'2,74 M',sub:'+14 %'},
+    {h:'Eventos 90 d',v:'4',sub:'62 % son club'},
+    {h:'Candidatos AI',v:'5',sub:'a promover'},
     {h:'Contenido pendiente',v:'4',sub:'esta sem'}
   ],
   // Marcos · R&D
@@ -4568,7 +5183,7 @@ const AUDIT_LOG = [
   {who:'Fer López',ini:'FL',action:'access',what:'invoice.F-2026-0181 · vista descargada',badge:'access',when:'hace 14 min'},
   {who:'Claude AI',ini:'AI',action:'create',what:'voice_note.patient_carla · transcripción Whisper',badge:'create',when:'hace 18 min'},
   {who:'Marcos Diéguez',ini:'MD',action:'update',what:'grant.icex_2026 · campo "estado" cambiado: "drafting" → "submitted"',badge:'update',when:'hace 32 min'},
-  {who:'Tommy Real',ini:'TR',action:'create',what:'content_piece.reel_peptidos · publicado IG + Skool',badge:'create',when:'hace 1 h'},
+  {who:'Tommy Real',ini:'TR',action:'create',what:'content_piece.reel_longevidad · publicado IG + TikTok',badge:'create',when:'hace 1 h'},
   {who:'David Soler',ini:'DS',action:'update',what:'project.villa_mallorca · avance 65 % → 72 %',badge:'update',when:'hace 1 h'},
   {who:'Iván Lara',ini:'IL',action:'access',what:'ticket.mallorca_sensor · vista detalle',badge:'access',when:'hace 2 h'},
   {who:'Webhook · Square',ini:'WH',action:'create',what:'invoice.F-2026-0184 · auto-generada desde cobro Square',badge:'create',when:'hace 2 h'},
@@ -4603,7 +5218,7 @@ const PERM_MATRIX = [
   {res:'Proyectos Residences', cells:['full','read','no','no','no','no','full','read','no','no','no']},
   {res:'Tickets', cells:['full','no','no','no','no','no','full','full','no','no','no']},
   {res:'Vendors', cells:['full','full','no','no','no','no','full','no','no','no','no']},
-  {res:'Miembros Skool', cells:['full','read','no','no','no','no','no','no','full','read','no']},
+  {res:'Miembros del club', cells:['full','read','no','no','no','no','no','no','full','read','no']},
   {res:'Contenido', cells:['full','no','no','no','no','no','no','no','full','full','no']},
   {res:'Grants', cells:['full','read','no','no','no','no','no','no','no','no','full']},
   {res:'Datasets R&D', cells:['full','no','no','no','no','no','no','no','no','no','full']},
@@ -4725,9 +5340,9 @@ VIEWS['holding.compliance'] = () => pageHead('Compliance · Seguridad', 'Audit l
 
       <div class="anon-section on" id="anonEcom">
         <div class="h">
-          <h4>Skool engagement → R&D</h4>
+          <h4>Engagement del club → R&D</h4>
           <span class="muted" style="font-size:11.5px">opt-in · 1.840 miembros consintieron</span>
-          <div class="toggle-big" onclick="this.parentElement.parentElement.classList.toggle('on');toast('Anonimización Skool → R&D actualizada','success')"></div>
+          <div class="toggle-big" onclick="this.parentElement.parentElement.classList.toggle('on');toast('Anonimización Club → R&D actualizada','success')"></div>
         </div>
         <div class="desc">Solo se envían datos de miembros que han dado consentimiento explícito (opt-in registrado en GHL). Engagement metrics agregadas, contenido nunca individual.</div>
         <div class="anon-fields">
