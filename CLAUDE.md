@@ -26,9 +26,28 @@ Dashboard interno del holding **Reto Health** implementado en un único `index.h
 
 ---
 
+## Marketplace · arquitectura central + atribución
+
+El catálogo de productos (artículos · patrocinadores · eventos) **NO pertenece a ninguna sub-cuenta**: es un **marketplace único** que vive en la web pública y se navega desde `holding.marketplace` (sidebar del holding · 4 sub-tabs: overview · artículos · patrocinadores · eventos).
+
+**Atribución del revenue por origen de cliente.** Cada transacción del marketplace lleva tag de la sub-cuenta de origen del cliente (relación más fuerte): si el cliente vino del club o las redes → E-Commerce; si está en el programa 12 sem → Clínica; si es cliente residencial → Residences; si es para estudios académicos → R&D.
+
+Distribución mensual típica (mayo 2026): E-Commerce 65 % · Clínica 28 % · Residences 5 % · R&D 2 % (sobre marketplace total $ 38,4 K). Los patrocinios B2B se atribuyen 100 % a E-Commerce porque viven en sus canales.
+
+**Implementación técnica:**
+- `holding.marketplace` template con sub-tabs (overview reutiliza el catálogo de antes, ahora con sección de "Atribución por sub-cuenta" con donut + tabla)
+- Las sub-vistas (articulos · patrocinadores · eventos) reutilizan el template `ecommerce.productos` (legacy, ya no en sidebar) vía pass-through: `state.productosTab = state.marketTab` antes de llamar
+- `state.marketTab` es el source-of-truth para la navegación del marketplace
+- `state.productosTab` se mantiene como variable de paso para no duplicar el template grande de catálogo
+- Cada sub-cuenta muestra su slice atribuido en Finanzas y en el dashboard (`ecommerce.dashboard` tiene KPI "Marketplace atribuido" y card "Marketplace · atribuido a E-Commerce" que linka al holding)
+
+**Cuando llegue la BBDD:** la tabla `transactions` lleva `origen_subcuenta_id FK` además de `product_id FK` y `client_id FK`. Las vistas de cada sub-cuenta hacen `WHERE origen_subcuenta_id = X`.
+
 ## E-Commerce · estructura final (Fases 1-7 implementadas)
 
-**6 módulos** en sidebar: Dashboard · Club Privado · Redes Sociales · Productos · Finanzas · Personal.
+**5 módulos** en sidebar: Dashboard · Club Privado · Redes Sociales · Finanzas · Personal.
+
+(**Productos eliminado de E-Commerce** · el catálogo es marketplace central en holding · cada sub-cuenta solo ve su slice atribuido en Finanzas/dashboard).
 
 ### Club Privado · Overview + 4 tier sub-views en sidebar
 
@@ -52,7 +71,49 @@ Dashboard interno del holding **Reto Health** implementado en un único `index.h
 
 6 KPIs (Ingresos · Recurrente mensualizado · Margen · Pendiente · ARR contratado · CAC blended) → Ingresos por fuente stacked 6m + donut mix mes actual → Forecast 6m basado en contratos + tabla próximos cobros → Margen por categoría + CAC por canal → Aportación por tier del club (cross-ref con LTV × miembros) + Gastos del mes desglosados → Facturas recientes.
 
-Las otras 3 sub-cuentas siguen usando `tpl_finanzas` genérico.
+---
+
+## Clínica · estructura final (basada en doc "Automatización del Negocio - Clínica")
+
+**9 módulos** en sidebar: Dashboard · Funnel cliente · Programa 12 sem · Citas · Productos · Automatizaciones · Inventario · Finanzas · Personal.
+
+El modelo de Clínica NO es el tradicional de "pacientes individuales con consultas sueltas" sino **programa estructurado de 12 semanas con automatización end-to-end + upselling sistemático + API farmacéutica REFILL**. Los conceptos "paciente" del template viejo siguen en código (legacy) pero no se navegan desde sidebar.
+
+**Modelo operativo · no hay inventario.** Reto Health Clínica funciona **on-demand** (estilo print-on-demand pero adaptado): el cliente viene a clínica el día del estudio para tests con máquinas (sangre, HSIC, composición, HRV), tras eso el Agente Evaluador genera 3 planes personalizados (médico · nutricional · ejercicio) y la parte de medicación se dispensa vía API farmacéutica (REFILL). No hay stock físico de suplementos/medicación en clínica. **El módulo `inventario` está eliminado del sidebar de Clínica.** Si en algún momento se vuelve a necesitar, recuperar el template legacy + remontar en `WORKSPACES.clinica.modules`.
+
+**Patrón de chart aprobado · bar + line combinado con puntos entre barras.** Para visualizar simultáneamente n absoluto (bar) y % conversión entre puntos consecutivos (line con dots posicionados entre dos barras), usar `scales.x:{type:'linear', min:0.5, max:N+0.5}` con bars en x=1,2,...,N y line en x=1.5,2.5,...,N-0.5. La línea con `borderWidth:2.6`, color que contraste con las barras (sage + vermillion `#D9531C` funciona), `pointRadius:5.5` con borde paper para que se vea por encima de las barras. Dual axis: `y` izquierdo (n), `y1` derecho (%). Las ticks del eje X usan callback que solo muestra etiquetas en enteros. Ver `ch-cl-prog-personas`.
+
+### Funnel cliente · 6 pasos del journey
+
+`clinica.funnel` muestra los 6 pasos como secciones editoriales con número Fraunces grande + estado de automatización por etapa (⚡ activo · ◷ fase posterior · ✋ manual) + conteo de clientes en cada etapa + conversion bar:
+
+1. **Entrada · lead** (⚡) — captura CRM + email auto
+2. **CORE · pago + test** (⚡ PRIORIDAD #1) — firma + link pago + factura + test condicional
+3. **Reserva cita** (⚡) — link reserva + confirmación + recordatorio 2 d
+4. **Día de estudio** (✋ MANUAL · prioridad automatizar) — subida resultados + notif "listos"
+5. **Resultados online** (⚡) — videocall + grabación a perfil
+6. **Decisión · acepta** (⚡) — Rama B: cobro + factura + API REFILL · Rama A: test motivos
+
+### Programa 12 sem · Overview + 3 fases en sidebar
+
+- `overview` (default): 6 KPIs + distribución por semana + upselling por producto + cohort heatmap (renderClinicaCohorts) + tabla de adopción de productos
+- `sem01-04` Onboarding (62 clientes · 18 upsell)
+- `sem05-08` Núcleo (68 · 32)
+- `sem09-12` Renovación (56 · 22)
+
+### Productos · 6 sub-tipos en sidebar
+
+Suplementos (API REFILL · auto-pedido) · Tec (wearables · luz roja · CGM · báscula) · Libro · Consultoría 1:1 · Nutrición · Entrenamiento. Cada uno con sub-tab independiente, KPIs y tabla de catálogo.
+
+### Automatizaciones · health-check
+
+Lista de 29 automatizaciones del flujo end-to-end con estado ⚡◷✋, categoría, runs/30 d, success rate. KPIs agregados: activas / pendientes / manuales / runs total / success rate medio. **Prioridad #1 destacada: subida automática de resultados del paso 4**.
+
+### Finanzas · template dedicado (`clinica_finanzas`)
+
+6 KPIs (Ingresos · MRR programa · Margen · Pendiente · % cobros auto · CAC paciente). Stacked bar 6m (estudios + programa recurring + upselling + API REFILL) + donut mix · Upselling revenue por producto + próximos cobros recurrentes · Margen por línea + funnel económico · Facturas recientes.
+
+Las sub-cuentas Residences, R&D y Holding siguen usando `tpl_finanzas` genérico.
 
 ---
 
@@ -116,6 +177,78 @@ Las vistas internas (cohortes, scoring AI, calendario) son **queries**, no tabla
 - ❌ **Poner sub-navegación como chips encima del contenido**. La sub-navegación debe vivir en el sidebar como segundo nivel jerárquico (estilo VS Code / Notion). Las chips inline solo se justifican para filtros transitorios (ej. filtro de tier dentro de una tabla), no para cambiar de vista completa.
 
 ---
+
+## Sistema de diseño · "Specimen" (Fases A-H)
+
+Bio-editorial × Lab precision. Wellness en cuerpo + futurismo en sidebar.
+
+**Tokens · `:root`**
+- Wellness body: `--bg #F4EFE6`, `--paper #FAF6EE`, `--ink #1B1816`, `--rule #E2DAC9`, `--ink-deep #0E0C0A`.
+- Futurismo sidebar: `--side-bg #0F0E0C`, `--side-glow #C4F45E` (lab-glow signature).
+- Workspace accents: holding `#A05A1F` cobre · clinica `#4A6A48` sage · residences `#B86433` terracota · ecommerce `#3A6FD1` azul tinta · rd `#6E4F7A` plum.
+
+**Tipografía**
+- `--display`: **Fraunces** variable (opsz 9..144) — page titles, KPI numbers, brand name.
+- `--sans`: **Geist** (Vercel) — body, UI, card-h h3, page-sub italic.
+- `--mono`: **Geist Mono** — KPI labels, data, tabla headers, ticks de charts, tooltips title, nav-group, nav-sub-num, tags, ws-badge, crumbs, sec-num, fig-marker, n-marker, live-indicator, kpi-seg.
+- Body siempre: `font-feature-settings:'tnum','lnum','ss01','cv11'; font-optical-sizing:auto`.
+
+**Charts (Chart.js defaults globales en `initWidgets`)**
+- Sin gridlines en eje X (categórica limpia); hairlines en Y `rgba(27,24,22,.05)` con ticks 4 px tipo regla.
+- Numerales en Geist Mono 10.5 px.
+- Líneas 1.5 px, tension .32, puntos invisibles excepto al hover (5 px con borde 2 px y centro paper).
+- Barras radius 2 px (casi cuadradas).
+- Tooltip: bg `--ink #1B1816`, title color `--side-glow` (lab readout feel), title Geist Mono, body Geist sans.
+
+**KPI editorial block (`.kpi-grid` + `.kpi`)**
+- Sin caja · sin borde · sin sombra. Strip horizontal con hairline top/bottom.
+- `grid-template-columns: repeat(auto-fit, minmax(170px,1fr))` (adapta a 4/5/6 KPIs).
+- Divisores verticales 1 px entre KPIs (`border-left`).
+- Label: Geist Mono 9.5 px uppercase `.20em` tracking.
+- Value: Fraunces 38 px weight 400, `opsz 96`, `font-variant-numeric:tabular-nums`.
+- Trend: Geist Mono 11 px.
+- Hover en clickable: warm wash + número cambia a `--ws-accent`.
+
+**Sidebar futurista**
+- Background warm-black + linear gradient sutil arriba + radial halo lab-glow.
+- Nav items: borde-left 2 px lab-glow al activarse + pulsing dot derecha (animación `pulseGlow` 2.4 s, glow box-shadow 8 px).
+- Sub-items numerados `01 · 02 · 03` en Geist Mono 9 px tracked; active state es lab-glow color (sin fill).
+- Group labels: Geist Mono 9 px `.22em` tracking.
+
+**Page head editorial**
+- Hairline border-bottom (no card).
+- `ws-badge` ahora kicker mono con dot del ws-accent + `live · 30 d` indicator (pulsing lab-glow).
+- Title: Fraunces 40 px peso 400 (`opsz 144`).
+- Page-sub: italic Fraunces — dek editorial.
+
+**Tables**
+- Headers Geist Mono uppercase `.18em` tracking, sin background fill.
+- Hover row warm wash, no zebra-stripes.
+- Active row con `box-shadow: inset 2px 0 0 var(--ws-accent)`.
+
+**Tags**
+- Geist Mono uppercase `.08em` tracking, border-radius 3 px (casi cuadrado, no pill).
+
+**Botones**
+- Border-radius 4 px (sharper).
+- Primary: warm-black bg → hover muestra `lab-glow` en texto (mini reveal).
+
+**Micro-details disponibles como helpers CSS**
+- `.n-marker` — `n = 2.184` con bg lab-glow al 10 %.
+- `.fig-marker` — `[fig. 01]` mono pequeño.
+- `.live-indicator` — pulsing dot + `live · 30 d` (en page-head por defecto).
+- `.reg-corner` (tl/tr/bl/br) — registration marks `+` en esquinas de cards.
+- `.sec-num` — numeral Fraunces para encabezados de bloque.
+
+**Motion**
+- `.content > *` con `fadeInUp .55s cubic-bezier(.16,1,.3,1)` en stagger 70 ms.
+- `prefers-reduced-motion: reduce` desactiva animaciones y pulsing.
+
+**Paper grain**
+- Body `::after` con SVG noise overlay al 2.5 % opacity, `mix-blend-mode:multiply`.
+
+**Scan-line topbar**
+- `::before` con linear-gradient lab-glow al 15 % en el top de la topbar.
 
 ## Layout de charts — gotcha conocido
 

@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="es" data-rev="phase-0">
+<html lang="es" data-rev="specimen-fix1">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -7,54 +7,94 @@
 <meta name="description" content="Panel interno del holding Reto Health · 1 cuenta agencia + 4 sub-cuentas (Clínica, Residences, E-Commerce, R&D)." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..700&family=Geist:wght@300..700&family=Geist+Mono:wght@400;500&family=Playfair+Display:wght@500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
 <style>
 :root {
-  --navy-900:#0a1929; --navy-800:#0f2238; --navy-700:#152e4a; --navy-600:#1f3d5c;
-  --copper:#b87333; --copper-soft:#d49862; --copper-dim:#8a5527;
-  --sage:#7a9b76; --sage-soft:#a8c2a4;
-  --gold:#c9a96e; --gold-dim:#9b7f49;
-  --plum:#7c5b8a; --plum-soft:#a988b6;
-  --cream:#faf7f2; --paper:#ffffff; --paper-2:#f4efe6;
-  --ink:#0e1620; --ink-2:#374151; --muted:#6b7280; --line:#e6dfd2;
-  --ok:#10b981; --warn:#f59e0b; --err:#ef4444; --info:#3b82f6;
-  --shadow-sm: 0 1px 2px rgba(15,34,56,.06);
-  --shadow:    0 6px 20px rgba(15,34,56,.07), 0 1px 3px rgba(15,34,56,.04);
-  --shadow-lg: 0 18px 40px rgba(15,34,56,.10);
-  --r-sm:6px; --r:10px; --r-lg:16px;
+  /* === BIO-EDITORIAL · "Specimen" === */
+  /* Wellness · light body */
+  --bg          :#F4EFE6;
+  --cream       :#F4EFE6;
+  --paper       :#FAF6EE;
+  --paper-2     :#EFE7D6;
+  --ink         :#1B1816;
+  --ink-2       :#6B645A;
+  --ink-deep    :#0E0C0A;
+  --muted       :#8E867B;
+  --line        :#E2DAC9;
+  --rule        :#E2DAC9;
+
+  /* Futurismo · sidebar oscuro + glow signature */
+  --side-bg     :#0F0E0C;
+  --side-bg-2   :#14130F;
+  --side-ink    :#E2DAC9;
+  --side-mute   :#7A746B;
+  --side-line   :rgba(255,255,255,.06);
+  --side-glow   :#C4F45E;
+
+  /* Workspace accents · más profundos · alineados a marca */
+  --copper      :#A05A1F;
+  --copper-soft :#C89060;
+  --copper-dim  :#7A4319;
+  --sage        :#4A6A48;
+  --sage-soft   :#7A9B76;
+  --gold        :#C9A96E;
+  --gold-dim    :#9B7F49;
+  --plum        :#6E4F7A;
+  --plum-soft   :#A988B6;
+  --info        :#3A6FD1;
+
+  /* Status */
+  --ok          :#0F8A5F;
+  --warn        :#C77A14;
+  --err         :#C72F2F;
+
+  /* Legacy navy aliases · ahora warm-black coherente con sidebar */
+  --navy-900    :#0F0E0C;
+  --navy-800    :#14130F;
+  --navy-700    :#1B1816;
+  --navy-600    :#22201C;
+
+  /* Sombras refinadas (casi hairlines) */
+  --shadow-sm   : 0 1px 0 rgba(27,24,22,.04);
+  --shadow      : 0 6px 18px rgba(27,24,22,.05), 0 1px 2px rgba(27,24,22,.03);
+  --shadow-lg   : 0 16px 36px rgba(27,24,22,.09);
+  --r-sm:4px; --r:8px; --r-lg:12px;
   --sidebar-w:248px;
-  --display: 'Playfair Display', Georgia, serif;
-  --sans: 'Inter', system-ui, -apple-system, sans-serif;
-  --mono: 'JetBrains Mono', ui-monospace, Menlo, monospace;
+
+  /* Tipografía · Fraunces (display variable) + Geist (sans) + Geist Mono (mono) */
+  --display: 'Fraunces', 'Newsreader', Georgia, serif;
+  --sans:    'Geist', 'Inter Tight', system-ui, -apple-system, sans-serif;
+  --mono:    'Geist Mono', 'JetBrains Mono', ui-monospace, Menlo, monospace;
   --ws-accent: var(--copper);
 }
 [data-theme="dark"]{
-  --cream:#0a1320; --paper:#0f1c2e; --paper-2:#152838;
-  --ink:#eef3f8; --ink-2:#c1cbd6; --muted:#7d8a99; --line:#1d3148;
-  --copper:#d49862;
+  --cream:#0F0E0C; --paper:#14130F; --paper-2:#1B1816;
+  --ink:#F1ECDF; --ink-2:#B8B0A0; --muted:#7A746B; --line:#2A2724;
+  --copper:#D49862;
 }
 *{box-sizing:border-box}
 html,body{margin:0;padding:0}
-body{font-family:var(--sans); color:var(--ink); background:var(--cream); -webkit-font-smoothing:antialiased; min-height:100vh}
+body{font-family:var(--sans); color:var(--ink); background:var(--cream); -webkit-font-smoothing:antialiased; min-height:100vh; font-feature-settings:'tnum','lnum','ss01','cv11'; font-optical-sizing:auto}
 a{color:inherit; text-decoration:none}
 button{font-family:inherit; cursor:pointer; border:0; background:none; color:inherit}
 input,select,textarea{font-family:inherit}
 
 /* ===== LAYOUT ===== */
 .app{display:grid; grid-template-columns:var(--sidebar-w) 1fr; min-height:100vh}
-.sidebar{background:var(--navy-900); color:#dfe6ef; padding:14px 14px 24px; position:sticky; top:0; height:100vh; overflow-y:auto; border-right:1px solid rgba(255,255,255,.04)}
+.sidebar{background:var(--side-bg);background-image:linear-gradient(180deg,var(--side-bg-2) 0,var(--side-bg) 280px),radial-gradient(800px 200px at 50% 0,rgba(196,244,94,.04),transparent 70%);color:var(--side-ink);padding:14px 14px 24px;position:sticky;top:0;height:100vh;overflow-y:auto;border-right:1px solid var(--side-line)}
 
 
-.brand-row{display:flex;align-items:center;gap:8px;padding:2px 4px 10px;margin-bottom:6px;border-bottom:1px solid rgba(255,255,255,.05)}
+.brand-row{display:flex;align-items:center;gap:8px;padding:4px 8px 14px;margin-bottom:8px;border-bottom:1px solid var(--side-line)}
 .logo{width:28px;height:24px;flex-shrink:0;filter:drop-shadow(0 1px 2px rgba(0,0,0,.4))}
-.brand-name{font-family:var(--display);font-size:14px;font-weight:600;color:#fff;line-height:1}
-.brand-sub{font-size:8.5px;text-transform:uppercase;letter-spacing:1.6px;color:#8aa0b8;margin-top:1px}
+.brand-name{font-family:var(--display);font-size:15px;font-weight:500;color:#fff;line-height:1;letter-spacing:-.01em;font-variation-settings:"opsz" 24}
+.brand-sub{font-family:'Geist Mono',ui-monospace,monospace;font-size:8.5px;text-transform:uppercase;letter-spacing:.22em;color:var(--side-mute);margin-top:3px}
 /* ===== WORKSPACE SWITCHER ===== */
 .ws-switcher{position:relative;margin-bottom:14px}
-.ws-current{display:flex;align-items:center;gap:7px;padding:5px 7px;border-radius:7px;background:rgba(255,255,255,.04);cursor:pointer;border:1px solid rgba(255,255,255,.06);transition:background .15s}
+.ws-current{display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:3px;background:rgba(255,255,255,.03);cursor:pointer;border:1px solid var(--side-line);transition:background .15s,border-color .15s}
+.ws-current:hover{border-color:rgba(196,244,94,.20)}
 .ws-current:hover{background:rgba(255,255,255,.08)}
-.ws-mark{width:22px;height:22px;border-radius:5px;display:grid;place-items:center;font-family:var(--display);font-weight:700;color:#fff;font-size:11px;flex-shrink:0}
+.ws-mark{width:24px;height:24px;border-radius:3px;display:grid;place-items:center;font-family:var(--display);font-weight:500;color:#fff;font-size:11px;flex-shrink:0;letter-spacing:-.01em;font-variation-settings:"opsz" 24}
 .ws-name{font-size:11.5px;font-weight:600;color:#fff;line-height:1.05}
 .ws-sub{font-size:9px;color:#8aa0b8;text-transform:uppercase;letter-spacing:1px;margin-top:1px}
 .ws-caret{width:14px;height:14px;margin-left:auto;color:#8aa0b8;flex-shrink:0;stroke-width:2}
@@ -66,24 +106,31 @@ input,select,textarea{font-family:inherit}
 .ws-opt small{display:block;font-size:11px;color:#8aa0b8;margin-top:1px}
 .ws-divider{height:1px;background:rgba(255,255,255,.08);margin:4px 6px}
 
-.nav-group{margin:14px 0 4px;padding:0 8px;font-size:10.5px;letter-spacing:1.4px;color:#7a90a8;text-transform:uppercase;font-weight:600}
-.nav-item{display:flex;align-items:center;gap:11px;padding:9px 10px;border-radius:8px;color:#c9d4e1;font-size:14px;cursor:pointer;transition:background .15s,color .15s;margin-bottom:2px}
-.nav-item:hover{background:rgba(255,255,255,.04);color:#fff}
-.nav-item.active{background:linear-gradient(90deg,rgba(184,115,51,.20),rgba(184,115,51,.04));color:#fff;box-shadow:inset 2px 0 0 var(--ws-accent)}
-.nav-item svg{width:17px;height:17px;flex-shrink:0;opacity:.85}
-.nav-item.active svg{color:var(--ws-accent);opacity:1}
-.nav-pill{margin-left:auto;font-size:10.5px;background:rgba(255,255,255,.08);color:#fff;padding:1px 7px;border-radius:99px;font-weight:500}
-.nav-pill.warn{background:rgba(245,158,11,.20);color:#fde08a}
-.nav-pill.err{background:rgba(239,68,68,.22);color:#ffb1ad}
-.nav-sub{display:flex;align-items:center;gap:9px;padding:6px 10px 6px 38px;color:#9aa7b7;font-size:12.5px;cursor:pointer;border-radius:6px;margin:1px 6px;transition:background .12s,color .12s}
-.nav-sub:hover{background:rgba(255,255,255,.04);color:#e6edf3}
-.nav-sub.active{background:rgba(255,255,255,.06);color:#fff;font-weight:500}
-.nav-sub-dot{width:4px;height:4px;border-radius:50%;background:#5b6b7e;flex-shrink:0}
-.nav-sub.active .nav-sub-dot{background:var(--ws-accent)}
+/* ===== SIDEBAR · futurismo bio-editorial · lab-glow signature ===== */
+.nav-group{margin:18px 0 8px;padding:0 12px;font-family:'Geist Mono',ui-monospace,monospace;font-size:9px;letter-spacing:.22em;color:var(--side-mute);text-transform:uppercase;font-weight:500}
+.nav-item{display:flex;align-items:center;gap:11px;padding:9px 12px;border-radius:0;color:var(--side-ink);font-size:13.5px;font-weight:400;cursor:pointer;transition:background .15s,color .15s;margin-bottom:1px;position:relative}
+.nav-item:hover{background:rgba(255,255,255,.025);color:#fff}
+.nav-item.active{background:rgba(196,244,94,.05);color:#fff;box-shadow:inset 2px 0 0 var(--side-glow)}
+.nav-item.active::after{content:'';position:absolute;right:14px;top:50%;width:5px;height:5px;border-radius:50%;background:var(--side-glow);box-shadow:0 0 8px var(--side-glow),0 0 2px var(--side-glow);transform:translateY(-50%);animation:pulseGlow 2.4s ease-in-out infinite}
+@keyframes pulseGlow{0%,100%{opacity:.7}50%{opacity:1}}
+.nav-item svg{width:16px;height:16px;flex-shrink:0;opacity:.7}
+.nav-item.active svg{color:var(--side-glow);opacity:1}
+.nav-pill{margin-left:auto;font-family:'Geist Mono',monospace;font-size:9.5px;letter-spacing:.06em;background:rgba(255,255,255,.06);color:var(--side-ink);padding:1px 7px;border-radius:2px;font-weight:500}
+.nav-pill.warn{background:rgba(199,122,20,.20);color:#F5C97A}
+.nav-pill.err{background:rgba(199,47,47,.22);color:#FF9F9F}
+.nav-item.active .nav-pill{margin-right:14px}  /* deja espacio para el active dot */
+.nav-sub{display:flex;align-items:baseline;gap:10px;padding:5px 12px 5px 38px;color:var(--side-mute);font-size:12.5px;cursor:pointer;border-radius:0;margin:0;transition:color .12s,background .12s;position:relative}
+.nav-sub:hover{color:var(--side-ink);background:rgba(255,255,255,.02)}
+.nav-sub.active{color:var(--side-glow);background:transparent}
+.nav-sub-num{font-family:'Geist Mono',ui-monospace,monospace;font-size:9px;letter-spacing:.08em;color:var(--side-mute);min-width:14px;font-feature-settings:'tnum';opacity:.7}
+.nav-sub.active .nav-sub-num{color:var(--side-glow);opacity:1}
+.nav-sub-dot{width:4px;height:4px;border-radius:50%;background:var(--side-mute);flex-shrink:0;display:none}
 body.sb-collapsed .nav-sub{display:none}
-.kpi-seg{display:inline-flex;gap:0;margin-top:8px;border:1px solid var(--line);border-radius:6px;overflow:hidden;width:fit-content}
-.kpi-seg span{padding:3px 10px;font-size:11px;cursor:pointer;color:var(--ink-2);background:var(--paper);user-select:none}
-.kpi-seg span.active{background:var(--ws-accent);color:#fff}
+
+/* ===== KPI · editorial block · sin caja, hairline dividers, Fraunces grande ===== */
+.kpi-seg{display:inline-flex;gap:0;margin-top:10px;border:1px solid var(--rule);border-radius:3px;overflow:hidden;width:fit-content;font-family:'Geist Mono',monospace;font-size:9.5px;letter-spacing:.08em;text-transform:uppercase}
+.kpi-seg span{padding:3px 9px;cursor:pointer;color:var(--ink-2);background:transparent;user-select:none}
+.kpi-seg span.active{background:var(--ink-deep);color:var(--side-glow)}
 .kpi-seg span:not(.active):hover{background:var(--paper-2)}
 
 .sidebar-foot{margin-top:18px;padding:14px 8px 6px;border-top:1px solid rgba(255,255,255,.07);font-size:12px;color:#7a90a8}
@@ -92,11 +139,11 @@ body.sb-collapsed .nav-sub{display:none}
 
 /* ===== TOPBAR ===== */
 .main{display:flex;flex-direction:column;min-width:0}
-.topbar{display:flex;align-items:center;gap:14px;padding:14px 28px;background:var(--paper);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5}
-.crumbs{font-size:13px;color:var(--muted)}
-.crumbs strong{color:var(--ink);font-weight:600}
-.crumbs .sep{margin:0 6px;color:var(--line)}
-.crumbs .ws{font-weight:600;color:var(--ws-accent)}
+.topbar{display:flex;align-items:center;gap:14px;padding:14px 28px;background:var(--paper);border-bottom:1px solid var(--rule);position:sticky;top:0;z-index:5}
+.crumbs{font-family:'Geist Mono',ui-monospace,monospace;font-size:10.5px;letter-spacing:.10em;text-transform:uppercase;color:var(--muted)}
+.crumbs strong{color:var(--ink);font-weight:500}
+.crumbs .sep{margin:0 8px;color:var(--rule)}
+.crumbs .ws{font-weight:500;color:var(--ws-accent)}
 .search{display:flex;align-items:center;gap:8px;padding:8px 12px;background:var(--paper-2);border-radius:99px;width:340px;color:var(--muted);font-size:13px;border:1px solid transparent}
 .search:focus-within{border-color:var(--ws-accent);background:var(--paper)}
 .search input{background:transparent;border:0;outline:0;flex:1;color:var(--ink);font-size:13px}
@@ -109,27 +156,37 @@ body.sb-collapsed .nav-sub{display:none}
 /* ===== CONTENT ===== */
 .content{padding:26px 30px 60px;max-width:1480px;width:100%}
 
-.page-head{display:flex;align-items:flex-end;gap:18px;margin-bottom:22px;flex-wrap:wrap}
-.page-title{font-family:var(--display);font-size:30px;font-weight:600;letter-spacing:-.5px;line-height:1.1;margin:0}
-.page-sub{color:var(--muted);font-size:14px;margin-top:6px}
-.page-actions{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}
-.ws-badge{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1.2px;color:var(--ws-accent);padding:3px 9px;background:color-mix(in srgb, var(--ws-accent) 12%, transparent);border-radius:99px;margin-bottom:8px}
+/* ===== PAGE HEAD · editorial · serif display + kicker mono ===== */
+.page-head{display:flex;align-items:flex-end;gap:18px;margin-bottom:28px;padding-bottom:22px;border-bottom:1px solid var(--rule);flex-wrap:wrap;position:relative}
+.page-head>div:first-child{flex:1;min-width:0}
+.page-title{font-family:var(--display);font-size:40px;font-weight:400;letter-spacing:-.02em;line-height:1.05;margin:0;color:var(--ink-deep);font-variation-settings:"opsz" 144}
+.page-sub{color:var(--ink-2);font-size:13.5px;margin-top:8px;max-width:760px;font-style:italic;font-family:var(--display);font-weight:400;letter-spacing:0;line-height:1.45}
+.page-actions{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap;align-self:flex-end}
+.ws-badge{display:inline-flex;align-items:center;gap:8px;font-family:'Geist Mono',ui-monospace,monospace;font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.22em;color:var(--ink-2);padding:0;background:transparent;border-radius:0;margin-bottom:14px;border:0}
+.ws-badge::before{content:'';display:inline-block;width:6px;height:6px;background:var(--ws-accent);border-radius:50%}
 
-.btn{display:inline-flex;align-items:center;gap:7px;padding:9px 14px;border-radius:8px;font-size:13px;font-weight:500;border:1px solid var(--line);background:var(--paper);color:var(--ink);transition:all .15s;box-shadow:var(--shadow-sm)}
-.btn:hover{border-color:var(--ws-accent);color:var(--ws-accent)}
-.btn-primary{background:var(--navy-900);color:#fff;border-color:var(--navy-900)}
-.btn-primary:hover{background:var(--ws-accent);border-color:var(--ws-accent);color:#fff}
+/* ===== BUTTONS · sharper, more refined ===== */
+.btn{display:inline-flex;align-items:center;gap:7px;padding:9px 14px;border-radius:4px;font-size:12.5px;font-weight:500;border:1px solid var(--rule);background:var(--paper);color:var(--ink);transition:all .15s;box-shadow:none;letter-spacing:.01em}
+.btn:hover{border-color:var(--ink);color:var(--ink-deep);background:var(--paper-2)}
+.btn-primary{background:var(--ink-deep);color:var(--paper);border-color:var(--ink-deep)}
+.btn-primary:hover{background:#000;border-color:#000;color:var(--side-glow)}
 .btn-ghost{background:transparent;border-color:transparent;box-shadow:none;color:var(--ink-2)}
 .btn-ghost:hover{background:var(--paper-2);color:var(--ink)}
 
-/* ===== KPI cards ===== */
-.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:22px}
-.kpi{background:var(--paper);border:1px solid var(--line);border-radius:var(--r-lg);padding:18px;box-shadow:var(--shadow-sm);position:relative;overflow:hidden}
-.kpi::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--ws-accent),var(--sage))}
-.kpi-label{font-size:11.5px;text-transform:uppercase;letter-spacing:1.2px;color:var(--muted);font-weight:600}
-.kpi-value{font-family:var(--display);font-size:28px;font-weight:600;margin:8px 0 4px;letter-spacing:-.5px}
-.kpi-trend{font-size:12.5px;display:flex;align-items:center;gap:4px}
+/* ===== KPI · editorial block · sin caja · hairline dividers · Fraunces grande ===== */
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:0;margin-bottom:32px;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.kpi{background:transparent;border:0;border-left:1px solid var(--rule);border-radius:0;padding:20px 22px;box-shadow:none;position:relative;overflow:visible;transition:background .2s}
+.kpi:first-child{border-left:0}
+.kpi.clickable{cursor:pointer}
+.kpi.clickable:hover{background:rgba(239,231,214,.30)}
+.kpi.clickable:hover .kpi-value{color:var(--ws-accent)}
+.kpi::before{display:none}
+.kpi-label{font-family:'Geist Mono',ui-monospace,monospace;font-size:9.5px;text-transform:uppercase;letter-spacing:.20em;color:var(--ink-2);font-weight:500}
+.kpi-value{font-family:var(--display);font-size:38px;font-weight:400;margin:12px 0 4px;letter-spacing:-.025em;line-height:1;color:var(--ink-deep);font-variation-settings:"opsz" 96;font-feature-settings:'tnum','lnum'}
+.kpi-trend{font-family:'Geist Mono',ui-monospace,monospace;font-size:11px;display:flex;align-items:center;gap:4px;color:var(--ink-2);letter-spacing:0;margin-top:2px}
 .up{color:var(--ok)}.down{color:var(--err)}.flat{color:var(--muted)}
+.kpi.income-card .kpi-value{color:#0F8A5F}
+.kpi.expense-card .kpi-value{color:#C72F2F}
 
 /* ===== CARD / PANELS ===== */
 .grid-2{display:grid;grid-template-columns:2fr 1fr;gap:18px;margin-bottom:18px;align-items:start}
@@ -137,31 +194,83 @@ body.sb-collapsed .nav-sub{display:none}
 .grid-2-eq{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:18px}
 .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:18px}
 .card{background:var(--paper);border:1px solid var(--line);border-radius:var(--r-lg);box-shadow:var(--shadow-sm);overflow:hidden}
-.card-h{display:flex;align-items:center;gap:10px;padding:16px 20px;border-bottom:1px solid var(--line)}
-.card-h h3{margin:0;font-size:15px;font-weight:600;letter-spacing:-.2px}
-.card-h .meta{font-size:12px;color:var(--muted);margin-left:auto}
+.card-h{display:flex;align-items:center;gap:12px;padding:16px 20px;border-bottom:1px solid var(--rule)}
+.card-h h3{margin:0;font-family:var(--sans);font-size:13.5px;font-weight:500;letter-spacing:.01em;color:var(--ink-deep);text-transform:none}
+.card-h .meta{font-family:'Geist Mono',ui-monospace,monospace;font-size:10px;letter-spacing:.10em;text-transform:uppercase;color:var(--muted);margin-left:auto}
 .card-b{padding:18px 20px}
 .card-b.flush{padding:0}
 
-/* ===== TABLE ===== */
-.table{width:100%;border-collapse:collapse;font-size:13.5px}
-.table th{text-align:left;font-weight:600;font-size:11.5px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);padding:10px 14px;border-bottom:1px solid var(--line);background:var(--paper-2)}
-.table td{padding:12px 14px;border-bottom:1px solid var(--line);color:var(--ink-2)}
+/* ===== TABLE · editorial · tabular numerals · hairlines ===== */
+.table{width:100%;border-collapse:collapse;font-size:13px;font-variant-numeric:tabular-nums lining-nums}
+.table th{text-align:left;font-family:'Geist Mono',ui-monospace,monospace;font-weight:500;font-size:9.5px;text-transform:uppercase;letter-spacing:.18em;color:var(--ink-2);padding:12px 14px;border-bottom:1px solid var(--rule);background:transparent}
+.table td{padding:13px 14px;border-bottom:1px solid var(--rule);color:var(--ink)}
+.table td.muted, .table td .muted{color:var(--muted);font-size:12px}
 .table tr:last-child td{border-bottom:0}
-.table tr:hover td{background:var(--paper-2)}
+.table tr:hover td{background:rgba(239,231,214,.30)}
 .table tr.clickable{cursor:pointer}
-.table tr.row-active td{background:color-mix(in srgb, var(--ws-accent) 8%, var(--paper-2));border-left:2px solid var(--ws-accent)}
-.tag{display:inline-flex;align-items:center;gap:5px;padding:2px 9px;border-radius:99px;font-size:11.5px;font-weight:500;background:var(--paper-2);color:var(--ink-2)}
-.tag.ok{background:rgba(16,185,129,.10);color:#0a8059}
-.tag.warn{background:rgba(245,158,11,.12);color:#a96b00}
-.tag.err{background:rgba(239,68,68,.10);color:#b1342f}
-.tag.info{background:rgba(59,130,246,.10);color:#1e51b8}
-.tag.copper{background:rgba(184,115,51,.12);color:var(--copper-dim)}
-.tag.sage{background:rgba(122,155,118,.15);color:#496a47}
-.tag.plum{background:rgba(124,91,138,.14);color:#5d4068}
-.tag.dark{background:rgba(0,0,0,.85);color:#fff}
+.table tr.row-active td{background:color-mix(in srgb, var(--ws-accent) 6%, var(--paper-2));box-shadow:inset 2px 0 0 var(--ws-accent)}
+
+/* ===== TAGS · refinados, casi rectangulares, mono uppercase para status ===== */
+.tag{display:inline-flex;align-items:center;gap:5px;padding:3px 8px;border-radius:3px;font-family:'Geist Mono',ui-monospace,monospace;font-size:9.5px;font-weight:500;text-transform:uppercase;letter-spacing:.08em;background:var(--paper-2);color:var(--ink-2)}
+.tag.ok{background:rgba(15,138,95,.10);color:#0F8A5F}
+.tag.warn{background:rgba(199,122,20,.14);color:#A66510}
+.tag.err{background:rgba(199,47,47,.10);color:#A52929}
+.tag.info{background:rgba(58,111,209,.10);color:#2C57A8}
+.tag.copper{background:rgba(160,90,31,.12);color:var(--copper-dim)}
+.tag.sage{background:rgba(74,106,72,.14);color:#3A5239}
+.tag.plum{background:rgba(110,79,122,.14);color:#4F3756}
+.tag.dark{background:rgba(0,0,0,.88);color:#fff}
 .dot{width:8px;height:8px;border-radius:50%;display:inline-block;background:var(--muted)}
 .dot.ok{background:var(--ok)} .dot.warn{background:var(--warn)} .dot.err{background:var(--err)} .dot.copper{background:var(--copper)}
+
+/* ===== MICRO-DETAILS · Specimen · futurismo bio-editorial ===== */
+
+/* Numeral annotations · "n = 2.184" estilo lab */
+.n-marker{display:inline-flex;align-items:center;font-family:'Geist Mono',ui-monospace,monospace;font-size:10.5px;letter-spacing:.06em;color:var(--ink-2);font-style:italic;padding:2px 6px;background:rgba(196,244,94,.10);border-radius:2px;margin-left:10px;vertical-align:middle;font-variant-numeric:tabular-nums}
+.n-marker::before{content:'n = ';color:var(--muted);font-style:normal}
+
+/* Section figure tag · "[fig. 01]" */
+.fig-marker{font-family:'Geist Mono',ui-monospace,monospace;font-size:9.5px;letter-spacing:.10em;color:var(--muted);text-transform:none;margin-right:8px;font-variant-numeric:tabular-nums}
+.fig-marker::before{content:'[ '}
+.fig-marker::after{content:' ]'}
+
+/* Live indicator · pulsing lab-glow dot + label */
+.live-indicator{display:inline-flex;align-items:center;gap:6px;font-family:'Geist Mono',ui-monospace,monospace;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-2)}
+.live-indicator::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--side-glow);box-shadow:0 0 6px var(--side-glow);animation:pulseGlow 1.8s ease-in-out infinite}
+
+/* Registration marks · esquinas de sección · sutiles */
+.reg-corner{position:absolute;width:8px;height:8px;color:var(--rule);font-family:'Geist Mono',monospace;font-size:9px;line-height:1;pointer-events:none;opacity:.7}
+.reg-corner.tl{top:6px;left:6px}
+.reg-corner.tr{top:6px;right:6px}
+.reg-corner.bl{bottom:6px;left:6px}
+.reg-corner.br{bottom:6px;right:6px}
+
+/* Subtle paper grain · whole page · 1.5% opacity · z-index:1 con pointer-events:none */
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:1;background-image:url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.95' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.6'/%3E%3C/svg%3E");opacity:.015;mix-blend-mode:multiply}
+
+/* Scan-line accent encima de la topbar · 1px lab-glow al 8% */
+.topbar::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--side-glow) 50%,transparent);opacity:.15;pointer-events:none}
+.topbar{position:sticky}
+
+/* Section numbering · prefijo grande Fraunces para encabezados de bloque */
+.sec-num{display:inline-block;font-family:var(--display);font-weight:300;font-size:14px;color:var(--ws-accent);margin-right:10px;font-variant-numeric:tabular-nums;letter-spacing:0;opacity:.8}
+
+/* ===== MOTION · page reveal stagger (sin 'both' para no ocultar contenedores de canvas) ===== */
+@keyframes fadeInUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.content>.page-head{animation:fadeInUp .45s cubic-bezier(.16,1,.3,1) backwards}
+.content>.kpi-grid{animation:fadeInUp .45s cubic-bezier(.16,1,.3,1) backwards;animation-delay:60ms}
+@media (prefers-reduced-motion:reduce){
+  .content>*{animation:none}
+  .nav-item.active::after{animation:none}
+  .live-indicator::before{animation:none}
+}
+
+/* Soft transition on KPI value when workspace changes */
+.kpi-value{transition:color .25s ease}
+
+/* Card hover (cards remain mostly static) · subtle border accent */
+.card{transition:border-color .2s,box-shadow .2s}
+.card.clickable:hover{border-color:var(--ws-accent)}
 
 /* ===== KANBAN ===== */
 .kanban{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
@@ -823,11 +932,11 @@ body.presenting .exit-presenting{display:block}
 .divider{height:1px;background:var(--line);margin:14px 0}
 
 /* Workspace accent overrides */
-[data-ws="holding"]{--ws-accent:var(--copper)}
-[data-ws="clinica"]{--ws-accent:var(--sage)}
-[data-ws="residences"]{--ws-accent:var(--copper)}
-[data-ws="ecommerce"]{--ws-accent:#3b82f6}
-[data-ws="rd"]{--ws-accent:var(--gold)}
+[data-ws="holding"]{--ws-accent:#A05A1F}
+[data-ws="clinica"]{--ws-accent:#4A6A48}
+[data-ws="residences"]{--ws-accent:#B86433}
+[data-ws="ecommerce"]{--ws-accent:#3A6FD1}
+[data-ws="rd"]{--ws-accent:#6E4F7A}
 
 @media (max-width:1100px){
   .kpi-grid{grid-template-columns:repeat(2,1fr)}
@@ -1166,42 +1275,53 @@ const ICONS = { dashboard:'i-home', copilot:'i-bot', integraciones:'i-data', rep
   pacientes:'i-stetho', citas:'i-cal', protocolos:'i-pill', inventario:'i-pkg', portal:'i-users', booking:'i-cal',
   proyectos:'i-house', cotizaciones:'i-doc', tickets:'i-ticket', vendors:'i-vendor', iot:'i-data',
   miembros:'i-users', contenido:'i-msg', cohortes:'i-grid', scoring:'i-target',
-  club:'i-users', redes:'i-msg', productos:'i-cart',
+  club:'i-users', redes:'i-msg', productos:'i-cart', marketplace:'i-cart',
+  funnel:'i-flow', programa:'i-cal', automatizaciones:'i-bot',
   grants:'i-flask', estudios:'i-data', datasets:'i-data', propuestas:'i-doc', protocols:'i-flow' };
 
 const LABELS = { dashboard:'Dashboard', copilot:'AI Copilot', integraciones:'Integraciones', reportes:'Reportes', compliance:'Compliance', pipeline:'Pipeline', calendario:'Calendario', finanzas:'Finanzas', personal:'Personal', analitica:'Analítica',
   pacientes:'Pacientes', citas:'Citas', protocolos:'Protocolos', inventario:'Inventario', portal:'Portal paciente', booking:'Booking widget',
   proyectos:'Proyectos', cotizaciones:'Cotizaciones', tickets:'Tickets', vendors:'Vendors', iot:'IoT en vivo',
   miembros:'Miembros', contenido:'Contenido', cohortes:'Cohortes', scoring:'Lead scoring',
-  club:'Club Privado', redes:'Redes Sociales', productos:'Productos',
+  club:'Club Privado', redes:'Redes Sociales', productos:'Productos', marketplace:'Marketplace',
+  funnel:'Funnel Cliente', programa:'Programa 12 sem', automatizaciones:'Automatizaciones',
   grants:'Grants', estudios:'Estudios', datasets:'Datasets', propuestas:'Propuestas', protocols:'Study builder' };
 
 const WORKSPACES = {
   holding: {
-    mark:'H', name:'Holding', sub:'Reto Health · Agency', accent:'#b87333',
-    description:'Vista consolidada · todas las unidades',
-    modules:['dashboard','copilot','integraciones','reportes','compliance','calendario','finanzas','personal','analitica'],
+    mark:'H', name:'Holding', sub:'Reto Health · Agency', accent:'#A05A1F',
+    description:'Vista consolidada · marketplace · todas las unidades',
+    modules:['dashboard','copilot','marketplace','integraciones','reportes','compliance','calendario','finanzas','personal','analitica'],
+    subs:{
+      marketplace:[
+        {k:'overview',label:'Overview'},
+        {k:'articulos',label:'Artículos'},
+        {k:'patrocinadores',label:'Patrocinadores'},
+        {k:'eventos',label:'Eventos'}
+      ]
+    },
     badges:{}
   },
   clinica: {
-    mark:'C', name:'Clínica', sub:'Sub-cuenta · Pacientes', accent:'#7a9b76',
-    description:'Fisioterapia · estudios · peptidos · luz roja',
+    mark:'C', name:'Clínica', sub:'Sub-cuenta · Clientes', accent:'#4A6A48',
+    description:'Programa de 12 sem · estudios · protocolos · upselling · API farmacéutica',
     lead:'Jessica Pardo', leadRole:'Lead Fisio',
-    modules:['dashboard','pacientes','pipeline','citas','protocolos','inventario','portal','booking','finanzas','personal','analitica'],
-    badges:{ pipeline:'3', inventario:{cls:'err', text:'!'} }
+    modules:['dashboard','funnel','programa','citas','automatizaciones','finanzas','personal'],
+    subs:{},
+    badges:{ automatizaciones:{cls:'warn', text:'3 ✋'} }
   },
   residences: {
-    mark:'R', name:'Residences', sub:'Sub-cuenta · Proyectos', accent:'#b87333',
+    mark:'R', name:'Residences', sub:'Sub-cuenta · Proyectos', accent:'#B86433',
     description:'Diseño residencial biohacker · luz roja · sistemas de cobre',
     lead:'David Soler', leadRole:'Project Lead',
     modules:['dashboard','pipeline','proyectos','cotizaciones','tickets','vendors','iot','calendario','finanzas','personal','analitica'],
     badges:{ tickets:{cls:'warn', text:'5'} }
   },
   ecommerce: {
-    mark:'E', name:'E-Commerce', sub:'Sub-cuenta · Comunidad', accent:'#3b82f6',
+    mark:'E', name:'E-Commerce', sub:'Sub-cuenta · Comunidad', accent:'#3A6FD1',
     description:'Club privado · redes sociales · productos (artículos · patrocinios · eventos)',
     lead:'Tommy Real', leadRole:'Director Comunidad',
-    modules:['dashboard','club','redes','productos','finanzas','personal'],
+    modules:['dashboard','club','redes','finanzas','personal'],
     subs:{
       club:[
         {k:'overview',label:'Overview'},
@@ -1217,17 +1337,12 @@ const WORKSPACES = {
         {k:'linkedin',label:'LinkedIn'},
         {k:'youtube',label:'YouTube'},
         {k:'calendario',label:'Calendario'}
-      ],
-      productos:[
-        {k:'articulos',label:'Artículos'},
-        {k:'patrocinadores',label:'Patrocinadores'},
-        {k:'eventos',label:'Eventos'}
       ]
     },
     badges:{}
   },
   rd: {
-    mark:'R&D', name:'R&D', sub:'Sub-cuenta · Investigación', accent:'#c9a96e',
+    mark:'R&D', name:'R&D', sub:'Sub-cuenta · Investigación', accent:'#6E4F7A',
     description:'Grants gubernamentales · estudios · datos de longevidad',
     lead:'Marcos Diéguez', leadRole:'Director Investigación',
     modules:['dashboard','grants','pipeline','estudios','datasets','propuestas','protocols','calendario','finanzas','personal','analitica'],
@@ -1235,7 +1350,7 @@ const WORKSPACES = {
   }
 };
 
-let state = { ws:'holding', module:'dashboard', calFilter:null, socialTab:'overview', productosTab:'articulos', clubTab:'overview', churnMode:'duro', clubTierFilter:'todos' };
+let state = { ws:'holding', module:'dashboard', calFilter:null, socialTab:'overview', productosTab:'overview', clubTab:'overview', churnMode:'duro', clubTierFilter:'todos', marketTab:'overview' };
 
 /* ============= NAV + WORKSPACE SWITCHER ============= */
 function renderWsMenu(){
@@ -1289,7 +1404,7 @@ function renderNav(){
       let subList = '';
       if (subs && isActive) {
         const activeSub = getActiveSub(m);
-        subList = subs.map(s => `<div class="nav-sub ${s.k===activeSub?'active':''}" onclick="event.stopPropagation();goSub('${m}','${s.k}')"><span class="nav-sub-dot"></span><span>${s.label}</span></div>`).join('');
+        subList = subs.map((s,i) => `<div class="nav-sub ${s.k===activeSub?'active':''}" onclick="event.stopPropagation();goSub('${m}','${s.k}')"><span class="nav-sub-num">${String(i+1).padStart(2,'0')}</span><span class="nav-sub-label">${s.label}</span></div>`).join('');
       }
       return `<div class="nav-item ${isActive?'active':''}" onclick="go('${m}')">
         <svg><use href="#${ICONS[m]||'i-grid'}"/></svg><span>${LABELS[m]||m}</span>${pill}
@@ -1298,15 +1413,22 @@ function renderNav(){
   document.getElementById('nav').innerHTML = html;
 }
 function getActiveSub(module){
-  if (module === 'club') return state.clubTab || 'overview';
-  if (module === 'redes') return state.socialTab || 'overview';
-  if (module === 'productos') return state.productosTab || 'articulos';
+  if (state.ws === 'ecommerce'){
+    if (module === 'club') return state.clubTab || 'overview';
+    if (module === 'redes') return state.socialTab || 'overview';
+  }
+  if (state.ws === 'holding'){
+    if (module === 'marketplace') return state.marketTab || 'overview';
+  }
   return null;
 }
 function goSub(module, sub){
-  if (module === 'club') state.clubTab = sub;
-  else if (module === 'redes') state.socialTab = sub;
-  else if (module === 'productos') state.productosTab = sub;
+  if (state.ws === 'ecommerce'){
+    if (module === 'club') state.clubTab = sub;
+    else if (module === 'redes') state.socialTab = sub;
+  } else if (state.ws === 'holding'){
+    if (module === 'marketplace') state.marketTab = sub;
+  }
   go(module);
 }
 function go(module){
@@ -1348,10 +1470,11 @@ function placeholder(){
 /* Helper: page header */
 function pageHead(title, sub, actions){
   const w = WORKSPACES[state.ws];
+  // Auto-extract n=X from subtitle if pattern present (e.g. "2.184 miembros · ...") OR just show live indicator
   return `
   <div class="page-head">
     <div>
-      <div class="ws-badge">${w.name} ${state.ws==='holding'?'· agency':'· sub-cuenta'}</div>
+      <div class="ws-badge">${w.name} ${state.ws==='holding'?'· agency':'· sub-cuenta'}<span class="live-indicator" style="margin-left:14px">live · 30 d</span></div>
       <h1 class="page-title">${title}</h1>
       <div class="page-sub">${sub}</div>
     </div>
@@ -1531,7 +1654,7 @@ function tpl_finanzas(){
 }
 
 function ecommerce_finanzas(){
-  return pageHead('Finanzas · E-Commerce', 'Patrocinios + artículos + eventos · margen 76,1 % · ARR contratado $ 184 K', `<button class="btn"><svg class="ic"><use href="#i-doc"/></svg>OCR factura</button><button class="btn btn-primary"><svg class="ic"><use href="#i-plus"/></svg>Nueva factura</button>`) + `
+  return pageHead('Finanzas · E-Commerce', 'Revenue atribuido del marketplace (club + redes traen $ 24,9 K) · margen 76,1 % · ARR contratado $ 184 K (100 % patrocinios)', `<button class="btn"><svg class="ic"><use href="#i-doc"/></svg>OCR factura</button><button class="btn btn-primary" onclick="setWs('holding');setTimeout(()=>go('marketplace'),50)"><svg class="ic"><use href="#i-cart"/></svg>Ver marketplace</button>`) + `
   <div class="kpi-grid">
     <div class="kpi clickable income-card" onclick="kpiToggle(this)"><div class="kpi-label">Ingresos mes</div><div class="kpi-value">$ 38,4 K</div><div class="kpi-trend up">▲ 8,1 % vs mes ant.</div></div>
     <div class="kpi clickable" onclick="kpiToggle(this)"><div class="kpi-label">Recurrente mes</div><div class="kpi-value">$ 15,3 K</div><div class="kpi-trend up">patrocinios / 12</div></div>
@@ -1617,6 +1740,76 @@ function ecommerce_finanzas(){
         <tr class="clickable" onclick="this.classList.toggle('row-active')"><td>F-2026-0166</td><td><strong>Stripe payouts</strong></td><td class="muted">Comisiones abril</td><td class="expense">−$ 1.840</td><td><span class="tag ok">Pagada</span></td><td>—</td></tr>
         <tr class="clickable" onclick="this.classList.toggle('row-active')"><td>F-2026-0162</td><td><strong>Ads Meta</strong></td><td class="muted">Campañas abril</td><td class="expense">−$ 4.200</td><td><span class="tag ok">Pagada</span></td><td>—</td></tr>
         <tr class="clickable" onclick="this.classList.toggle('row-active')"><td>F-2026-0158</td><td><strong>Influencer ABC</strong></td><td class="muted">Colab abril</td><td class="expense">−$ 2.500</td><td><span class="tag ok">Pagada</span></td><td>—</td></tr>
+      </tbody>
+    </table></div>
+  </div>`;
+}
+
+function clinica_finanzas(){
+  return pageHead('Finanzas · Clínica', 'Programa 12 sem (recurring) + estudios iniciales + 3 planes activos (médico · nutri · ejer) + API REFILL · margen 54,9 %', `<button class="btn"><svg class="ic"><use href="#i-doc"/></svg>OCR factura</button><button class="btn btn-primary"><svg class="ic"><use href="#i-plus"/></svg>Nueva factura</button>`) + `
+  <div class="kpi-grid">
+    <div class="kpi clickable income-card" onclick="kpiToggle(this)"><div class="kpi-label">Ingresos mes</div><div class="kpi-value">$ 62,4 K</div><div class="kpi-trend up">▲ 8,6 %</div></div>
+    <div class="kpi clickable" onclick="kpiToggle(this)"><div class="kpi-label">MRR programa</div><div class="kpi-value">$ 42,8 K</div><div class="kpi-trend up">186 activos · ARR $ 514 K</div></div>
+    <div class="kpi clickable" onclick="kpiToggle(this)"><div class="kpi-label">Margen</div><div class="kpi-value">54,9 %</div><div class="kpi-trend up">▲ 2 pp</div></div>
+    <div class="kpi clickable expense-card" onclick="kpiToggle(this)"><div class="kpi-label">Pendiente cobro</div><div class="kpi-value">$ 1,9 K</div><div class="kpi-trend warn">2 facturas</div></div>
+    <div class="kpi clickable" onclick="kpiToggle(this)"><div class="kpi-label">Cobros auto · 30 d</div><div class="kpi-value">98,1 %</div><div class="kpi-trend up">Stripe instant</div></div>
+    <div class="kpi clickable" onclick="kpiToggle(this)"><div class="kpi-label">CAC paciente</div><div class="kpi-value">$ 184</div><div class="kpi-trend down">▼ 12 %</div></div>
+  </div>
+
+  <div class="grid-2-eq" style="display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:14px;align-items:start">
+    <div class="card"><div class="card-h"><h3>Ingresos por fuente · 6 m</h3><span class="meta">Stacked · estudios + programa + upselling</span></div>
+      <div class="card-b"><div style="position:relative;height:260px;width:100%"><canvas id="ch-cl-fin-stack"></canvas></div></div>
+    </div>
+    <div class="card"><div class="card-h"><h3>Mix de ingresos · mayo</h3></div>
+      <div class="card-b"><div style="position:relative;height:260px;width:100%"><canvas id="ch-cl-fin-mix"></canvas></div></div>
+    </div>
+  </div>
+
+  <div class="grid-2-eq" style="display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:14px;align-items:start">
+    <div class="card"><div class="card-h"><h3>Upselling · revenue por producto · 30 d</h3><span class="meta">cross-ref Programa 12 sem</span></div>
+      <div class="card-b"><div style="position:relative;height:240px;width:100%"><canvas id="ch-cl-fin-upsell"></canvas></div></div>
+    </div>
+    <div class="card"><div class="card-h"><h3>Próximos cobros recurrentes</h3><span class="meta">7 d</span></div>
+      <div class="card-b flush"><table class="table">
+        <thead><tr><th>Cliente</th><th>Concepto</th><th>Importe</th><th>Vence</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Sara Ibáñez</strong></td><td>Renovación anual sem 12</td><td>$ 4.480</td><td>14 may</td></tr>
+          <tr><td><strong>Carla Méndez</strong></td><td>Mensualidad programa</td><td>$ 240</td><td>14 may</td></tr>
+          <tr><td><strong>Mateo Páez</strong></td><td>Renovación anual sem 12</td><td>$ 3.840</td><td>16 may</td></tr>
+          <tr><td><strong>Andrés Vega</strong></td><td>Upselling Club + Tec</td><td>$ 480</td><td>17 may</td></tr>
+          <tr><td><strong>Eva Ferrer</strong></td><td>Mensualidad programa</td><td>$ 240</td><td>18 may</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </div>
+
+  <div class="grid-2-eq" style="display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:14px;align-items:start">
+    <div class="card"><div class="card-h"><h3>Margen por línea</h3><span class="meta">Bruto por tipo</span></div>
+      <div class="card-b"><div style="position:relative;height:220px;width:100%"><canvas id="ch-cl-fin-margin"></canvas></div></div>
+    </div>
+    <div class="card"><div class="card-h"><h3>Funnel económico</h3><span class="meta">$ por etapa · 30 d</span></div>
+      <div class="card-b flush"><table class="table">
+        <thead><tr><th>Etapa</th><th>Clientes</th><th>$ medio</th><th>$ total</th></tr></thead>
+        <tbody>
+          <tr><td>Paso 2 · estudio inicial</td><td>54</td><td>$ 1.480</td><td>$ 79.920</td></tr>
+          <tr><td>Decisión · acepta protocolo</td><td>38</td><td>$ 1.620</td><td>$ 61.560</td></tr>
+          <tr><td>Programa 12 sem · entrada</td><td>38</td><td>$ 480</td><td>$ 18.240</td></tr>
+          <tr><td>Upselling 30 d</td><td>72</td><td>$ 384</td><td>$ 27.648</td></tr>
+          <tr><td>Renovaciones sem 12</td><td>22</td><td>$ 3.480</td><td>$ 76.560</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </div>
+
+  <div class="card"><div class="card-h"><h3>Facturas recientes · ingresos y gastos</h3><span class="meta">Mayo</span></div>
+    <div class="card-b flush"><table class="table">
+      <thead><tr><th>Nº</th><th>Concepto</th><th>Detalle</th><th>Importe</th><th>Estado</th><th>Vencim.</th></tr></thead>
+      <tbody>
+        <tr class="clickable" onclick="this.classList.toggle('row-active')"><td>F-2026-0182</td><td><strong>Carla Méndez</strong></td><td class="muted">BPC-157 · trimestral</td><td class="income">+$ 1.480</td><td><span class="tag ok">Cobrada</span></td><td>—</td></tr>
+        <tr class="clickable" onclick="this.classList.toggle('row-active')"><td>F-2026-0177</td><td><strong>Jorge Cabré</strong></td><td class="muted">Glutatión IV · trim.</td><td class="income">+$ 980</td><td><span class="tag warn">Pendiente</span></td><td>8 may</td></tr>
+        <tr class="clickable" onclick="this.classList.toggle('row-active')"><td>F-2026-0175</td><td><strong>Sara Ibáñez</strong></td><td class="muted">Hiperbárica · 10 sesiones</td><td class="income">+$ 1.250</td><td><span class="tag ok">Cobrada</span></td><td>—</td></tr>
+        <tr class="clickable" onclick="this.classList.toggle('row-active')"><td>F-2026-0173</td><td><strong>Pedro Vila</strong></td><td class="muted">Fisio · mensualidad</td><td class="income">+$ 620</td><td><span class="tag ok">Cobrada</span></td><td>—</td></tr>
+        <tr class="clickable" onclick="this.classList.toggle('row-active')"><td>F-2026-0180</td><td><strong>BiotechLab</strong></td><td class="muted">BPC-157 · 30 unid · API REFILL</td><td class="expense">−$ 3.750</td><td><span class="tag ok">Pagada</span></td><td>—</td></tr>
       </tbody>
     </table></div>
   </div>`;
@@ -1849,7 +2042,7 @@ const VIEWS = {
       <div class="card"><div class="card-h"><h3>Anomalías detectadas</h3><span class="meta">Claude · últimas 24 h</span></div>
         <div class="card-b spaced">
           <div class="list-item clickable"><div class="li-ic" style="color:var(--err)"><svg class="ic"><use href="#i-dollar"/></svg></div><div><div class="li-t">Gasto Ads Meta +38 % vs media</div><div class="li-m">E-Commerce · revisar campañas</div></div></div>
-          <div class="list-item clickable"><div class="li-ic" style="color:var(--warn)"><svg class="ic"><use href="#i-stetho"/></svg></div><div><div class="li-t">Stock BPC-157 bajo</div><div class="li-m">3 unid · reorden urgente</div></div></div>
+          <div class="list-item clickable"><div class="li-ic" style="color:var(--warn)"><svg class="ic"><use href="#i-bot"/></svg></div><div><div class="li-t">Agente Evaluador · 3 planes pendientes aprobación médica</div><div class="li-m">Clínica · Jessica · revisar antes de enviar al cliente</div></div></div>
           <div class="list-item clickable"><div class="li-ic" style="color:var(--info)"><svg class="ic"><use href="#i-house"/></svg></div><div><div class="li-t">SLA Mallorca cerca de venc.</div><div class="li-m">Sensor luz roja · 4 h</div></div></div>
         </div>
       </div>
@@ -1886,37 +2079,179 @@ const VIEWS = {
       </div>
     </div>`,
 
+  'holding.marketplace': () => {
+    const tab = state.marketTab || 'overview';
+    if (tab === 'overview') {
+      return pageHead('Marketplace · Reto Health', 'Catálogo único · vive en la web pública · revenue atribuido a cada sub-cuenta según origen del cliente', `<button class="btn"><svg class="ic"><use href="#i-doc"/></svg>Exportar catálogo</button><button class="btn btn-primary"><svg class="ic"><use href="#i-plus"/></svg>Nuevo producto</button>`) + `
+    <div class="kpi-grid">
+      <div class="kpi clickable" onclick="kpiToggle(this)"><div class="kpi-label">Ingresos mes · total</div><div class="kpi-value">$ 38,4 K</div><div class="kpi-trend up">▲ 8,1 %</div></div>
+      <div class="kpi clickable" onclick="kpiToggle(this)"><div class="kpi-label">Recurrente · mes</div><div class="kpi-value">$ 15,3 K</div><div class="kpi-trend up">patrocinios anuales / 12</div></div>
+      <div class="kpi clickable" onclick="kpiToggle(this)"><div class="kpi-label">ARR contratado</div><div class="kpi-value">$ 184 K</div><div class="kpi-trend up">6 patrocinios firmados</div></div>
+      <div class="kpi clickable" onclick="kpiToggle(this)"><div class="kpi-label">Eventos · 90 d</div><div class="kpi-value">4</div><div class="kpi-trend up">$ 96 K esperados</div></div>
+      <div class="kpi clickable" onclick="kpiToggle(this)"><div class="kpi-label">Margen blended</div><div class="kpi-value">68 %</div><div class="kpi-trend up">▲ ponderado por mix</div></div>
+      <div class="kpi clickable" onclick="kpiToggle(this)"><div class="kpi-label">SKUs activos</div><div class="kpi-value">28</div><div class="kpi-trend up">18 artículos + 6 patroc. + 4 ev.</div></div>
+    </div>
+
+    <div class="grid-2-eq" style="display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:14px;align-items:start">
+      <div class="card"><div class="card-h"><h3>Ingresos por categoría · 6 m</h3><span class="meta">Stacked · artículos + patrocinios + eventos</span></div>
+        <div class="card-b"><div style="position:relative;height:260px;width:100%"><canvas id="ch-mkt-stack"></canvas></div></div></div>
+      <div class="card"><div class="card-h"><h3>Mix de ingresos · mayo</h3></div>
+        <div class="card-b"><div style="position:relative;height:260px;width:100%"><canvas id="ch-mkt-mix"></canvas></div></div></div>
+    </div>
+
+    <div class="card"><div class="card-h"><h3>Atribución por sub-cuenta · clave del modelo</h3><span class="meta">Cada venta tag-ea el origen del cliente · revenue va a su sub-cuenta</span></div>
+      <div class="card-b">
+        <div style="display:grid;grid-template-columns:280px 1fr;gap:28px;align-items:center">
+          <div style="position:relative;height:260px"><canvas id="ch-mkt-attr"></canvas></div>
+          <div>
+            <table class="table" style="font-size:13px">
+              <thead><tr><th>Sub-cuenta · origen</th><th>Cliente vino de</th><th>Revenue mes</th><th>% del marketplace</th></tr></thead>
+              <tbody>
+                <tr><td><span class="tag info">E-Commerce</span></td><td>Club privado + redes sociales</td><td>$ 24,9 K</td><td>65 %</td></tr>
+                <tr><td><span class="tag sage">Clínica</span></td><td>Programa 12 sem · upselling test semanal</td><td>$ 10,8 K</td><td>28 %</td></tr>
+                <tr><td><span class="tag copper">Residences</span></td><td>Cliente residencial compró suplementos/eventos</td><td>$ 1,9 K</td><td>5 %</td></tr>
+                <tr><td><span class="tag plum">R&D</span></td><td>Suscripciones para estudios académicos</td><td>$ 0,8 K</td><td>2 %</td></tr>
+                <tr><td><strong>Total marketplace</strong></td><td>—</td><td><strong>$ 38,4 K</strong></td><td><strong>100 %</strong></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid-3" style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:14px;margin-bottom:14px;align-items:start">
+      <div class="card clickable" onclick="goSub('marketplace','articulos')" style="border-top:3px solid #3A6FD1">
+        <div class="card-h"><h3>Artículos</h3><span class="meta right">→</span></div>
+        <div class="card-b">
+          <div style="font-family:var(--display);font-size:32px;font-weight:400;color:var(--ink-deep);letter-spacing:-.02em;line-height:1">$ 14,8 K</div>
+          <div style="font-family:'Geist Mono',monospace;font-size:10.5px;color:var(--muted);margin-top:6px;letter-spacing:.06em">INGRESOS MES · 18 SKUs · MARGEN 64 %</div>
+          <div style="margin-top:14px;padding-top:14px;border-top:1px solid var(--rule);font-size:12.5px;color:var(--ink-2);line-height:1.5">
+            5 categorías · Hardware · Digital · Libros · Suplementos · Merch. Hardware + Digital ofrecidos a clientes E-Commerce; Suplementos también a clientes Clínica como upselling.
+          </div>
+        </div>
+      </div>
+      <div class="card clickable" onclick="goSub('marketplace','patrocinadores')" style="border-top:3px solid #A05A1F">
+        <div class="card-h"><h3>Patrocinadores</h3><span class="meta right">→</span></div>
+        <div class="card-b">
+          <div style="font-family:var(--display);font-size:32px;font-weight:400;color:var(--ink-deep);letter-spacing:-.02em;line-height:1">$ 15,3 K</div>
+          <div style="font-family:'Geist Mono',monospace;font-size:10.5px;color:var(--muted);margin-top:6px;letter-spacing:.06em">INGRESOS MES · 6 CONTRATOS · MARGEN 92 %</div>
+          <div style="margin-top:14px;padding-top:14px;border-top:1px solid var(--rule);font-size:12.5px;color:var(--ink-2);line-height:1.5">
+            Patrocinios B2B (marcas pagan por presencia en contenido + acceso a audiencia). Atribución 100 % a E-Commerce porque viven en sus canales.
+          </div>
+        </div>
+      </div>
+      <div class="card clickable" onclick="goSub('marketplace','eventos')" style="border-top:3px solid #6E4F7A">
+        <div class="card-h"><h3>Eventos</h3><span class="meta right">→</span></div>
+        <div class="card-b">
+          <div style="font-family:var(--display);font-size:32px;font-weight:400;color:var(--ink-deep);letter-spacing:-.02em;line-height:1">$ 8,3 K</div>
+          <div style="font-family:'Geist Mono',monospace;font-size:10.5px;color:var(--muted);margin-top:6px;letter-spacing:.06em">PENDIENTE · 4 EVENTOS 90 D · MARGEN 45 %</div>
+          <div style="margin-top:14px;padding-top:14px;border-top:1px solid var(--rule);font-size:12.5px;color:var(--ink-2);line-height:1.5">
+            Retreat · Workshop · Summit · Cena fundadores. 62 % asistentes son del club; clientes Clínica + Residences ocupan el resto.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card"><div class="card-h"><h3>Top items · todas las categorías · mayo</h3><span class="meta">revenue + sub-cuenta atribuida principal</span></div>
+      <div class="card-b flush"><table class="table">
+        <thead><tr><th>Item</th><th>Categoría</th><th>Unidades / contratos</th><th>Revenue</th><th>Atribución principal</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Patrocinio Hyperice · anual</strong></td><td><span class="tag copper">Patrocinio</span></td><td>1 contrato</td><td>$ 3.500</td><td><span class="tag info">E-Commerce 100 %</span></td></tr>
+          <tr><td><strong>Patrocinio Magic Mind · anual</strong></td><td><span class="tag copper">Patrocinio</span></td><td>1 contrato</td><td>$ 3.000</td><td><span class="tag info">E-Commerce 100 %</span></td></tr>
+          <tr><td><strong>Kit Biohacker</strong></td><td><span class="tag info">Artículo · Hardware</span></td><td>14 uds</td><td>$ 6.720</td><td><span class="tag info">E-Commerce 86 %</span> · <span class="tag sage">Clínica 14 %</span></td></tr>
+          <tr><td><strong>Suplemento exclusivo</strong></td><td><span class="tag info">Artículo · Suplementos</span></td><td>62 uds</td><td>$ 4.960</td><td><span class="tag sage">Clínica 72 %</span> · <span class="tag info">E-Commerce 28 %</span></td></tr>
+          <tr><td><strong>Curso Longevidad práctica</strong></td><td><span class="tag info">Artículo · Digital</span></td><td>18 uds</td><td>$ 5.220</td><td><span class="tag info">E-Commerce 78 %</span> · <span class="tag sage">Clínica 22 %</span></td></tr>
+          <tr><td><strong>Workshop metabolismo · Madrid</strong></td><td><span class="tag plum">Evento</span></td><td>54 / 80 entradas</td><td>$ 8.300</td><td><span class="tag info">E-Commerce 52 %</span> · <span class="tag sage">Clínica 38 %</span></td></tr>
+          <tr><td><strong>Manual Reto Health</strong></td><td><span class="tag info">Artículo · Libro</span></td><td>32 uds</td><td>$ 1.536</td><td><span class="tag info">E-Commerce 62 %</span> · <span class="tag sage">Clínica 28 %</span></td></tr>
+        </tbody>
+      </table></div>
+    </div>
+
+    <div class="card" style="margin-top:14px"><div class="card-h"><h3>Pipeline · contratos y eventos a cerrar</h3><span class="meta">próximos 90 d</span></div>
+      <div class="card-b flush"><table class="table">
+        <thead><tr><th>Item</th><th>Categoría</th><th>Importe esperado</th><th>Probabilidad</th><th>Cierre est.</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Patrocinio LMNT</strong></td><td><span class="tag copper">Patrocinio</span></td><td>$ 32.000 anual</td><td><span class="tag ok">82 %</span></td><td>Jun 26</td></tr>
+          <tr><td><strong>Patrocinio Athletic Greens</strong></td><td><span class="tag copper">Patrocinio</span></td><td>$ 24.000 anual</td><td><span class="tag warn">52 %</span></td><td>Jul 26</td></tr>
+          <tr><td><strong>Retreat Pirineos · Sep 26</strong></td><td><span class="tag plum">Evento</span></td><td>$ 28.000</td><td><span class="tag ok">78 %</span></td><td>Sep 26</td></tr>
+          <tr><td><strong>Edición lujo Manual · pre-order</strong></td><td><span class="tag info">Artículo</span></td><td>$ 4.800</td><td><span class="tag info">40 %</span></td><td>Jun 26</td></tr>
+        </tbody>
+      </table></div>
+    </div>`;
+    }
+    // Sub-tabs · catálogo por categoría (reutiliza estructura productos)
+    return VIEWS['ecommerce.productos'] ? (() => { state.productosTab = tab; return VIEWS['ecommerce.productos'](); })() : pageHead('Marketplace · ' + tab, '', '') + '<div class="card"><div class="card-b"><p class="muted">Sub-vista pendiente</p></div></div>';
+  },
+
   'holding.calendario': tpl_calendario,
   'holding.finanzas': holding_finanzas,
   'holding.personal': tpl_personal,
   'holding.analitica': holding_analitica,
 
   /* ============ CLÍNICA ============ */
-  'clinica.dashboard': () => pageHead('Clínica · Dashboard', 'Pacientes · citas · protocolos · inventario · liderado por Jessica Pardo', `<button class="btn" onclick="go('citas')"><svg class="ic"><use href="#i-cal"/></svg>Agenda</button><button class="btn btn-primary" onclick="go('pacientes')"><svg class="ic"><use href="#i-plus"/></svg>Nuevo paciente</button>`) + `
+  'clinica.dashboard': () => pageHead('Clínica · Dashboard', 'Programa de 12 sem · funnel automatizado · upselling · estudios + protocolos · liderado por Jessica Pardo', `<button class="btn" onclick="go('citas')"><svg class="ic"><use href="#i-cal"/></svg>Agenda</button><button class="btn btn-primary" onclick="go('funnel')"><svg class="ic"><use href="#i-flow"/></svg>Ver funnel</button>`) + `
     <div class="kpi-grid">
-      <div class="kpi clickable" onclick="kpiToggle(this)"><div class="kpi-label">Pacientes activos</div><div class="kpi-value">312</div><div class="kpi-trend up">▲ 18 esta semana</div></div>
-      <div class="kpi clickable" onclick="kpiToggle(this)"><div class="kpi-label">Citas hoy</div><div class="kpi-value">6</div><div class="kpi-trend flat">4 confirmadas</div></div>
-      <div class="kpi clickable" onclick="kpiToggle(this)"><div class="kpi-label">NPS · 30 días</div><div class="kpi-value">72</div><div class="kpi-trend up">▲ 9 puntos</div></div>
-      <div class="kpi clickable" onclick="kpiToggle(this)"><div class="kpi-label">Protocolos activos</div><div class="kpi-value">48</div><div class="kpi-trend flat">peptidos · IV · luz roja</div></div>
+      <div class="kpi clickable" onclick="kpiToggle(this)"><div class="kpi-label">Leads · 30 d</div><div class="kpi-value">142</div><div class="kpi-trend up">▲ 18 % vs mes ant.</div></div>
+      <div class="kpi clickable" onclick="kpiToggle(this)"><div class="kpi-label">Conv. a pago (paso 2)</div><div class="kpi-value">38 %</div><div class="kpi-trend up">▲ 4 pp</div></div>
+      <div class="kpi clickable" onclick="kpiToggle(this)"><div class="kpi-label">En programa</div><div class="kpi-value">186</div><div class="kpi-trend up">▲ 22 este mes</div></div>
+      <div class="kpi clickable" onclick="kpiToggle(this)"><div class="kpi-label">Renovación sem 12</div><div class="kpi-value">64 %</div><div class="kpi-trend up">▲ 6 pp</div></div>
+      <div class="kpi clickable" onclick="kpiToggle(this)"><div class="kpi-label">MRR programa</div><div class="kpi-value">$ 42,8 K</div><div class="kpi-trend up">▲ 12 %</div></div>
+      <div class="kpi clickable" onclick="kpiToggle(this)"><div class="kpi-label">Upselling rate</div><div class="kpi-value">28 %</div><div class="kpi-trend up">tests semanales</div></div>
     </div>
-    <div class="grid-2">
-      <div class="card"><div class="card-h"><h3>Ingresos Clínica · 6 meses</h3></div><div class="card-b"><div style="position:relative;height:210px;width:100%"><canvas id="ch-cl-rev"></canvas></div></div></div>
-      <div class="card"><div class="card-h"><h3>Inventario crítico</h3><span class="meta">3 alertas</span></div>
-        <div class="card-b spaced">
-          <div><div class="split"><span>BPC-157</span><span class="right tag err">Stock bajo</span></div><div class="bar" style="margin-top:6px"><span style="width:18%"></span></div><div class="muted" style="margin-top:4px">3 unid · umbral 15</div></div>
-          <div><div class="split"><span>NAD+ Ampollas</span><span class="right tag warn">Reordenar</span></div><div class="bar" style="margin-top:6px"><span style="width:38%"></span></div><div class="muted" style="margin-top:4px">12 unid · umbral 30</div></div>
-          <div><div class="split"><span>Glutatión IV</span><span class="right tag ok">Stock OK</span></div><div class="bar" style="margin-top:6px"><span style="width:74%"></span></div><div class="muted" style="margin-top:4px">37 unid · umbral 20</div></div>
+
+    <div class="grid-2-eq" style="display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:14px;align-items:start">
+      <div class="card clickable" onclick="go('funnel')"><div class="card-h"><h3>Funnel cliente · resumen</h3><span class="meta">Click para drill-down</span></div>
+        <div class="card-b">
+          ${[['Entrada · lead',142,'⚡',''],['Paso 2 · pago + test',54,'⚡','38 %'],['Paso 3 · reserva cita',52,'⚡','96 %'],['Paso 4 · estudio',48,'✋','92 %'],['Paso 5 · resultados',47,'⚡','98 %'],['Decisión · acepta',38,'⚡','81 %'],['Inicio tratamiento',38,'⚡','100 %']].map(([etapa,n,auto,pct]) => `
+            <div style="display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid var(--paper-2)">
+              <div style="width:24px;font-family:'Geist Mono',monospace;font-size:11px;color:${auto==='⚡'?'#0F8A5F':'#C77A14'}">${auto}</div>
+              <div style="flex:1;font-size:13px">${etapa}</div>
+              <div style="width:48px;text-align:right;font-family:'Geist Mono',monospace;font-size:12px;color:var(--ink)">${n}</div>
+              <div style="width:54px;text-align:right;font-family:'Geist Mono',monospace;font-size:11.5px;color:var(--muted)">${pct}</div>
+            </div>`).join('')}
+        </div>
+      </div>
+      <div class="card"><div class="card-h"><h3>Ingresos Clínica · 6 m</h3></div><div class="card-b"><div style="position:relative;height:230px;width:100%"><canvas id="ch-cl-rev"></canvas></div></div></div>
+    </div>
+
+    <div class="grid-2-eq" style="display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:14px;align-items:start">
+      <div class="card clickable" onclick="go('programa')"><div class="card-h"><h3>Programa 12 sem · distribución</h3><span class="meta">186 activos</span></div>
+        <div class="card-b"><div style="position:relative;height:220px;width:100%"><canvas id="ch-cl-prog-week"></canvas></div></div>
+      </div>
+      <div class="card clickable" onclick="go('automatizaciones')"><div class="card-h"><h3>Salud de automatizaciones</h3><span class="meta">Click para detalle</span></div>
+        <div class="card-b">
+          <div style="display:flex;gap:18px;padding:8px 0">
+            <div style="flex:1">
+              <div style="font-family:'Geist Mono',monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)">⚡ Activas</div>
+              <div style="font-family:var(--display);font-size:36px;font-weight:400;color:var(--ok);line-height:1.1;margin-top:6px">22</div>
+              <div style="font-family:'Geist Mono',monospace;font-size:11px;color:var(--ink-2)">runs · 1.842 / 30 d</div>
+            </div>
+            <div style="flex:1">
+              <div style="font-family:'Geist Mono',monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)">◷ Pendientes</div>
+              <div style="font-family:var(--display);font-size:36px;font-weight:400;color:var(--warn);line-height:1.1;margin-top:6px">5</div>
+              <div style="font-family:'Geist Mono',monospace;font-size:11px;color:var(--ink-2)">fase posterior</div>
+            </div>
+            <div style="flex:1">
+              <div style="font-family:'Geist Mono',monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)">✋ Manual</div>
+              <div style="font-family:var(--display);font-size:36px;font-weight:400;color:var(--err);line-height:1.1;margin-top:6px">3</div>
+              <div style="font-family:'Geist Mono',monospace;font-size:11px;color:var(--ink-2)">por automatizar</div>
+            </div>
+          </div>
+          <div style="margin-top:10px;padding-top:12px;border-top:1px solid var(--paper-2);font-size:12px;color:var(--ink-2)">
+            <strong style="color:var(--ink)">Prioridad #1:</strong> automatizar el Paso 4 (resultados de estudio al perfil del cliente).
+          </div>
         </div>
       </div>
     </div>
-    <div class="card"><div class="card-h"><h3>Citas próximas</h3><span class="meta">Hoy · 6 citas</span></div>
+
+    <div class="card"><div class="card-h"><h3>Próximas decisiones · semana 12</h3><span class="meta">Clientes en semana 10-12 · próxima renovación</span></div>
       <div class="card-b flush"><table class="table">
-        <thead><tr><th>Hora</th><th>Paciente</th><th>Protocolo</th><th>Estado</th><th>NPS</th></tr></thead>
+        <thead><tr><th>Cliente</th><th>Semana</th><th>Adherencia 3 planes</th><th>Marcadores</th><th>Probabilidad renovación</th><th>Acción</th></tr></thead>
         <tbody>
-          <tr><td><strong>10:00</strong></td><td><strong>Carla Méndez</strong><div class="muted">38 a · Madrid</div></td><td><span class="tag copper">BPC-157</span></td><td><span class="tag ok">Confirmada</span></td><td>9</td></tr>
-          <tr><td><strong>11:30</strong></td><td><strong>Luis Romero</strong><div class="muted">45 a · Lisboa</div></td><td><span class="tag sage">Hiperbárica</span></td><td><span class="tag warn">Pendiente</span></td><td>—</td></tr>
-          <tr><td><strong>12:30</strong></td><td><strong>Sara Ibáñez</strong><div class="muted">52 a · Barcelona</div></td><td><span class="tag info">Luz roja</span></td><td><span class="tag ok">Confirmada</span></td><td>10</td></tr>
-          <tr><td><strong>16:00</strong></td><td><strong>Pedro Vila</strong><div class="muted">29 a · Valencia</div></td><td><span class="tag copper">Fisio</span></td><td><span class="tag ok">Confirmada</span></td><td>8</td></tr>
+          <tr><td><strong>Carla Méndez</strong><div class="muted">38 a · Madrid</div></td><td>11 / 12</td><td>94 % · 88 % · 86 %</td><td>PCR ↓ 32 %</td><td><span class="tag ok">82 %</span></td><td><button class="btn">Convocar</button></td></tr>
+          <tr><td><strong>Sara Ibáñez</strong><div class="muted">52 a · Barcelona</div></td><td>12 / 12</td><td>96 % · 92 % · 90 %</td><td>HRV +24 %</td><td><span class="tag ok">94 %</span></td><td><button class="btn">Cobrar anual</button></td></tr>
+          <tr><td><strong>Marta Ríos</strong><div class="muted">61 a · Bilbao</div></td><td>10 / 12</td><td>72 % · 64 % · 58 %</td><td>Glucosa baja</td><td><span class="tag warn">58 %</span></td><td><button class="btn">Llamar</button></td></tr>
+          <tr><td><strong>Pedro Vila</strong><div class="muted">29 a · Valencia</div></td><td>12 / 12</td><td>48 % · 32 % · 28 %</td><td>Sin progreso</td><td><span class="tag err">28 %</span></td><td><button class="btn">Test motivos</button></td></tr>
         </tbody>
       </table></div>
     </div>`,
@@ -2015,7 +2350,196 @@ const VIEWS = {
       </table></div>
     </div>`,
 
-  'clinica.finanzas': tpl_finanzas,
+  // ===== Clínica · módulos nuevos (Funnel · Programa · Productos · Automatizaciones) =====
+
+  'clinica.funnel': () => {
+    const steps = [
+      {n:1,t:'Entrada · lead',sub:'Cliente quiere estudio de salud · RRSS · recomendados',count:142,prev:120,auto:'⚡',autoLabel:'Automatizado',acts:['Captura datos en CRM al primer contacto','Respuesta auto por email con info del servicio'],pending:['Chatbot WhatsApp vinculado a CRM','Respuesta auto por RRSS / SMS / llamada']},
+      {n:2,t:'CORE · pago + test',sub:'Firma documentos + Pago $ + TEST de protocolo',count:54,prev:142,auto:'⚡',autoLabel:'PRIORIDAD #1 · automatizado',acts:['Envío auto de documentos para firma digital','Generación y envío de link de pago al instante','Generación y envío auto de factura al confirmar pago','Envío del TEST de protocolo (plantilla con lógica condicional)','Captura y almacenamiento en CRM']},
+      {n:3,t:'Reserva cita',sub:'Tras confirmar pago, envío auto del link de reserva',count:52,prev:54,auto:'⚡',autoLabel:'Automatizado',acts:['Envío auto del link de reserva tras pago confirmado','Confirmación auto al responsable asignado','Recordatorio auto 2 d antes con instrucciones preestudio']},
+      {n:4,t:'Día de estudio en clínica',sub:'Cliente viene en persona · tests con máquinas (HSIC, sangre, composición, HRV, marcadores hormonales) · NO hay stock de productos en clínica · todo se hace on-demand',count:48,prev:52,auto:'✋',autoLabel:'Manual + parcial · automatizar prioridad',acts:['Recepción y check-in del cliente en clínica · 90 min reservados','Tests con equipos: analítica sangre, composición corporal (InBody), HRV (Polar), HSIC, etc.','Subida de resultados al perfil del cliente (manual hoy)','Notificación auto: "tus resultados están listos · agenda para presentación en 2 sem"'],pending:['Subida automática desde equipos de medición vía HL7/FHIR','OCR de informes en papel a perfil cliente']},
+      {n:5,t:'Resultados online + Agente Evaluador',sub:'Cita 1h online presentando resultados · Agente Evaluador AI genera los 3 planes en paralelo (médico · nutricional · ejercicio)',count:47,prev:48,auto:'⚡',autoLabel:'Automatizado',acts:['Convocatoria auto de cita con link videollamada · +2 sem desde estudio','Grabación guardada auto en perfil del cliente','<strong>Agente Evaluador AI</strong> · skill 1 · genera <strong>Plan Médico</strong> (protocolo farmacéutico + IV + dosificación) cross-ref con marcadores del estudio','<strong>Agente Evaluador AI</strong> · skill 2 · genera <strong>Plan Nutricional</strong> personalizado · macro/micro · timing · ayunos según objetivos del TEST protocolo','<strong>Agente Evaluador AI</strong> · skill 3 · genera <strong>Plan de Ejercicio</strong> · fuerza · cardio · movilidad · adaptado a edad y composición corporal','Los 3 planes se entregan en el portal cliente antes de la cita · el médico revisa y aprueba antes de presentar']},
+      {n:6,t:'Decisión · acepta los 3 planes',sub:'¿El cliente acepta el programa completo (médico + nutrición + ejercicio)?',count:38,prev:47,auto:'⚡',autoLabel:'Automatizado · ambas ramas',acts:['Rama B (acepta · 81 %): cobro instantáneo + factura auto + pedido API REFILL (solo plan médico) + activación de los 3 planes en perfil cliente','Rama A (no continúa · 19 %): test auto de motivos desde perfil cliente · dato guardado en CRM'],pending:[]}
+    ];
+    const autoColor = a => a==='⚡' ? '#0F8A5F' : a==='◷' ? '#C77A14' : '#C72F2F';
+    return pageHead('Clínica · Funnel cliente', 'Los 6 pasos del journey end-to-end · estado de automatización por etapa · prioridad #1 marcada', `<button class="btn"><svg class="ic"><use href="#i-doc"/></svg>Exportar flujo</button><button class="btn btn-primary"><svg class="ic"><use href="#i-spark"/></svg>Sugerir mejoras AI</button>`) + `
+    <div class="kpi-grid">
+      <div class="kpi clickable" onclick="kpiToggle(this)"><div class="kpi-label">Leads · 30 d</div><div class="kpi-value">142</div><div class="kpi-trend up">▲ 18 %</div></div>
+      <div class="kpi clickable" onclick="kpiToggle(this)"><div class="kpi-label">Convierten paso 2</div><div class="kpi-value">38 %</div><div class="kpi-trend up">54 clientes</div></div>
+      <div class="kpi clickable" onclick="kpiToggle(this)"><div class="kpi-label">Tasa aceptación protocolo</div><div class="kpi-value">81 %</div><div class="kpi-trend up">▲ 6 pp</div></div>
+      <div class="kpi clickable" onclick="kpiToggle(this)"><div class="kpi-label">Tiempo medio L→Tratamiento</div><div class="kpi-value">18 d</div><div class="kpi-trend down">▼ 4 d</div></div>
+      <div class="kpi clickable" onclick="kpiToggle(this)"><div class="kpi-label">Automatizadas · 7</div><div class="kpi-value">5 / 6</div><div class="kpi-trend warn">paso 4 manual</div></div>
+      <div class="kpi clickable" onclick="kpiToggle(this)"><div class="kpi-label">Cobro promedio paso 2</div><div class="kpi-value">$ 1.480</div><div class="kpi-trend up">▲ 3 %</div></div>
+    </div>
+
+    ${steps.map((s,i) => `
+      <div class="card" style="margin-bottom:14px;position:relative">
+        <div class="card-h" style="gap:14px">
+          <div style="font-family:var(--display);font-size:32px;font-weight:300;line-height:1;color:var(--ws-accent);min-width:42px">${String(s.n).padStart(2,'0')}</div>
+          <div style="flex:1">
+            <h3 style="margin:0;font-size:15px">${s.t}</h3>
+            <div class="muted" style="font-size:12px;margin-top:2px">${s.sub}</div>
+          </div>
+          <span style="font-family:'Geist Mono',monospace;font-size:9.5px;letter-spacing:.10em;color:${autoColor(s.auto)};text-transform:uppercase">${s.auto} ${s.autoLabel}</span>
+        </div>
+        <div class="card-b" style="display:flex;gap:18px;align-items:flex-start">
+          <div style="flex:1">
+            <div style="font-family:'Geist Mono',monospace;font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:8px">⚡ Acciones automáticas</div>
+            <ul style="margin:0;padding-left:18px;font-size:13px;line-height:1.7;color:var(--ink)">${s.acts.map(a=>`<li>${a}</li>`).join('')}</ul>
+            ${s.pending?.length ? `<div style="font-family:'Geist Mono',monospace;font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin:14px 0 8px">◷ Pendiente · fase posterior</div><ul style="margin:0;padding-left:18px;font-size:13px;line-height:1.7;color:var(--ink-2)">${s.pending.map(a=>`<li>${a}</li>`).join('')}</ul>`:''}
+          </div>
+          <div style="width:200px;flex-shrink:0;border-left:1px solid var(--rule);padding-left:18px">
+            <div style="font-family:'Geist Mono',monospace;font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)">En esta etapa</div>
+            <div style="font-family:var(--display);font-size:34px;font-weight:400;color:var(--ink-deep);line-height:1.1;margin:8px 0 4px">${s.count}</div>
+            <div style="font-family:'Geist Mono',monospace;font-size:11px;color:var(--ink-2)">de ${s.prev} · ${Math.round(s.count/s.prev*100)} %</div>
+            <div style="margin-top:10px;height:6px;background:var(--paper-2);border-radius:3px;overflow:hidden"><div style="width:${Math.round(s.count/s.prev*100)}%;height:100%;background:var(--ws-accent)"></div></div>
+          </div>
+        </div>
+      </div>
+    `).join('')}`;
+  },
+
+  'clinica.programa': () => {
+    return pageHead('Clínica · Programa 12 semanas', '186 clientes activos · estructura 4+4+4 (onboarding · núcleo · renovación) · 3 planes en paralelo (médico · nutrición · ejercicio) · decisión renovación en sem 12', `<button class="btn"><svg class="ic"><use href="#i-doc"/></svg>Exportar cohorte</button><button class="btn btn-primary"><svg class="ic"><use href="#i-spark"/></svg>Sugerir intervención AI</button>`) + `
+    <div class="kpi-grid">
+      <div class="kpi clickable" onclick="kpiToggle(this)"><div class="kpi-label">Activos</div><div class="kpi-value">186</div><div class="kpi-trend up">▲ 22 este mes</div></div>
+      <div class="kpi clickable" onclick="kpiToggle(this)"><div class="kpi-label">Sem. media</div><div class="kpi-value">6,4</div><div class="kpi-trend flat">de 12</div></div>
+      <div class="kpi clickable" onclick="kpiToggle(this)"><div class="kpi-label">Retención S1→S12</div><div class="kpi-value">64 %</div><div class="kpi-trend up">▲ 6 pp</div></div>
+      <div class="kpi clickable" onclick="kpiToggle(this)"><div class="kpi-label">Tests completados / sem</div><div class="kpi-value">82 %</div><div class="kpi-trend up">▲ 4 pp</div></div>
+      <div class="kpi clickable" onclick="kpiToggle(this)"><div class="kpi-label">Adherencia 3 planes</div><div class="kpi-value">76 %</div><div class="kpi-trend up">médico+nutri+ejer</div></div>
+      <div class="kpi clickable" onclick="kpiToggle(this)"><div class="kpi-label">Renovación sem 12</div><div class="kpi-value">64 %</div><div class="kpi-trend up">▲ 6 pp</div></div>
+    </div>
+
+    <div class="card"><div class="card-h"><h3>Personas activas por semana + conversión entre semanas</h3><span class="meta">barras · n absoluto · línea · % que pasa de S(n) a S(n+1) · puntos entre dos barras</span></div>
+      <div class="card-b"><div style="position:relative;height:320px;width:100%"><canvas id="ch-cl-prog-personas"></canvas></div></div>
+    </div>
+
+    <div class="grid-2-eq" style="display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:14px;margin-bottom:14px;align-items:start">
+      <div class="card"><div class="card-h"><h3>Funnel acumulado · S1 → S12</h3><span class="meta">% que sigue activo en cada semana · vs. cohorte inicial</span></div><div class="card-b"><div style="position:relative;height:280px;width:100%"><canvas id="ch-cl-prog-funnel"></canvas></div></div></div>
+      <div class="card"><div class="card-h"><h3>Upselling por semana · stacked</h3><span class="meta">ofertas aceptadas · cross-ref productos E-Commerce</span></div><div class="card-b"><div style="position:relative;height:280px;width:100%"><canvas id="ch-cl-prog-upsell-week"></canvas></div></div></div>
+    </div>
+
+    <div class="card"><div class="card-h"><h3>Cohort heatmap · retención mensual</h3><span class="meta">% activos en cada semana · cohortes Dic-25 → May-26</span></div>
+      <div class="card-b" id="clinicaCohortHost" style="overflow-x:auto;padding:14px 16px"></div>
+    </div>
+
+    <div class="grid-2-eq" style="display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:14px;margin-bottom:14px;align-items:start">
+      <div class="card"><div class="card-h"><h3>Adherencia de los 3 planes · por semana</h3><span class="meta">% cumple cada plan</span></div><div class="card-b"><div style="position:relative;height:240px;width:100%"><canvas id="ch-cl-prog-plans"></canvas></div></div></div>
+      <div class="card"><div class="card-h"><h3>Engagement medio del test semanal</h3><span class="meta">score / 100 · baseline 60</span></div><div class="card-b"><div style="position:relative;height:240px;width:100%"><canvas id="ch-cl-prog-eng"></canvas></div></div></div>
+    </div>
+
+    <div class="card"><div class="card-h"><h3>Listado completo · clientes en programa</h3><span class="meta">186 activos · click para ficha</span></div>
+      <div class="card-b flush" style="max-height:480px;overflow-y:auto"><table class="table">
+        <thead style="position:sticky;top:0;background:var(--paper);z-index:1"><tr><th>Cliente</th><th>Sem actual</th><th>Tests</th><th>Plan médico</th><th>Plan nutri</th><th>Plan ejer</th><th>Eng</th><th>Riesgo</th></tr></thead>
+        <tbody>
+          ${[
+            ['Carla Méndez','38 a','3','3/3','Antiinflamatorio','Mediterráneo','Movilidad + cardio L','94 %','ok'],
+            ['Pedro Vila','29 a','2','2/2','Recuperación','Performance','Fuerza 4×/sem','82 %','ok'],
+            ['Marina Coll','41 a','1','1/1','Energía + sueño','Anti-fatiga','Z2 + yoga','78 %','ok'],
+            ['Luis Romero','45 a','1','1/1','Anti-inflamatorio','Mediterráneo','Movilidad L','71 %','ok'],
+            ['Sara Ibáñez','52 a','7','6/7','Hormonal','Anti-perimenopausia','Fuerza 3×/sem','89 %','ok'],
+            ['Andrés Vega','52 a','6','5/6','Anti-aging','Mediterráneo','Cardio + fuerza','82 %','ok'],
+            ['Jorge Cabré','34 a','5','4/5','Detox + energía','Ayuno intermitente','Z2 + HIIT','68 %','warn'],
+            ['Helena Gil','47 a','5','5/5','Recuperación','Antiinflamatoria','Movilidad + yoga','76 %','ok'],
+            ['Mateo Páez','58 a','11','10/11','Longevidad core','Mediterráneo','Fuerza M + cardio','78 %','ok'],
+            ['Eva Ferrer','44 a','10','9/10','Hormonal','Mediterráneo','Movilidad L','64 %','warn'],
+            ['Diego Lema','39 a','12','11/12','Anti-aging','Performance','Hybrid · 5d','88 %','ok'],
+            ['Marta Ríos','61 a','10','8/10','Anti-aging suave','Mediterráneo','Movilidad L','52 %','err']
+          ].map(([n,e,s,t,med,nut,ejer,eng,r]) => `<tr><td><strong>${n}</strong><div class="muted">${e}</div></td><td>${s}</td><td>${t}</td><td><span class="tag info">${med}</span></td><td><span class="tag sage">${nut}</span></td><td><span class="tag copper">${ejer}</span></td><td>${eng}</td><td><span class="tag ${r}">${r==='ok'?'OK':r==='warn'?'Vigilar':'Alto'}</span></td></tr>`).join('')}
+        </tbody>
+      </table></div>
+    </div>
+
+    <div class="card" style="margin-top:14px"><div class="card-h"><h3>Drop-off detallado · causa raíz por transición</h3><span class="meta">los gráficos arriba ya muestran los % · esta tabla añade el «por qué» (cross-ref test motivos)</span></div>
+      <div class="card-b flush"><table class="table">
+        <thead><tr><th>Transición</th><th>Entran</th><th>Continúan</th><th>Drop</th><th>Causa principal (test motivos)</th></tr></thead>
+        <tbody>
+          <tr><td>S1 → S2</td><td>100</td><td>96</td><td>4,0 %</td><td>Logística · primera dosis (sin protocolo entendido)</td></tr>
+          <tr><td>S2 → S3</td><td>96</td><td>92</td><td>4,2 %</td><td>Efectos secundarios primeras dosis</td></tr>
+          <tr><td>S3 → S4</td><td>92</td><td>88</td><td>4,3 %</td><td>Tiempo / agenda · dificultad de adherencia</td></tr>
+          <tr><td>S4 → S5</td><td>88</td><td>85</td><td>3,4 %</td><td>Falta de resultados visibles aún</td></tr>
+          <tr><td>S5 → S6</td><td>85</td><td>82</td><td>3,5 %</td><td>Coste percibido vs resultados</td></tr>
+          <tr><td>S6 → S7</td><td>82</td><td>79</td><td>3,7 %</td><td>Mid-program fatigue · zona crítica</td></tr>
+          <tr><td>S7 → S8</td><td>79</td><td>76</td><td>3,8 %</td><td>Mid-program fatigue · zona crítica</td></tr>
+          <tr><td>S8 → S9</td><td>76</td><td>74</td><td>2,6 %</td><td>Cambio personal externo</td></tr>
+          <tr><td>S9 → S10</td><td>74</td><td>72</td><td>2,7 %</td><td>Vida (mudanza, hijos, salud familiar)</td></tr>
+          <tr><td>S10 → S11</td><td>72</td><td>69</td><td>4,2 %</td><td>Anticipan decisión sem 12 · prefieren parar</td></tr>
+          <tr><td>S11 → S12</td><td>69</td><td>66</td><td>4,3 %</td><td>Anticipan decisión sem 12 · prefieren parar</td></tr>
+          <tr><td><strong>S12 → Renueva</strong></td><td><strong>66</strong></td><td><strong>42</strong></td><td><strong>36,4 %</strong></td><td><strong>Decisión renovación · 64 % continúan</strong></td></tr>
+        </tbody>
+      </table></div>
+    </div>`;
+  },
+
+  // clinica.productos eliminado · productos viven solo en e-commerce.
+
+  'clinica.automatizaciones': () => {
+    const autos = [
+      ['Captura datos lead en CRM','Cobros · Comunicación','⚡','1.842 / 30 d','99,8 %','Activo'],
+      ['Email auto · info del servicio','Comunicación','⚡','142 / 30 d','100 %','Activo'],
+      ['Envío de docs para firma digital','Documentos','⚡','54 / 30 d','100 %','Activo'],
+      ['Link de pago instantáneo (paso 2)','Cobros','⚡','54 / 30 d','98,1 %','Activo'],
+      ['Factura auto al confirmar pago','Facturas','⚡','54 / 30 d','100 %','Activo'],
+      ['TEST de protocolo · plantilla condicional','Análisis · Gemini+Perplexity','⚡','54 / 30 d','96,3 %','Activo'],
+      ['Envío link de reserva tras pago','Comunicación · Calendario','⚡','52 / 30 d','100 %','Activo'],
+      ['Recordatorio 2 d antes con preestudio','Comunicación','⚡','48 / 30 d','97,9 %','Activo'],
+      ['Subida resultados al perfil cliente','Datos','✋','48 / 30 d','—','MANUAL · Prioridad #1'],
+      ['Notificación "resultados listos"','Comunicación','⚡','48 / 30 d','100 %','Activo'],
+      ['Convocatoria cita resultados (videocall)','Comunicación · Calendario','⚡','47 / 30 d','100 %','Activo'],
+      ['Grabación auto en perfil cliente','Datos · Vídeo','⚡','47 / 30 d','98,9 %','Activo'],
+      ['Cobro instantáneo si acepta protocolo','Cobros','⚡','38 / 30 d','100 %','Activo'],
+      ['Pedido API REFILL farmacéutica','Pedidos · API','⚡','38 / 30 d','94,7 %','Activo'],
+      ['Notif farmacéutica · pedido confirmado','Comunicación','⚡','38 / 30 d','100 %','Activo'],
+      ['Tracking de envío al cliente','Comunicación · Logística','⚡','38 / 30 d','100 %','Activo'],
+      ['Test semanal (sem 1-12)','Análisis · Gemini+Perplexity','⚡','1.452 / 30 d','92,1 %','Activo'],
+      ['Análisis de respuestas + upselling','Análisis · AI','⚡','1.452 / 30 d','89,4 %','Activo'],
+      ['Cobro de upselling aceptado + factura','Cobros · Facturas','⚡','72 / 30 d','100 %','Activo'],
+      ['Cobro anual/mensual sem 12','Cobros','⚡','22 / 30 d','100 %','Activo'],
+      ['Reserva nuevo estudio sem 12','Calendario','⚡','22 / 30 d','100 %','Activo'],
+      ['Test de motivos (rama A · no continúa)','Datos · CRM','⚡','9 / 30 d','100 %','Activo'],
+      ['Chatbot WhatsApp vinculado a CRM','Comunicación','◷','—','—','FASE POSTERIOR'],
+      ['Respuesta auto RRSS / SMS / llamada','Comunicación','◷','—','—','FASE POSTERIOR'],
+      ['Subida auto desde equipos de medición','Datos · IoT','◷','—','—','FASE POSTERIOR'],
+      ['OCR informes a perfil cliente','Datos · OCR','◷','—','—','FASE POSTERIOR'],
+      ['Recomendación protocolo AI (paso 5)','Análisis · AI','◷','—','—','FASE POSTERIOR'],
+      ['Sincronización HRV / sueño wearables','Datos · IoT','✋','—','—','MANUAL'],
+      ['Importación HSIC anual sem 12','Datos','✋','—','—','MANUAL']
+    ];
+    const statColor = s => s==='⚡' ? 'ok' : s==='◷' ? 'warn' : 'err';
+    const counts = autos.reduce((a,r) => { a[r[2]]=(a[r[2]]||0)+1; return a; }, {});
+    return pageHead('Clínica · Automatizaciones', 'Health-check del flujo end-to-end · prioridad #1 marcada con ✋ · runs últimos 30 d', `<button class="btn" onclick="window.open('clinica-flow/index.html','_blank')"><svg class="ic"><use href="#i-doc"/></svg>Preview UIs</button><button class="btn btn-primary" onclick="window.open('roadmap-integraciones.pdf','_blank')"><svg class="ic"><use href="#i-doc"/></svg>Roadmap PDF</button>`) + `
+    <div class="card" style="margin-bottom:18px;background:linear-gradient(135deg,rgba(196,244,94,.08),rgba(74,106,72,.04));border-color:rgba(74,106,72,.3)">
+      <div class="card-b" style="display:flex;gap:18px;align-items:center">
+        <div style="font-family:var(--display);font-size:36px;font-weight:300;color:var(--sage)">⚡</div>
+        <div style="flex:1">
+          <h3 style="margin:0 0 4px;font-size:15px;color:var(--ink-deep)">Entrega · 6 UIs funcionales + 29 funciones backend mock</h3>
+          <p style="margin:0;font-family:var(--sans);font-size:13px;color:var(--ink-2);line-height:1.55">Portal cliente · TEST protocolo · test semanal · test motivos · plantilla factura · 5 email templates. <code style="font-family:var(--mono);font-size:12px;background:rgba(0,0,0,.04);padding:2px 6px;border-radius:3px">clinica-flow/automations.js</code> incluye event bus, state localStorage y webhooks doc. Specs de integración externas (Stripe/Cal.com/GHL/WhatsApp/REFILL/DocuSign) en <code style="font-family:var(--mono);font-size:12px;background:rgba(0,0,0,.04);padding:2px 6px;border-radius:3px">roadmap-integraciones.pdf</code>.</p>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:6px;flex-shrink:0">
+          <a class="btn" href="clinica-flow/index.html" target="_blank" style="text-decoration:none">Abrir flow index →</a>
+          <a class="btn" href="clinica-flow/automations.js" target="_blank" style="text-decoration:none">Ver automations.js</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="kpi-grid">
+      <div class="kpi clickable" onclick="kpiToggle(this)"><div class="kpi-label">⚡ Activas</div><div class="kpi-value">${counts['⚡']||0}</div><div class="kpi-trend up">funcionando hoy</div></div>
+      <div class="kpi clickable" onclick="kpiToggle(this)"><div class="kpi-label">◷ Pendientes</div><div class="kpi-value">${counts['◷']||0}</div><div class="kpi-trend warn">fase posterior</div></div>
+      <div class="kpi clickable" onclick="kpiToggle(this)"><div class="kpi-label">✋ Manual</div><div class="kpi-value">${counts['✋']||0}</div><div class="kpi-trend down">por automatizar</div></div>
+      <div class="kpi clickable" onclick="kpiToggle(this)"><div class="kpi-label">Runs · 30 d</div><div class="kpi-value">5.482</div><div class="kpi-trend up">▲ 18 %</div></div>
+      <div class="kpi clickable" onclick="kpiToggle(this)"><div class="kpi-label">Success rate medio</div><div class="kpi-value">97,2 %</div><div class="kpi-trend up">▲ 0,8 pp</div></div>
+      <div class="kpi clickable" onclick="kpiToggle(this)"><div class="kpi-label">Tiempo cierre cuentas</div><div class="kpi-value">D + 2</div><div class="kpi-trend down">vs D + 5 manual</div></div>
+    </div>
+
+    <div class="card"><div class="card-h"><h3>Listado · todas las automatizaciones</h3><span class="meta">${autos.length} total · prioridad #1 destacada</span></div>
+      <div class="card-b flush"><table class="table">
+        <thead><tr><th>Automatización</th><th>Categoría</th><th>Estado</th><th>Runs · 30 d</th><th>Success</th><th>Estado operativo</th></tr></thead>
+        <tbody>${autos.map(r => `<tr><td><strong>${r[0]}</strong></td><td>${r[1]}</td><td><span style="font-family:'Geist Mono',monospace;font-size:14px;color:${r[2]==='⚡'?'#0F8A5F':r[2]==='◷'?'#C77A14':'#C72F2F'}">${r[2]}</span></td><td>${r[3]}</td><td>${r[4]}</td><td><span class="tag ${statColor(r[2])}">${r[5]}</span></td></tr>`).join('')}</tbody>
+      </table></div>
+    </div>`;
+  },
+
+  'clinica.finanzas': clinica_finanzas,
   'clinica.personal': tpl_personal,
   'clinica.analitica': tpl_analitica,
 
@@ -2157,21 +2681,21 @@ const VIEWS = {
   'residences.analitica': tpl_analitica,
 
   /* ============ E-COMMERCE ============ */
-  'ecommerce.dashboard': () => pageHead('E-Commerce · Dashboard', 'Club privado · redes sociales · productos · liderado por Tommy Real', `<button class="btn" onclick="go('club')"><svg class="ic"><use href="#i-users"/></svg>Invitar miembro</button><button class="btn btn-primary" onclick="goSub('redes','calendario')"><svg class="ic"><use href="#i-plus"/></svg>Publicar</button>`) + `
+  'ecommerce.dashboard': () => pageHead('E-Commerce · Dashboard', 'Club privado · redes sociales · revenue atribuido del marketplace · liderado por Tommy Real', `<button class="btn" onclick="go('club')"><svg class="ic"><use href="#i-users"/></svg>Invitar miembro</button><button class="btn btn-primary" onclick="goSub('redes','calendario')"><svg class="ic"><use href="#i-plus"/></svg>Publicar</button>`) + `
     <div class="kpi-grid">
       <div class="kpi clickable" onclick="kpiToggle(this)"><div class="kpi-label">Miembros del club</div><div class="kpi-value">2.184</div><div class="kpi-trend up">▲ 96 este mes</div></div>
-      <div class="kpi clickable" onclick="kpiToggle(this)"><div class="kpi-label">Ingresos mes</div><div class="kpi-value">$ 38,4 K</div><div class="kpi-trend up">▲ 8,1 %</div></div>
+      <div class="kpi clickable" onclick="kpiToggle(this)"><div class="kpi-label">Marketplace atribuido</div><div class="kpi-value">$ 24,9 K</div><div class="kpi-trend up">65 % del total marketplace</div></div>
       <div class="kpi clickable" onclick="kpiToggle(this)"><div class="kpi-label">Alcance redes</div><div class="kpi-value">2,74 M</div><div class="kpi-trend up">▲ 14 % vs mes ant.</div></div>
-      <div class="kpi clickable" onclick="kpiToggle(this)"><div class="kpi-label">Eventos próximos 90 d</div><div class="kpi-value">4</div><div class="kpi-trend up">62 % asistentes son club</div></div>
+      <div class="kpi clickable" onclick="kpiToggle(this)"><div class="kpi-label">Conv. al club / mes</div><div class="kpi-value">136</div><div class="kpi-trend up">desde redes + referidos</div></div>
     </div>
     <div class="grid-2">
       <div class="card clickable" onclick="go('club')"><div class="card-h"><h3>Crecimiento del club</h3><span class="meta right">→</span></div><div class="card-b"><div style="position:relative;height:210px;width:100%"><canvas id="ch-ec-grow"></canvas></div></div></div>
-      <div class="card clickable" onclick="goSub('productos','articulos')"><div class="card-h"><h3>Mix de ingresos · mes</h3><span class="meta right">→</span></div>
+      <div class="card clickable" onclick="setWs('holding');setTimeout(()=>{state.marketTab='overview';go('marketplace')},50)"><div class="card-h"><h3>Marketplace · atribuido a E-Commerce</h3><span class="meta right">→ holding</span></div>
         <div class="card-b flush"><table class="table">
-          <tr><td><strong>Patrocinadores</strong><div class="muted">6 contratos activos · $ 184 K anuales</div></td><td>$ 15,3 K</td><td><span class="tag info">40 %</span></td></tr>
-          <tr><td><strong>Artículos</strong><div class="muted">18 SKUs · margen 64 %</div></td><td>$ 14,8 K</td><td><span class="tag info">39 %</span></td></tr>
-          <tr><td><strong>Eventos</strong><div class="muted">4 en próximos 90 d</div></td><td>$ 8,3 K</td><td><span class="tag info">21 %</span></td></tr>
-          <tr><td><strong>Total mes</strong></td><td><strong>$ 38,4 K</strong></td><td><span class="tag ok">100 %</span></td></tr>
+          <tr><td><strong>Patrocinadores</strong><div class="muted">6 contratos · 100 % atribuido E-Com</div></td><td>$ 15,3 K</td><td><span class="tag info">61 %</span></td></tr>
+          <tr><td><strong>Artículos · slice E-Com</strong><div class="muted">vendidos a miembros del club + redes</div></td><td>$ 5,2 K</td><td><span class="tag info">21 %</span></td></tr>
+          <tr><td><strong>Eventos · slice E-Com</strong><div class="muted">52 % de asistentes son miembros</div></td><td>$ 4,3 K</td><td><span class="tag info">17 %</span></td></tr>
+          <tr><td><strong>Total atribuido E-Com</strong></td><td><strong>$ 24,9 K</strong></td><td><span class="tag ok">65 % marketplace</span></td></tr>
         </table></div>
       </div>
     </div>`,
@@ -2419,10 +2943,88 @@ const VIEWS = {
   },
 
   'ecommerce.productos': () => {
-    const tab = state.productosTab || 'articulos';
-    const subLabel = {articulos:'Artículos',patrocinadores:'Patrocinadores',eventos:'Eventos'}[tab] || 'Artículos';
+    const tab = state.productosTab || 'overview';
+    const subLabel = {overview:'Overview',articulos:'Artículos',patrocinadores:'Patrocinadores',eventos:'Eventos'}[tab] || 'Overview';
     let body;
-    if (tab === 'articulos') {
+    if (tab === 'overview') {
+      body = `
+    <div class="kpi-grid">
+      <div class="kpi clickable" onclick="kpiToggle(this)"><div class="kpi-label">Ingresos mes · total</div><div class="kpi-value">$ 38,4 K</div><div class="kpi-trend up">▲ 8,1 %</div></div>
+      <div class="kpi clickable" onclick="kpiToggle(this)"><div class="kpi-label">Recurrente · mes</div><div class="kpi-value">$ 15,3 K</div><div class="kpi-trend up">patrocinios anuales / 12</div></div>
+      <div class="kpi clickable" onclick="kpiToggle(this)"><div class="kpi-label">ARR contratado</div><div class="kpi-value">$ 184 K</div><div class="kpi-trend up">6 patrocinios firmados</div></div>
+      <div class="kpi clickable" onclick="kpiToggle(this)"><div class="kpi-label">Eventos · 90 d</div><div class="kpi-value">4</div><div class="kpi-trend up">$ 96 K esperados</div></div>
+      <div class="kpi clickable" onclick="kpiToggle(this)"><div class="kpi-label">Margen blended</div><div class="kpi-value">68 %</div><div class="kpi-trend up">▲ ponderado por mix</div></div>
+      <div class="kpi clickable" onclick="kpiToggle(this)"><div class="kpi-label">SKUs activos</div><div class="kpi-value">28</div><div class="kpi-trend up">18 artículos + 6 patroc. + 4 ev.</div></div>
+    </div>
+
+    <div class="grid-2-eq" style="display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:14px;align-items:start">
+      <div class="card"><div class="card-h"><h3>Ingresos por categoría · 6 m</h3><span class="meta">Stacked · artículos + patrocinios + eventos</span></div>
+        <div class="card-b"><div style="position:relative;height:260px;width:100%"><canvas id="ch-prod-ov-stack"></canvas></div></div></div>
+      <div class="card"><div class="card-h"><h3>Mix de ingresos · mayo</h3></div>
+        <div class="card-b"><div style="position:relative;height:260px;width:100%"><canvas id="ch-prod-ov-mix"></canvas></div></div></div>
+    </div>
+
+    <div class="grid-3" style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:14px;align-items:start">
+      <div class="card clickable" onclick="goSub('productos','articulos')" style="border-top:3px solid #3A6FD1">
+        <div class="card-h"><h3>Artículos</h3><span class="meta right">→</span></div>
+        <div class="card-b">
+          <div style="font-family:var(--display);font-size:32px;font-weight:400;color:var(--ink-deep);letter-spacing:-.02em;line-height:1">$ 14,8 K</div>
+          <div style="font-family:'Geist Mono',monospace;font-size:10.5px;color:var(--muted);margin-top:6px;letter-spacing:.06em">INGRESOS MES · 18 SKUs · MARGEN 64 %</div>
+          <div style="margin-top:14px;padding-top:14px;border-top:1px solid var(--rule);font-size:12.5px;color:var(--ink-2);line-height:1.5">
+            5 categorías · Hardware (Kit Biohacker) · Digital (cursos) · Libros · Suplementos · Merch. Auto-shipping al inicio del programa.
+          </div>
+        </div>
+      </div>
+      <div class="card clickable" onclick="goSub('productos','patrocinadores')" style="border-top:3px solid #A05A1F">
+        <div class="card-h"><h3>Patrocinadores</h3><span class="meta right">→</span></div>
+        <div class="card-b">
+          <div style="font-family:var(--display);font-size:32px;font-weight:400;color:var(--ink-deep);letter-spacing:-.02em;line-height:1">$ 15,3 K</div>
+          <div style="font-family:'Geist Mono',monospace;font-size:10.5px;color:var(--muted);margin-top:6px;letter-spacing:.06em">INGRESOS MES · 6 CONTRATOS · MARGEN 92 %</div>
+          <div style="margin-top:14px;padding-top:14px;border-top:1px solid var(--rule);font-size:12.5px;color:var(--ink-2);line-height:1.5">
+            Oura · Eight Sleep · Levels · Magic Mind · Hyperice · InsideTracker. Renovaciones próximas en junio/julio: 3 contratos.
+          </div>
+        </div>
+      </div>
+      <div class="card clickable" onclick="goSub('productos','eventos')" style="border-top:3px solid #6E4F7A">
+        <div class="card-h"><h3>Eventos</h3><span class="meta right">→</span></div>
+        <div class="card-b">
+          <div style="font-family:var(--display);font-size:32px;font-weight:400;color:var(--ink-deep);letter-spacing:-.02em;line-height:1">$ 8,3 K</div>
+          <div style="font-family:'Geist Mono',monospace;font-size:10.5px;color:var(--muted);margin-top:6px;letter-spacing:.06em">PENDIENTE · 4 EVENTOS 90 D · MARGEN 45 %</div>
+          <div style="margin-top:14px;padding-top:14px;border-top:1px solid var(--rule);font-size:12.5px;color:var(--ink-2);line-height:1.5">
+            Retreat Sierra · Workshop metabolismo · Summit Longevidad 26 · Cena fundadores. 62 % asistentes son miembros del club.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card"><div class="card-h"><h3>Top items · todas las categorías</h3><span class="meta">Mayo · revenue + unidades</span></div>
+      <div class="card-b flush"><table class="table">
+        <thead><tr><th>Item</th><th>Categoría</th><th>Tipo</th><th>Unidades / contratos / aforo</th><th>Revenue · mes</th><th>Margen</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Patrocinio Hyperice · anual</strong></td><td><span class="tag copper">Patrocinio</span></td><td>Recurrente</td><td>1 contrato</td><td>$ 3.500</td><td>92 %</td></tr>
+          <tr><td><strong>Patrocinio InsideTracker · anual</strong></td><td><span class="tag copper">Patrocinio</span></td><td>Recurrente</td><td>1 contrato</td><td>$ 2.670</td><td>92 %</td></tr>
+          <tr><td><strong>Patrocinio Magic Mind · anual</strong></td><td><span class="tag copper">Patrocinio</span></td><td>Recurrente</td><td>1 contrato</td><td>$ 3.000</td><td>92 %</td></tr>
+          <tr><td><strong>Patrocinio Oura · anual</strong></td><td><span class="tag copper">Patrocinio</span></td><td>Recurrente</td><td>1 contrato</td><td>$ 2.670</td><td>92 %</td></tr>
+          <tr><td><strong>Kit Biohacker</strong></td><td><span class="tag info">Artículo · Hardware</span></td><td>Unitario</td><td>14 uds</td><td>$ 6.720</td><td>52 %</td></tr>
+          <tr><td><strong>Curso Longevidad práctica</strong></td><td><span class="tag info">Artículo · Digital</span></td><td>Unitario</td><td>18 uds</td><td>$ 5.220</td><td>92 %</td></tr>
+          <tr><td><strong>Workshop metabolismo · Madrid</strong></td><td><span class="tag plum">Evento</span></td><td>Entrada</td><td>54 / 80</td><td>$ 8.300</td><td>45 %</td></tr>
+          <tr><td><strong>Manual Reto Health</strong></td><td><span class="tag info">Artículo · Libro</span></td><td>Unitario</td><td>32 uds</td><td>$ 1.536</td><td>74 %</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+
+    <div class="card" style="margin-top:14px"><div class="card-h"><h3>Pipeline · contratos y eventos a cerrar</h3><span class="meta">próximos 90 d</span></div>
+      <div class="card-b flush"><table class="table">
+        <thead><tr><th>Item</th><th>Categoría</th><th>Importe esperado</th><th>Probabilidad</th><th>Cierre est.</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Patrocinio LMNT</strong></td><td><span class="tag copper">Patrocinio</span></td><td>$ 32.000 anual</td><td><span class="tag ok">82 %</span></td><td>Jun 26</td></tr>
+          <tr><td><strong>Patrocinio Athletic Greens</strong></td><td><span class="tag copper">Patrocinio</span></td><td>$ 24.000 anual</td><td><span class="tag warn">52 %</span></td><td>Jul 26</td></tr>
+          <tr><td><strong>Retreat Pirineos · Sep 26</strong></td><td><span class="tag plum">Evento</span></td><td>$ 28.000</td><td><span class="tag ok">78 %</span></td><td>Sep 26</td></tr>
+          <tr><td><strong>Edición lujo Manual · pre-order</strong></td><td><span class="tag info">Artículo</span></td><td>$ 4.800</td><td><span class="tag info">40 %</span></td><td>Jun 26</td></tr>
+        </tbody>
+      </table></div>
+    </div>`;
+    } else if (tab === 'articulos') {
       body = `
     <div class="kpi-grid">
       <div class="kpi clickable" onclick="kpiToggle(this)"><div class="kpi-label">SKUs activos</div><div class="kpi-value">18</div><div class="kpi-trend up">▲ 3 nuevos</div></div>
@@ -2525,7 +3127,7 @@ const VIEWS = {
       </table></div>
     </div>`;
     }
-    return pageHead('Productos · ' + subLabel, '3 categorías · artículos · patrocinadores · eventos · alimenta Finanzas', `<button class="btn"><svg class="ic"><use href="#i-doc"/></svg>Exportar</button><button class="btn btn-primary"><svg class="ic"><use href="#i-plus"/></svg>Nuevo producto</button>`) + body;
+    return pageHead('Marketplace · ' + subLabel, 'Catálogo único · revenue se atribuye a la sub-cuenta según origen del cliente', `<button class="btn"><svg class="ic"><use href="#i-doc"/></svg>Exportar</button><button class="btn btn-primary"><svg class="ic"><use href="#i-plus"/></svg>Nuevo producto</button>`) + body;
   },
 
   'ecommerce.finanzas': ecommerce_finanzas,
@@ -2727,9 +3329,48 @@ function buildCal(id, today=4){
 }
 
 function initWidgets(){
-  Chart.defaults.font.family = "Inter, system-ui, sans-serif";
-  Chart.defaults.color = '#6b7280';
-  Chart.defaults.borderColor = '#e6dfd2';
+  // === Bio-editorial × Lab precision · Chart.js defaults ===
+  // Defensive: cada bloque en try/catch para que un fallo no rompa initWidgets entero
+  try { Chart.defaults.font.family = "'Geist', 'Inter Tight', system-ui, sans-serif"; } catch(e){}
+  try { Chart.defaults.font.size = 11.5; } catch(e){}
+  try { Chart.defaults.color = '#6B645A'; } catch(e){}
+  try { Chart.defaults.borderColor = '#E2DAC9'; } catch(e){}
+
+  // Elementos · líneas finas · puntos invisibles excepto al hover · barras casi cuadradas
+  try {
+    Chart.defaults.elements.line.borderWidth = 1.5;
+    Chart.defaults.elements.line.tension = 0.32;
+    Chart.defaults.elements.point.radius = 0;
+    Chart.defaults.elements.point.hoverRadius = 5;
+    Chart.defaults.elements.point.hoverBorderWidth = 2;
+    Chart.defaults.elements.point.hoverBackgroundColor = '#FAF6EE';
+    Chart.defaults.elements.bar.borderRadius = 2;
+    Chart.defaults.elements.arc.borderWidth = 0;
+  } catch(e){ console.warn('Chart elements defaults skip:', e); }
+
+  // Plugins · legend editorial
+  try {
+    Chart.defaults.plugins.legend.labels.color = '#1B1816';
+    Chart.defaults.plugins.legend.labels.padding = 14;
+    Chart.defaults.plugins.legend.labels.usePointStyle = true;
+    Chart.defaults.plugins.legend.labels.pointStyle = 'rect';
+    Chart.defaults.plugins.legend.labels.boxWidth = 8;
+    Chart.defaults.plugins.legend.labels.boxHeight = 8;
+  } catch(e){ console.warn('Chart legend defaults skip:', e); }
+
+  // Plugins · tooltip "instrument readout"
+  try {
+    Chart.defaults.plugins.tooltip.backgroundColor = '#1B1816';
+    Chart.defaults.plugins.tooltip.titleColor = '#C4F45E';
+    Chart.defaults.plugins.tooltip.bodyColor = '#E2DAC9';
+    Chart.defaults.plugins.tooltip.borderColor = 'rgba(196,244,94,.20)';
+    Chart.defaults.plugins.tooltip.borderWidth = 1;
+    Chart.defaults.plugins.tooltip.padding = 12;
+    Chart.defaults.plugins.tooltip.cornerRadius = 4;
+    Chart.defaults.plugins.tooltip.boxPadding = 6;
+    Chart.defaults.plugins.tooltip.titleMarginBottom = 6;
+    Chart.defaults.plugins.tooltip.displayColors = true;
+  } catch(e){ console.warn('Chart tooltip defaults skip:', e); }
   const accent = WORKSPACES[state.ws].accent;
 
   buildCal('cal-main');
@@ -2748,7 +3389,135 @@ function initWidgets(){
     });
   }
 
-  if (document.getElementById('ch-cl-rev')) charts.cl = lineChart('ch-cl-rev', ['Dic','Ene','Feb','Mar','Abr','May'], [42,46,48,52,58,62], '#7a9b76');
+  if (document.getElementById('ch-cl-rev')) charts.cl = lineChart('ch-cl-rev', ['Dic','Ene','Feb','Mar','Abr','May'], [42,46,48,52,58,62], '#4A6A48');
+  // ===== Clínica · charts del nuevo modelo =====
+  // Dashboard · distribución por semana del programa (mini)
+  if (document.getElementById('ch-cl-prog-week')) charts.clProgWeek = barChart('ch-cl-prog-week', ['1-2','3-4','5-6','7-8','9-10','11-12'], [38,24,28,22,32,42], '#4A6A48');
+  // Programa · personas activas por semana (bar) + conversión entre semanas (line con dots entre barras)
+  if (document.getElementById('ch-cl-prog-personas')) charts.clProgPersonas = new Chart(document.getElementById('ch-cl-prog-personas'), {
+    data:{
+      datasets:[
+        {
+          type:'bar',
+          label:'Personas',
+          data:[{x:1,y:100},{x:2,y:96},{x:3,y:92},{x:4,y:88},{x:5,y:85},{x:6,y:82},{x:7,y:79},{x:8,y:76},{x:9,y:74},{x:10,y:72},{x:11,y:69},{x:12,y:66}],
+          backgroundColor:'#4A6A48',
+          borderRadius:3,
+          barPercentage:0.7,
+          categoryPercentage:0.9,
+          yAxisID:'y',
+          order:2
+        },
+        {
+          type:'line',
+          label:'Conversión % entre semanas',
+          data:[{x:1.5,y:96.0},{x:2.5,y:95.8},{x:3.5,y:95.7},{x:4.5,y:96.6},{x:5.5,y:96.5},{x:6.5,y:96.3},{x:7.5,y:96.2},{x:8.5,y:97.4},{x:9.5,y:97.3},{x:10.5,y:95.8},{x:11.5,y:95.7},{x:12.5,y:63.6}],
+          borderColor:'#D9531C',
+          backgroundColor:'#D9531C',
+          tension:0.2,
+          borderWidth:2.6,
+          pointRadius:5.5,
+          pointHoverRadius:8,
+          pointBackgroundColor:'#D9531C',
+          pointBorderColor:'#FAF6EE',
+          pointBorderWidth:2,
+          yAxisID:'y1',
+          order:1
+        }
+      ]
+    },
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      plugins:{
+        legend:{position:'bottom',labels:{padding:14,boxWidth:12,font:{size:11},usePointStyle:true}},
+        tooltip:{callbacks:{label:c=>{
+          if (c.datasetIndex === 0) return `Personas activas: ${c.parsed.y}`;
+          const x = c.parsed.x;
+          if (x === 12.5) return `Decisión sem 12 → renuevan: ${c.parsed.y.toFixed(1)} %`;
+          return `Conversión S${Math.floor(x)}→S${Math.ceil(x)}: ${c.parsed.y.toFixed(1)} %`;
+        }}}
+      },
+      scales:{
+        x:{type:'linear', min:0.5, max:13, ticks:{stepSize:1, callback:v=>Number.isInteger(v)?(v===13?'':'S'+v):''}, grid:{display:false}, offset:false},
+        y:{type:'linear', position:'left', beginAtZero:true, title:{display:true,text:'personas',font:{size:10,family:"'Geist Mono',monospace"},color:'#8E867B'}},
+        y1:{type:'linear', position:'right', min:60, max:100, ticks:{callback:v=>v+'%'}, title:{display:true,text:'conversión %',font:{size:10,family:"'Geist Mono',monospace"},color:'#D9531C'}, grid:{drawOnChartArea:false}}
+      }
+    }
+  });
+  // Upselling por semana · stacked bar por producto
+  if (document.getElementById('ch-cl-prog-upsell-week')) charts.clProgUpsellWeek = new Chart(document.getElementById('ch-cl-prog-upsell-week'), {
+    type:'bar',
+    data:{ labels:['S1','S2','S3','S4','S5','S6','S7','S8','S9','S10','S11','S12'], datasets:[
+      {label:'Suplementos', data:[14,12,10,8,9,8,7,7,9,8,7,12], backgroundColor:'#4A6A48', stack:'a', borderRadius:2},
+      {label:'Club Privado', data:[4,6,5,5,7,6,5,5,4,3,4,8], backgroundColor:'#A05A1F', stack:'a', borderRadius:2},
+      {label:'Nutrición', data:[2,3,4,4,3,3,2,3,2,2,1,3], backgroundColor:'#7A9B76', stack:'a', borderRadius:2},
+      {label:'Entrenamiento', data:[1,1,2,2,2,1,1,2,1,1,1,2], backgroundColor:'#6E4F7A', stack:'a', borderRadius:2},
+      {label:'Tec / wearables', data:[3,2,1,1,1,2,1,1,2,1,0,1], backgroundColor:'#3A6FD1', stack:'a', borderRadius:2},
+      {label:'Consultoría 1:1', data:[0,0,1,1,1,1,2,2,3,4,5,4], backgroundColor:'#C9A96E', stack:'a', borderRadius:2},
+      {label:'Libro', data:[6,2,1,1,1,1,1,1,1,1,1,3], backgroundColor:'#B86433', stack:'a', borderRadius:2}
+    ]},
+    options:{ responsive:true, maintainAspectRatio:false,
+      plugins:{legend:{position:'bottom',labels:{padding:10,boxWidth:11,font:{size:10.5}}}, tooltip:{callbacks:{label:c=>`${c.dataset.label}: ${c.parsed.y} aceptados`}}},
+      scales:{x:{stacked:true,grid:{display:false}}, y:{stacked:true,beginAtZero:true,title:{display:true,text:'upsells aceptados',font:{size:10,family:"'Geist Mono',monospace"},color:'#8E867B'}}} }
+  });
+  // Funnel acumulado · S1 → S12
+  if (document.getElementById('ch-cl-prog-funnel')) charts.clProgFunnel = new Chart(document.getElementById('ch-cl-prog-funnel'), {
+    type:'line',
+    data:{ labels:['S1','S2','S3','S4','S5','S6','S7','S8','S9','S10','S11','S12'],
+      datasets:[{label:'% activos', data:[100,96,92,88,85,82,79,76,74,72,69,66], borderColor:'#4A6A48', backgroundColor:'rgba(74,106,72,.10)', tension:.32, fill:true, borderWidth:2, pointRadius:3}] },
+    options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>c.parsed.y+' % de la cohorte sigue activa'}}}, scales:{y:{beginAtZero:false,min:60,max:100,ticks:{callback:v=>v+'%'}}} }
+  });
+  // Adherencia de los 3 planes
+  if (document.getElementById('ch-cl-prog-plans')) charts.clProgPlans = new Chart(document.getElementById('ch-cl-prog-plans'), {
+    type:'line',
+    data:{ labels:['S1','S2','S3','S4','S5','S6','S7','S8','S9','S10','S11','S12'],
+      datasets:[
+        {label:'Plan médico', data:[94,92,90,88,86,84,82,80,78,76,74,72], borderColor:'#3A6FD1', backgroundColor:'rgba(58,111,209,.06)', tension:.32, borderWidth:2, pointRadius:2, fill:false},
+        {label:'Plan nutricional', data:[88,84,80,78,76,74,72,70,68,66,64,62], borderColor:'#4A6A48', backgroundColor:'rgba(74,106,72,.06)', tension:.32, borderWidth:2, pointRadius:2, fill:false},
+        {label:'Plan ejercicio', data:[82,76,72,70,68,66,64,62,60,58,56,54], borderColor:'#A05A1F', backgroundColor:'rgba(160,90,31,.06)', tension:.32, borderWidth:2, pointRadius:2, fill:false}
+      ] },
+    options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{position:'bottom',labels:{padding:10,boxWidth:12,font:{size:11}}},tooltip:{callbacks:{label:c=>c.dataset.label+': '+c.parsed.y+' %'}}}, scales:{y:{beginAtZero:false,min:50,max:100,ticks:{callback:v=>v+'%'}}} }
+  });
+  // Engagement medio test semanal
+  if (document.getElementById('ch-cl-prog-eng')) charts.clProgEng = new Chart(document.getElementById('ch-cl-prog-eng'), {
+    type:'line',
+    data:{ labels:['S1','S2','S3','S4','S5','S6','S7','S8','S9','S10','S11','S12'],
+      datasets:[{label:'Engagement', data:[84,82,80,78,77,75,73,72,71,70,72,76], borderColor:'#6E4F7A', backgroundColor:'rgba(110,79,122,.10)', tension:.32, fill:true, borderWidth:2, pointRadius:3}] },
+    options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>'Score '+c.parsed.y+' / 100'}}}, scales:{y:{beginAtZero:false,min:60,max:100}} }
+  });
+  if (document.getElementById('clinicaCohortHost')) renderClinicaCohorts();
+  // Finanzas Clínica
+  if (document.getElementById('ch-cl-fin-stack')) charts.clFinStack = new Chart(document.getElementById('ch-cl-fin-stack'), {
+    type:'bar',
+    data:{ labels:['Dic','Ene','Feb','Mar','Abr','May'], datasets:[
+      {label:'Estudios iniciales', data:[18.4,21.2,20.8,24.6,26.4,28.2], backgroundColor:'#4A6A48', stack:'a', borderRadius:3},
+      {label:'Programa (recurring)', data:[24.0,28.4,32.1,36.8,38.4,42.8], backgroundColor:'#A05A1F', stack:'a', borderRadius:3},
+      {label:'Upselling productos', data:[8.2,9.6,11.2,12.4,14.8,17.6], backgroundColor:'#6E4F7A', stack:'a', borderRadius:3},
+      {label:'API REFILL · suplementos', data:[3.4,4.2,5.8,6.4,8.2,8.4], backgroundColor:'#3A6FD1', stack:'a', borderRadius:3}
+    ]},
+    options:{ responsive:true, maintainAspectRatio:false,
+      plugins:{ legend:{position:'bottom',labels:{padding:10,boxWidth:12,font:{size:11}}}, tooltip:{callbacks:{label:c=>`${c.dataset.label}: $ ${c.parsed.y.toFixed(1)} K`}} },
+      scales:{ x:{stacked:true,grid:{display:false}}, y:{stacked:true,beginAtZero:true,ticks:{callback:v=>'$ '+v+' K'}} } }
+  });
+  if (document.getElementById('ch-cl-fin-mix')) charts.clFinMix = new Chart(document.getElementById('ch-cl-fin-mix'), {
+    type:'doughnut',
+    data:{ labels:['Programa MRR','Estudios','Upselling','API REFILL'],
+      datasets:[{data:[42.8,28.2,17.6,8.4], backgroundColor:['#A05A1F','#4A6A48','#6E4F7A','#3A6FD1'], borderWidth:0, hoverOffset:8}] },
+    options:{ responsive:true, maintainAspectRatio:false, cutout:'58%',
+      plugins:{ legend:{position:'bottom',labels:{padding:14,boxWidth:12,font:{size:12}}}, tooltip:{callbacks:{label:c=>{const t=97;return `${c.label}: $ ${c.parsed.toFixed(1)} K (${(c.parsed/t*100).toFixed(1)} %)`;}}} } }
+  });
+  if (document.getElementById('ch-cl-fin-upsell')) charts.clFinUpsell = new Chart(document.getElementById('ch-cl-fin-upsell'), {
+    type:'bar',
+    data:{ labels:['Suplementos','Club','Tec','Nutrición','Libro','Consultoría','Entrenamiento'],
+      datasets:[{label:'$ revenue', data:[18460,7812,6380,4560,4416,4200,2880], backgroundColor:['#4A6A48','#A05A1F','#3A6FD1','#7A9B76','#B86433','#C9A96E','#6E4F7A'], borderRadius:3}] },
+    options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>'$ '+c.parsed.y.toLocaleString('es-ES')}}}, scales:{y:{beginAtZero:true,ticks:{callback:v=>'$ '+(v/1000)+' K'}}} }
+  });
+  if (document.getElementById('ch-cl-fin-margin')) charts.clFinMargin = new Chart(document.getElementById('ch-cl-fin-margin'), {
+    type:'bar',
+    data:{ labels:['Consultoría','Libro','Nutrición','Programa','Suplementos','Estudios','Tec','Entrenamiento'],
+      datasets:[{label:'Margen %', data:[92,74,68,62,62,55,38,58], backgroundColor:['#A05A1F','#B86433','#7A9B76','#4A6A48','#4A6A48','#4A6A48','#3A6FD1','#6E4F7A'], borderRadius:3}] },
+    options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>c.parsed.y+' %'}}}, scales:{y:{beginAtZero:true,max:100,ticks:{callback:v=>v+'%'}}} }
+  });
   if (document.getElementById('ch-rs-rev')) charts.rs = lineChart('ch-rs-rev', ['Dic','Ene','Feb','Mar','Abr','May'], [38,52,48,72,84,80], '#b87333');
   if (document.getElementById('ch-ec-grow')) charts.ec = lineChart('ch-ec-grow', ['Dic','Ene','Feb','Mar','Abr','May'], [1620,1740,1825,1940,2060,2184], '#3b82f6');
 
@@ -2905,6 +3674,51 @@ function initWidgets(){
   });
   if (document.getElementById('ch-prod-spo')) charts.prodSpo = barChart('ch-prod-spo', ['Dic','Ene','Feb','Mar','Abr','May'], [124,132,142,158,168,184], '#3b82f6');
   if (document.getElementById('ch-prod-evt')) charts.prodEvt = barChart('ch-prod-evt', ['Mar 25','Jun 25','Sep 25','Dic 25','Mar 26','Jun 26*'], [24,38,62,18,32,44], '#3b82f6');
+  // Productos · Overview (E-Commerce)
+  // Marketplace (holding) · charts
+  if (document.getElementById('ch-mkt-stack')) charts.mktStack = new Chart(document.getElementById('ch-mkt-stack'), {
+    type:'bar',
+    data:{ labels:['Dic','Ene','Feb','Mar','Abr','May'], datasets:[
+      {label:'Patrocinios', data:[12.0,13.5,14.0,14.8,15.3,15.3], backgroundColor:'#A05A1F', stack:'a', borderRadius:3},
+      {label:'Artículos', data:[8.2,9.4,10.8,12.4,13.5,14.8], backgroundColor:'#3A6FD1', stack:'a', borderRadius:3},
+      {label:'Eventos', data:[2.5,4.2,6.8,2.1,5.6,8.3], backgroundColor:'#6E4F7A', stack:'a', borderRadius:3}
+    ]},
+    options:{ responsive:true, maintainAspectRatio:false,
+      plugins:{ legend:{position:'bottom',labels:{padding:10,boxWidth:12,font:{size:11}}}, tooltip:{callbacks:{label:c=>`${c.dataset.label}: $ ${c.parsed.y.toFixed(1)} K`}} },
+      scales:{ x:{stacked:true,grid:{display:false}}, y:{stacked:true,beginAtZero:true,ticks:{callback:v=>'$ '+v+' K'}} } }
+  });
+  if (document.getElementById('ch-mkt-mix')) charts.mktMix = new Chart(document.getElementById('ch-mkt-mix'), {
+    type:'doughnut',
+    data:{ labels:['Patrocinios','Artículos','Eventos'],
+      datasets:[{data:[15.3,14.8,8.3], backgroundColor:['#A05A1F','#3A6FD1','#6E4F7A'], borderWidth:0, hoverOffset:8}] },
+    options:{ responsive:true, maintainAspectRatio:false, cutout:'58%',
+      plugins:{ legend:{position:'bottom',labels:{padding:14,boxWidth:12,font:{size:12}}}, tooltip:{callbacks:{label:c=>{const t=38.4;return `${c.label}: $ ${c.parsed.toFixed(1)} K (${(c.parsed/t*100).toFixed(1)} %)`;}}} } }
+  });
+  if (document.getElementById('ch-mkt-attr')) charts.mktAttr = new Chart(document.getElementById('ch-mkt-attr'), {
+    type:'doughnut',
+    data:{ labels:['E-Commerce','Clínica','Residences','R&D'],
+      datasets:[{data:[24.9,10.8,1.9,0.8], backgroundColor:['#3A6FD1','#4A6A48','#B86433','#6E4F7A'], borderWidth:0, hoverOffset:8}] },
+    options:{ responsive:true, maintainAspectRatio:false, cutout:'62%',
+      plugins:{ legend:{position:'bottom',labels:{padding:12,boxWidth:11,font:{size:11}}}, tooltip:{callbacks:{label:c=>{const t=38.4;return `${c.label}: $ ${c.parsed.toFixed(1)} K (${(c.parsed/t*100).toFixed(1)} %)`;}}} } }
+  });
+  if (document.getElementById('ch-prod-ov-stack')) charts.prodOvStack = new Chart(document.getElementById('ch-prod-ov-stack'), {
+    type:'bar',
+    data:{ labels:['Dic','Ene','Feb','Mar','Abr','May'], datasets:[
+      {label:'Patrocinios', data:[12.0,13.5,14.0,14.8,15.3,15.3], backgroundColor:'#A05A1F', stack:'a', borderRadius:3},
+      {label:'Artículos', data:[8.2,9.4,10.8,12.4,13.5,14.8], backgroundColor:'#3A6FD1', stack:'a', borderRadius:3},
+      {label:'Eventos', data:[2.5,4.2,6.8,2.1,5.6,8.3], backgroundColor:'#6E4F7A', stack:'a', borderRadius:3}
+    ]},
+    options:{ responsive:true, maintainAspectRatio:false,
+      plugins:{ legend:{position:'bottom',labels:{padding:10,boxWidth:12,font:{size:11}}}, tooltip:{callbacks:{label:c=>`${c.dataset.label}: $ ${c.parsed.y.toFixed(1)} K`}} },
+      scales:{ x:{stacked:true,grid:{display:false}}, y:{stacked:true,beginAtZero:true,ticks:{callback:v=>'$ '+v+' K'}} } }
+  });
+  if (document.getElementById('ch-prod-ov-mix')) charts.prodOvMix = new Chart(document.getElementById('ch-prod-ov-mix'), {
+    type:'doughnut',
+    data:{ labels:['Patrocinios','Artículos','Eventos'],
+      datasets:[{data:[15.3,14.8,8.3], backgroundColor:['#A05A1F','#3A6FD1','#6E4F7A'], borderWidth:0, hoverOffset:8}] },
+    options:{ responsive:true, maintainAspectRatio:false, cutout:'58%',
+      plugins:{ legend:{position:'bottom',labels:{padding:14,boxWidth:12,font:{size:12}}}, tooltip:{callbacks:{label:c=>{const t=38.4;return `${c.label}: $ ${c.parsed.toFixed(1)} K (${(c.parsed/t*100).toFixed(1)} %)`;}}} } }
+  });
   // Club Privado · 4 charts + cohort heatmap
   const TIER_C = {miembro:'#3b82f6', fundador:'#b87333', embajador:'#7c5b8a', mentor:'#7a9b76'};
   if (document.getElementById('ch-club-pie')) {
@@ -3072,6 +3886,32 @@ function renderClubCohorts(){
   host.innerHTML = `<table class="coh-table">
     <thead><tr><th class="label">Cohorte</th>${months.map(m => `<th>${m}</th>`).join('')}</tr></thead>
     <tbody>${cohorts.map(c => `<tr><td class="label">${c}</td>${data[c].map(v => `<td><span class="coh-cell" style="background:${colorScale(v)}">${v} %</span></td>`).join('')}${months.slice(data[c].length).map(()=>'<td></td>').join('')}</tr>`).join('')}</tbody>
+  </table>`;
+}
+
+function renderClinicaCohorts(){
+  const host = document.getElementById('clinicaCohortHost'); if (!host) return;
+  const cohorts = ['Dic 25','Ene 26','Feb 26','Mar 26','Abr 26','May 26'];
+  const data = {};
+  cohorts.forEach((c, i) => {
+    data[c] = [];
+    const weeksActive = Math.min(12, 6 + (5-i)*2);
+    let v = 100;
+    for (let w = 0; w < weeksActive; w++){
+      if (w === 0) v = 100;
+      else v = Math.max(58, Math.round(v - 3 - Math.random()*4));
+      data[c].push(v);
+    }
+  });
+  const weeks = ['S1','S2','S3','S4','S5','S6','S7','S8','S9','S10','S11','S12'];
+  const colorScale = (v) => {
+    const t = v / 100;
+    const r = Math.round(160 - t*80), g = Math.round(80 + t*60), b = Math.round(40 + t*40);
+    return `rgb(${r},${g},${b})`;
+  };
+  host.innerHTML = `<table class="coh-table">
+    <thead><tr><th class="label">Cohorte mensual</th>${weeks.map(w => `<th>${w}</th>`).join('')}</tr></thead>
+    <tbody>${cohorts.map(c => `<tr><td class="label">${c}</td>${data[c].map(v => `<td><span class="coh-cell" style="background:${colorScale(v)}">${v} %</span></td>`).join('')}${weeks.slice(data[c].length).map(()=>'<td></td>').join('')}</tr>`).join('')}</tbody>
   </table>`;
 }
 
@@ -3484,7 +4324,7 @@ const NOTIFICATIONS = [
   {id:1, t:'Factura $ 4.200 vencida 32 días', m:'Casa Andorra · escalado a Fer', ic:'i-dollar', cls:'err', time:'hace 5 min', unread:true, link:{ws:'residences',mod:'finanzas'}},
   {id:2, t:'Ticket urgente · Andorra', m:'Conectividad sistema · SLA 2 h', ic:'i-ticket', cls:'err', time:'hace 12 min', unread:true, link:{ws:'residences',mod:'tickets'}},
   {id:3, t:'Grant ICEX cierra en 6 días', m:'Borrador AI 80 % completado', ic:'i-flask', cls:'warn', time:'hace 1 h', unread:true, link:{ws:'rd',mod:'propuestas'}},
-  {id:4, t:'Stock BPC-157 crítico', m:'3 unidades · reorden urgente', ic:'i-pkg', cls:'warn', time:'hace 2 h', unread:false, link:{ws:'clinica',mod:'inventario'}},
+  {id:4, t:'Agente Evaluador · 3 planes pendientes aprobación', m:'Plan médico de Carla, Pedro y Marina · revisar antes de enviar', ic:'i-bot', cls:'warn', time:'hace 2 h', unread:false, link:{ws:'clinica',mod:'funnel'}},
   {id:5, t:'+18 miembros nuevos al club', m:'Cohorte mayo · onboarding completo', ic:'i-cart', cls:'ok', time:'hace 3 h', unread:false, link:{ws:'ecommerce',mod:'club'}},
   {id:6, t:'Anomalía Ads Meta', m:'Gasto +38 % vs media · revisar', ic:'i-dollar', cls:'warn', time:'hace 5 h', unread:false, link:{ws:'ecommerce',mod:'finanzas'}},
   {id:7, t:'CDTI tramo Q2 ejecutado', m:'$ 22 K recibidos · sync QB OK', ic:'i-flask', cls:'ok', time:'ayer', unread:false, link:{ws:'rd',mod:'grants'}},
@@ -3802,7 +4642,7 @@ function renderRiskBanner(){
   const content = document.getElementById('content');
   // Only show on relevant views
   let banner = '';
-  if (v === 'clinica.dashboard' || v === 'clinica.pacientes'){
+  if (v === 'clinica.dashboard' || v === 'clinica.funnel' || v === 'clinica.programa'){
     banner = `<div class="risk-banner">
       <div class="ic-w"><svg class="ic"><use href="#i-stetho"/></svg></div>
       <div class="body">
@@ -4232,7 +5072,7 @@ const NL_PATTERNS = [
   {re:/(facturas? vencidas?|sin pagar|impagad|pendientes? cobro)/i, type:'invoice', filter:f => /Vencida|Pendiente/.test(f.meta), label:'Facturas vencidas o pendientes'},
   {re:/(grants? cierran?|próximo cierre|deadline cerca)/i, type:'grant', filter:g => /drafting|cierre|6 d/i.test(g.meta), label:'Grants próximos a cerrar'},
   {re:/(tickets? urgent|sla)/i, type:'ticket', filter:t => /URGENTE|2 h|4 h/.test(t.meta), label:'Tickets urgentes'},
-  {re:/(stock|peptid|inventario)/i, type:'patient', filter:()=>false, label:'Inventario crítico (saltar a Clínica > Inventario)'},
+  // Stock/inventario eliminado · Clínica no gestiona inventario · planes on-demand vía API
   {re:/(últimos pacientes|nuevos? pacientes|recientes)/i, type:'patient', filter:()=>true, label:'Pacientes recientes'},
   {re:/(margen|p&l|ingresos)/i, all:true, filter:it => it.type === 'invoice', label:'Análisis financiero · facturas'}
 ];
@@ -4310,8 +5150,8 @@ function getNBA(item){
     }
     if (item.data?.protocolo){
       return {
-        text: `<strong>Seguimiento de protocolo ${item.data.protocolo}</strong>. Siguiente control recomendado en 7 días. Inventario actual permite continuar.`,
-        actions:[{l:'Agendar seguimiento',k:'primary'},{l:'Verificar stock'}]
+        text: `<strong>Seguimiento de protocolo ${item.data.protocolo}</strong>. Siguiente control recomendado en 7 días. Plan médico activo · refill auto vía API.`,
+        actions:[{l:'Agendar seguimiento',k:'primary'},{l:'Ver perfil cliente'}]
       };
     }
     return {
@@ -4442,7 +5282,7 @@ function openMeetingPrep(item){
       </div>
       <div class="mp-section">
         <div class="h">Riesgos / atención</div>
-        <p style="margin:0;font-size:13px"><strong>Inventario BPC-157</strong> en stock crítico (3 unidades). Si se decide continuar, reordenar HOY.</p>
+        <p style="margin:0;font-size:13px"><strong>Plan médico pendiente de aprobación</strong> · Agente Evaluador generó propuesta ayer. Jessica debe revisar antes del envío al cliente.</p>
       </div>`;
   } else if (isProject){
     body = `
@@ -4981,12 +5821,12 @@ const ROLE_WIDGETS = [
   ],
   // Jessica · Clínica
   [
-    {h:'Pacientes activos',v:'312',sub:'▲ 18 sem'},
+    {h:'En programa',v:'186',sub:'▲ 22 mes'},
     {h:'Citas hoy',v:'6',sub:'4 conf.'},
     {h:'NPS últimos 30 d',v:'72',sub:'▲ 9'},
-    {h:'Stock crítico',v:'1',sub:'BPC-157'},
-    {h:'Protocolos activos',v:'48',sub:''},
-    {h:'No-show riesgo',v:'3',sub:'48 h'}
+    {h:'AE planes pendientes',v:'3',sub:'aprobar hoy'},
+    {h:'Adherencia 3 planes',v:'76 %',sub:'med + nut + ejer'},
+    {h:'Renovación sem 12',v:'64 %',sub:'▲ 6 pp'}
   ],
   // Tommy · E-Commerce
   [

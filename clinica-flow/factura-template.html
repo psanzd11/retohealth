@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Factura · Reto Health</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..700&family=Geist:wght@300..700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  @page{size:A4;margin:18mm}
+  :root{--bg:#F4EFE6;--paper:#FAF6EE;--ink:#1B1816;--ink-2:#6B645A;--ink-deep:#0E0C0A;--muted:#8E867B;--rule:#E2DAC9;--sage:#4A6A48;--display:'Fraunces',Georgia,serif;--sans:'Geist',system-ui,sans-serif;--mono:'Geist Mono',ui-monospace,monospace}
+  *{box-sizing:border-box}html,body{margin:0;padding:0}
+  body{font-family:var(--sans);color:var(--ink);background:var(--bg);font-feature-settings:'tnum','lnum';-webkit-font-smoothing:antialiased}
+  .doc{max-width:780px;margin:0 auto;padding:48px 56px;background:var(--paper);border:1px solid var(--rule);min-height:100vh}
+  @media print{body{background:white}.doc{border:0;padding:0;min-height:auto}.actions{display:none}}
+
+  .head{display:grid;grid-template-columns:1fr 1fr;gap:32px;padding:0 0 28px;border-bottom:1px solid var(--rule);margin-bottom:32px}
+  .brand{display:flex;align-items:center;gap:14px}
+  .brand-mark{width:36px;height:36px;border-radius:4px;background:var(--sage);color:#fff;display:grid;place-items:center;font-family:var(--display);font-weight:500;font-size:16px}
+  .brand-name{font-family:var(--display);font-size:22px;font-weight:500;letter-spacing:-.01em;color:var(--ink-deep);font-variation-settings:"opsz" 36}
+  .brand-sub{font-family:var(--mono);font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-top:2px}
+
+  .factura-meta{text-align:right;font-family:var(--mono);font-size:10.5px;color:var(--ink-2);line-height:1.8;letter-spacing:.05em;text-transform:uppercase}
+  .factura-meta .label{color:var(--muted)}
+  .factura-meta .num{font-family:var(--display);font-size:24px;font-weight:400;color:var(--ink-deep);letter-spacing:-.01em;text-transform:none;display:block;margin-top:2px}
+
+  .parties{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-bottom:36px}
+  .party-h{font-family:var(--mono);font-size:9.5px;letter-spacing:.20em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;border-bottom:1px solid var(--rule);padding-bottom:6px}
+  .party strong{font-family:var(--sans);font-size:15px;color:var(--ink-deep);font-weight:500;display:block;margin-bottom:6px}
+  .party p{font-family:var(--sans);font-size:12.5px;color:var(--ink-2);margin:2px 0;line-height:1.55}
+
+  table{width:100%;border-collapse:collapse;margin-bottom:28px;font-size:13px}
+  th{text-align:left;font-family:var(--mono);font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);padding:12px 8px;border-bottom:1px solid var(--ink-deep);font-weight:500}
+  th.right{text-align:right}
+  td{padding:14px 8px;border-bottom:1px solid var(--rule);color:var(--ink);vertical-align:top}
+  td.right{text-align:right;font-variant-numeric:tabular-nums;font-family:var(--mono)}
+  td .concept{font-family:var(--sans);font-size:14px;color:var(--ink-deep);font-weight:500;display:block;margin-bottom:4px}
+  td .detail{font-family:var(--sans);font-size:12px;color:var(--muted)}
+
+  .totals{display:flex;justify-content:flex-end;margin-bottom:32px}
+  .totals-tbl{min-width:280px;font-size:13px}
+  .totals-tbl .row{display:flex;justify-content:space-between;padding:7px 0;font-family:var(--mono);color:var(--ink-2)}
+  .totals-tbl .row.total{border-top:1px solid var(--ink-deep);margin-top:6px;padding-top:14px;color:var(--ink-deep)}
+  .totals-tbl .row.total .lbl{font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase}
+  .totals-tbl .row.total .val{font-family:var(--display);font-size:32px;font-weight:400;letter-spacing:-.025em;color:var(--ink-deep);font-variant-numeric:tabular-nums}
+
+  .notes{padding:20px;background:var(--bg);border:1px solid var(--rule);border-radius:4px;font-family:var(--sans);font-size:12.5px;color:var(--ink-2);line-height:1.6}
+  .notes strong{color:var(--ink-deep);font-weight:500;display:block;margin-bottom:8px;font-family:var(--mono);font-size:9.5px;letter-spacing:.18em;text-transform:uppercase}
+
+  footer{margin-top:48px;padding-top:22px;border-top:1px solid var(--rule);text-align:center;font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+
+  .actions{position:fixed;bottom:24px;right:24px;display:flex;gap:8px}
+  .btn{padding:10px 20px;font-family:var(--sans);font-size:13px;font-weight:500;border:1px solid var(--ink-deep);background:var(--ink-deep);color:var(--paper);cursor:pointer;border-radius:4px}
+  .btn-ghost{background:var(--paper);color:var(--ink)}
+</style>
+</head>
+<body>
+  <div class="doc">
+    <div class="head">
+      <div class="brand">
+        <div class="brand-mark">C</div>
+        <div>
+          <div class="brand-name">Reto Health Clínica</div>
+          <div class="brand-sub">Servicios médicos · longevidad</div>
+        </div>
+      </div>
+      <div class="factura-meta">
+        <div><span class="label">Nº factura</span><strong class="num" id="f-num">F-2026-0182</strong></div>
+        <div style="margin-top:12px"><span class="label">Fecha emisión</span><br><span id="f-date">12 may 2026</span></div>
+        <div style="margin-top:4px"><span class="label">Vencimiento</span><br><span id="f-due">12 may 2026 · pagada</span></div>
+      </div>
+    </div>
+
+    <div class="parties">
+      <div class="party">
+        <div class="party-h">Emisor</div>
+        <strong>Reto Health S.L.</strong>
+        <p>CIF · B-12345678</p>
+        <p>Calle Velázquez 142 · 28006 Madrid</p>
+        <p>facturacion@retohealth.com</p>
+        <p>+34 910 123 456</p>
+      </div>
+      <div class="party">
+        <div class="party-h">Cliente</div>
+        <strong id="c-name">Carla Méndez</strong>
+        <p id="c-nif">DNI · 12345678X</p>
+        <p id="c-addr">Calle del Pez 14 · 28015 Madrid</p>
+        <p id="c-email">carla.mendez@email.com</p>
+        <p id="c-phone">+34 656 789 012</p>
+      </div>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Concepto</th>
+          <th class="right">Cantidad</th>
+          <th class="right">Precio</th>
+          <th class="right">Importe</th>
+        </tr>
+      </thead>
+      <tbody id="items">
+        <tr>
+          <td>
+            <span class="concept">Protocolo BPC-157 · 12 semanas</span>
+            <span class="detail">Inicio 17 mar 2026 · cierre estimado 9 jun 2026 · incluye seguimiento semanal con AI + 4 videocalls + envíos REFILL</span>
+          </td>
+          <td class="right">1</td>
+          <td class="right">$ 1.480,00</td>
+          <td class="right">$ 1.480,00</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="totals">
+      <div class="totals-tbl">
+        <div class="row"><span>Subtotal</span><span id="t-sub">$ 1.480,00</span></div>
+        <div class="row"><span>IVA · exento (Art. 20.Uno.3º LIVA)</span><span>$ 0,00</span></div>
+        <div class="row total"><span class="lbl">Total a pagar</span><span class="val" id="t-total">$ 1.480,00</span></div>
+      </div>
+    </div>
+
+    <div class="notes">
+      <strong>Forma de pago</strong>
+      Cobrada vía Stripe · ID transacción <code style="font-family:var(--mono);font-size:11.5px">pi_3PJqLk2eZvKYlo2C1xWBcq8h</code> · 12 may 2026 · 09:47:21 CET.
+      <br><br>
+      <strong>Nota legal</strong>
+      Servicio médico exento de IVA conforme al art. 20.Uno.3º de la Ley 37/1992. Esta factura se ha generado automáticamente vía QuickBooks Online tras la confirmación de pago en Stripe.
+    </div>
+
+    <footer>Reto Health S.L. · CIF B-12345678 · Inscrita en el Registro Mercantil de Madrid · Tomo 12345 · Folio 678 · Hoja M-1234567</footer>
+  </div>
+
+  <div class="actions">
+    <button class="btn btn-ghost" onclick="window.print()">Imprimir / PDF</button>
+    <button class="btn" onclick="alert('Enviado · SendGrid template')">Enviar por email</button>
+  </div>
+
+<script>
+  // Si llega ?id=XXX, intenta cargar datos desde el state
+  const params = new URLSearchParams(location.search);
+  const id = params.get('id');
+  if (id) {
+    try {
+      const state = JSON.parse(localStorage.getItem('reto.clinica.state') || '{}');
+      const factura = state.facturas?.[id];
+      if (factura) {
+        document.getElementById('f-num').textContent = factura.numero;
+        document.getElementById('f-date').textContent = new Date(factura.fecha).toLocaleDateString('es-ES');
+        document.getElementById('t-sub').textContent = '$ ' + (factura.importe || 0).toLocaleString('es-ES', {minimumFractionDigits:2});
+        document.getElementById('t-total').textContent = '$ ' + (factura.importe || 0).toLocaleString('es-ES', {minimumFractionDigits:2});
+        // Cliente desde lead
+        const lead = state.leads?.[factura.leadId];
+        if (lead) {
+          document.getElementById('c-name').textContent = lead.nombre || '—';
+          document.getElementById('c-email').textContent = lead.email || '—';
+        }
+        const pago = state.pagos?.[factura.pagoId];
+        if (pago) {
+          document.querySelector('#items .concept').textContent = pago.concepto || '—';
+        }
+      }
+    } catch(e) {}
+  }
+</script>
+</body>
+</html>

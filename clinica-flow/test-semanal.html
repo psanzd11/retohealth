@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Test semanal · Reto Health Clínica</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..700&family=Geist:wght@300..700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root{--bg:#F4EFE6;--paper:#FAF6EE;--paper-2:#EFE7D6;--ink:#1B1816;--ink-2:#6B645A;--ink-deep:#0E0C0A;--muted:#8E867B;--rule:#E2DAC9;--side-glow:#C4F45E;--sage:#4A6A48;--display:'Fraunces',Georgia,serif;--sans:'Geist',system-ui,sans-serif;--mono:'Geist Mono',ui-monospace,monospace}
+  *{box-sizing:border-box}html,body{margin:0;padding:0}
+  body{font-family:var(--sans);color:var(--ink);background:var(--bg);font-feature-settings:'tnum','lnum';-webkit-font-smoothing:antialiased}
+  .wrap{max-width:640px;margin:0 auto;padding:32px 24px 80px}
+  header{padding:0 0 22px;border-bottom:1px solid var(--rule);margin-bottom:32px;display:flex;justify-content:space-between;align-items:center}
+  .brand{font-family:var(--mono);font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-2)}
+  .brand::before{content:'';display:inline-block;width:6px;height:6px;background:var(--sage);border-radius:50%;margin-right:8px;vertical-align:middle}
+  .week-tag{font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--sage);padding:4px 10px;background:rgba(74,106,72,.10);border-radius:3px}
+  h1{font-family:var(--display);font-size:36px;font-weight:400;letter-spacing:-.025em;line-height:1.05;margin:0 0 10px;color:var(--ink-deep);font-variation-settings:"opsz" 96}
+  .dek{font-family:var(--display);font-style:italic;font-size:14px;color:var(--ink-2);line-height:1.5;margin-bottom:28px}
+  .question{padding:22px 0;border-bottom:1px solid var(--rule)}
+  .q-num{font-family:var(--display);font-size:13px;font-weight:300;color:var(--sage);margin-bottom:4px;display:block;font-variant-numeric:tabular-nums}
+  .q-t{font-family:var(--sans);font-size:16px;font-weight:500;color:var(--ink-deep);margin:0 0 14px;line-height:1.4}
+  .scale{display:flex;gap:4px;flex-wrap:wrap}
+  .scale label{flex:1;min-width:34px;text-align:center;padding:10px 4px;border:1px solid var(--rule);border-radius:4px;cursor:pointer;font-family:var(--mono);font-size:12px;background:var(--paper);transition:all .15s}
+  .scale label:hover{background:var(--paper-2)} .scale label.selected{background:var(--ink-deep);color:var(--side-glow);border-color:var(--ink-deep)}
+  .scale input{display:none}
+  .scale-meta{display:flex;justify-content:space-between;font-family:var(--mono);font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-top:6px}
+  .opts{display:flex;flex-direction:column;gap:6px}
+  .opt{display:flex;align-items:center;gap:12px;padding:11px 14px;border:1px solid var(--rule);border-radius:4px;cursor:pointer;font-size:13.5px;background:var(--paper);transition:all .15s}
+  .opt:hover{background:var(--paper-2)}.opt.selected{background:rgba(196,244,94,.10);border-color:var(--side-glow)}
+  .opt input{accent-color:var(--sage);width:14px;height:14px;flex-shrink:0;margin:0}
+  textarea{font-family:var(--sans);font-size:14px;color:var(--ink);background:var(--paper);border:1px solid var(--rule);border-radius:4px;padding:10px 14px;width:100%;outline:none;min-height:80px;resize:vertical}
+  textarea:focus{border-color:var(--sage)}
+  .actions{margin-top:32px;padding-top:22px;border-top:1px solid var(--rule);display:flex;justify-content:space-between;align-items:center;gap:14px}
+  .note{font-family:var(--mono);font-size:10px;letter-spacing:.06em;color:var(--muted);line-height:1.5;max-width:340px}
+  .btn{padding:12px 22px;border-radius:4px;font-family:var(--sans);font-size:13px;font-weight:500;border:1px solid var(--ink-deep);background:var(--ink-deep);color:var(--paper);cursor:pointer}
+  .btn:hover{background:#000;color:var(--side-glow)}
+  .done{text-align:center;padding:48px 24px}
+  .done .ic{width:56px;height:56px;margin:0 auto 22px;border-radius:50%;background:var(--side-glow);display:grid;place-items:center;color:var(--ink-deep);font-size:28px;box-shadow:0 0 28px rgba(196,244,94,.4)}
+  .done h2{font-family:var(--display);font-size:28px;font-weight:400;margin:0 0 10px;color:var(--ink-deep)}
+  .done p{font-family:var(--display);font-style:italic;font-size:14px;color:var(--ink-2);margin:0;line-height:1.55}
+  .recs{margin-top:32px;padding:20px;background:var(--paper);border:1px solid var(--rule);border-radius:6px;text-align:left}
+  .rec{padding:14px 0;border-bottom:1px solid var(--paper-2)} .rec:last-child{border-bottom:0}
+  .rec-t{font-family:var(--sans);font-size:14px;color:var(--ink-deep);font-weight:500;margin:0}
+  .rec-r{font-family:var(--mono);font-size:11px;color:var(--ink-2);margin-top:4px;line-height:1.5}
+  .rec-cta{display:flex;gap:8px;margin-top:10px}
+  .btn-ghost{background:transparent;color:var(--ink);border:1px solid var(--rule);padding:8px 14px;font-size:12px;font-family:var(--sans);border-radius:4px;cursor:pointer;font-weight:500}
+  .btn-ghost:hover{border-color:var(--ink-deep)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">Reto Health · Clínica · Test semanal</div>
+    <div class="week-tag" id="week-tag">Semana 8</div>
+  </header>
+
+  <div id="form-view">
+    <h1 id="hello">Hola, ¿cómo ha ido esta semana?</h1>
+    <p class="dek">5 preguntas, 3 minutos. Tus respuestas se analizan con Gemini + Perplexity y nos permiten ajustar tu protocolo + sugerirte upselling solo si tiene sentido para ti.</p>
+
+    <form id="weekly-form">
+
+      <div class="question">
+        <span class="q-num">01</span>
+        <h3 class="q-t">Energía media esta semana</h3>
+        <div class="scale" data-name="energia">
+          <label><input type="radio" name="energia" value="1" required>1</label>
+          <label><input type="radio" name="energia" value="2">2</label>
+          <label><input type="radio" name="energia" value="3">3</label>
+          <label><input type="radio" name="energia" value="4">4</label>
+          <label><input type="radio" name="energia" value="5">5</label>
+          <label><input type="radio" name="energia" value="6">6</label>
+          <label><input type="radio" name="energia" value="7">7</label>
+          <label><input type="radio" name="energia" value="8">8</label>
+          <label><input type="radio" name="energia" value="9">9</label>
+          <label><input type="radio" name="energia" value="10">10</label>
+        </div>
+        <div class="scale-meta"><span>1 · agotado</span><span>10 · óptimo</span></div>
+      </div>
+
+      <div class="question">
+        <span class="q-num">02</span>
+        <h3 class="q-t">Calidad de sueño media</h3>
+        <div class="scale" data-name="sueno">
+          <label><input type="radio" name="sueno" value="1" required>1</label>
+          <label><input type="radio" name="sueno" value="2">2</label>
+          <label><input type="radio" name="sueno" value="3">3</label>
+          <label><input type="radio" name="sueno" value="4">4</label>
+          <label><input type="radio" name="sueno" value="5">5</label>
+          <label><input type="radio" name="sueno" value="6">6</label>
+          <label><input type="radio" name="sueno" value="7">7</label>
+          <label><input type="radio" name="sueno" value="8">8</label>
+          <label><input type="radio" name="sueno" value="9">9</label>
+          <label><input type="radio" name="sueno" value="10">10</label>
+        </div>
+        <div class="scale-meta"><span>1 · malo</span><span>10 · reparador</span></div>
+      </div>
+
+      <div class="question">
+        <span class="q-num">03</span>
+        <h3 class="q-t">¿Has cumplido la pauta del protocolo todos los días?</h3>
+        <div class="opts" data-name="adherencia">
+          <label class="opt"><input type="radio" name="adherencia" value="100" required><span>Sí, al 100 %</span></label>
+          <label class="opt"><input type="radio" name="adherencia" value="80"><span>Casi siempre (algún día se me olvidó)</span></label>
+          <label class="opt"><input type="radio" name="adherencia" value="50"><span>A medias (varios días olvidados)</span></label>
+          <label class="opt"><input type="radio" name="adherencia" value="20"><span>Poco · me ha costado</span></label>
+        </div>
+      </div>
+
+      <div class="question">
+        <span class="q-num">04</span>
+        <h3 class="q-t">¿Has notado algún cambio que quieras compartir?</h3>
+        <textarea name="cambios" placeholder="Lo que sea: mejor recuperación deportiva, peor digestión, antojos, dolor articular, ánimo, etc. (opcional)"></textarea>
+      </div>
+
+      <div class="question">
+        <span class="q-num">05</span>
+        <h3 class="q-t">¿Hay algo que sientes que falta en tu programa?</h3>
+        <div class="opts" data-name="hueco">
+          <label class="opt"><input type="radio" name="hueco" value="nutricion" required><span>Acompañamiento nutricional</span></label>
+          <label class="opt"><input type="radio" name="hueco" value="entrenamiento"><span>Plan de entrenamiento</span></label>
+          <label class="opt"><input type="radio" name="hueco" value="comunidad"><span>Comunidad para compartir avances</span></label>
+          <label class="opt"><input type="radio" name="hueco" value="1a1"><span>Más tiempo 1:1 con el equipo</span></label>
+          <label class="opt"><input type="radio" name="hueco" value="tech"><span>Tecnología de medición</span></label>
+          <label class="opt"><input type="radio" name="hueco" value="ninguno"><span>Nada en concreto · todo OK</span></label>
+        </div>
+      </div>
+
+      <div class="actions">
+        <p class="note">Análisis y recomendaciones llegan a tu portal en &lt; 1 h.</p>
+        <button class="btn" type="submit">Enviar →</button>
+      </div>
+    </form>
+  </div>
+
+  <div id="done-view" style="display:none">
+    <div class="done">
+      <div class="ic">✓</div>
+      <h2>¡Gracias!</h2>
+      <p>Hemos enviado tus respuestas. Aquí van algunas recomendaciones generadas con AI basadas en lo que nos has contado.</p>
+      <div class="recs" id="recs-host"></div>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+  function setupRadios(){
+    document.querySelectorAll('.opts').forEach(group => {
+      group.querySelectorAll('input[type=radio]').forEach(input => {
+        input.addEventListener('change', () => group.querySelectorAll('.opt').forEach(l => l.classList.toggle('selected', l.querySelector('input').checked)));
+      });
+    });
+    document.querySelectorAll('.scale').forEach(group => {
+      group.querySelectorAll('input[type=radio]').forEach(input => {
+        input.addEventListener('change', () => group.querySelectorAll('label').forEach(l => l.classList.toggle('selected', l.querySelector('input').checked)));
+      });
+    });
+  }
+
+  function urlParam(k){ return new URLSearchParams(location.search).get(k); }
+
+  // Setea cabecera con semana del URL
+  const sem = parseInt(urlParam('sem') || '8');
+  document.getElementById('week-tag').textContent = `Semana ${sem}`;
+
+  function localRecs(respuestas){
+    const recs = [];
+    if (respuestas.hueco === 'nutricion') recs.push({t:'Plan nutricional con coach',r:'Encaja con tu hueco identificado · $148/mes',cta:'Lo quiero'});
+    if (respuestas.hueco === 'entrenamiento') recs.push({t:'Plan de entrenamiento hybrid',r:'Online + 2 sesiones presenciales · $168/mes',cta:'Lo quiero'});
+    if (respuestas.hueco === 'comunidad') recs.push({t:'Club Privado mensual',r:'Acceso a comunidad de miembros · $48/mes',cta:'Quiero entrar'});
+    if (respuestas.hueco === 'tech') recs.push({t:'Oura Ring · Gen 3',r:'Wearable recomendado para tu protocolo · $280',cta:'Más info'});
+    if (respuestas.adherencia === '20' || respuestas.adherencia === '50') recs.push({t:'Sesión 1:1 con Jessica · 30 min',r:'La adherencia baja suele resolverse con una conversación · $140',cta:'Reservar'});
+    if (parseInt(respuestas.energia) <= 4) recs.push({t:'NAD+ IV · 3 sesiones de refuerzo',r:'Energía baja persistente · refuerzo mitocondrial · $480',cta:'Reservar'});
+    if (recs.length === 0) recs.push({t:'Sigue así',r:'Tus respuestas indican que el protocolo va bien. Sin recomendaciones extra esta semana.',cta:null});
+    return recs;
+  }
+
+  async function submitForm(e){
+    e.preventDefault();
+    const respuestas = Object.fromEntries(new FormData(e.target).entries());
+    const testId = urlParam('test') || ('wkt_' + Date.now().toString(36));
+    let recs = [];
+    try{
+      const mod = await import('./automations.js');
+      const r = await mod.Automations.submitWeeklyTest(testId, respuestas);
+      recs = (r.analisisAI?.recomendaciones || []).map(p => ({t:p.nombre, r:p.razon + ' · $' + p.precio, cta:'Lo quiero'}));
+      if (!recs.length) recs = localRecs(respuestas);
+    } catch(e){ recs = localRecs(respuestas); }
+    document.getElementById('recs-host').innerHTML = recs.map(r => `<div class="rec"><p class="rec-t">${r.t}</p><p class="rec-r">${r.r}</p>${r.cta?`<div class="rec-cta"><button class="btn-ghost" onclick="alert('Aceptar · cobra Stripe + factura QB')">${r.cta}</button><button class="btn-ghost" onclick="alert('Registrar declinación · CRM')">Ahora no</button></div>`:''}</div>`).join('');
+    document.getElementById('form-view').style.display = 'none';
+    document.getElementById('done-view').style.display = 'block';
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+  document.addEventListener('DOMContentLoaded', () => { setupRadios(); document.getElementById('weekly-form').addEventListener('submit', submitForm); });
+</script>
+</body>
+</html>

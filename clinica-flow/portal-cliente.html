@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Portal Cliente · Reto Health</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..700&family=Geist:wght@300..700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --bg:#F4EFE6; --paper:#FAF6EE; --paper-2:#EFE7D6;
+    --ink:#1B1816; --ink-2:#6B645A; --ink-deep:#0E0C0A; --muted:#8E867B;
+    --rule:#E2DAC9; --side-glow:#C4F45E;
+    --sage:#4A6A48; --copper:#A05A1F; --plum:#6E4F7A; --info:#3A6FD1;
+    --ok:#0F8A5F; --warn:#C77A14; --err:#C72F2F;
+    --display:'Fraunces','Newsreader',Georgia,serif;
+    --sans:'Geist',system-ui,sans-serif;
+    --mono:'Geist Mono',ui-monospace,monospace;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{font-family:var(--sans);color:var(--ink);background:var(--bg);-webkit-font-smoothing:antialiased;font-feature-settings:'tnum','lnum';font-optical-sizing:auto;min-height:100vh}
+  .wrap{max-width:1100px;margin:0 auto;padding:32px 28px 80px}
+  header.top{display:flex;justify-content:space-between;align-items:center;padding:0 0 22px;border-bottom:1px solid var(--rule);margin-bottom:32px}
+  .brand{display:flex;align-items:center;gap:12px}
+  .brand-mark{width:28px;height:28px;border-radius:4px;background:var(--sage);color:#fff;display:grid;place-items:center;font-family:var(--display);font-weight:500;font-size:13px}
+  .brand-name{font-family:var(--display);font-size:18px;font-weight:500;letter-spacing:-.01em;color:var(--ink-deep);font-variation-settings:"opsz" 36}
+  .brand-sub{font-family:var(--mono);font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
+  .user-meta{font-family:var(--mono);font-size:10.5px;letter-spacing:.10em;text-transform:uppercase;color:var(--ink-2);text-align:right}
+  .user-meta .glow{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--side-glow);box-shadow:0 0 6px var(--side-glow);margin-right:6px;vertical-align:middle;animation:pulse 2.4s ease-in-out infinite}
+  @keyframes pulse{0%,100%{opacity:.7}50%{opacity:1}}
+
+  .hero{display:grid;grid-template-columns:1.5fr 1fr;gap:28px;align-items:end;padding:18px 0 26px;margin-bottom:32px;border-bottom:1px solid var(--rule)}
+  .kicker{font-family:var(--mono);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-2);margin-bottom:10px;display:flex;align-items:center;gap:8px}
+  .kicker::before{content:'';display:inline-block;width:6px;height:6px;background:var(--sage);border-radius:50%}
+  h1{font-family:var(--display);font-size:48px;font-weight:400;letter-spacing:-.025em;line-height:1.02;margin:0;color:var(--ink-deep);font-variation-settings:"opsz" 144}
+  .dek{font-family:var(--display);font-style:italic;font-size:15px;color:var(--ink-2);margin-top:10px;line-height:1.5;max-width:520px}
+  .program-meta{font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--ink-2);line-height:1.8;text-align:right}
+  .program-meta strong{font-family:var(--display);font-size:22px;font-weight:400;color:var(--ink-deep);display:block;letter-spacing:-.01em}
+
+  .kpi-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);margin-bottom:36px}
+  .kpi{padding:20px 22px;border-left:1px solid var(--rule)}
+  .kpi:first-child{border-left:0}
+  .kpi-lab{font-family:var(--mono);font-size:9.5px;letter-spacing:.20em;text-transform:uppercase;color:var(--ink-2);font-weight:500}
+  .kpi-val{font-family:var(--display);font-size:36px;font-weight:400;color:var(--ink-deep);line-height:1;margin-top:12px;letter-spacing:-.025em;font-variation-settings:"opsz" 96;font-feature-settings:'tnum'}
+  .kpi-tre{font-family:var(--mono);font-size:11px;color:var(--ink-2);margin-top:4px}
+
+  .section{margin-bottom:36px}
+  .sec-h{display:flex;align-items:baseline;gap:14px;margin-bottom:18px;padding-bottom:8px;border-bottom:1px solid var(--rule)}
+  .sec-num{font-family:var(--display);font-weight:300;font-size:14px;color:var(--sage);font-variant-numeric:tabular-nums}
+  .sec-t{font-family:var(--sans);font-size:14px;font-weight:500;letter-spacing:0;color:var(--ink-deep);margin:0;flex:1}
+  .sec-meta{font-family:var(--mono);font-size:10px;letter-spacing:.10em;text-transform:uppercase;color:var(--muted)}
+
+  .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:start}
+
+  .card{background:var(--paper);border:1px solid var(--rule);border-radius:8px;padding:20px 22px}
+  .card-t{font-family:var(--mono);font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;font-weight:500}
+  .card-v{font-family:var(--display);font-size:30px;font-weight:400;color:var(--ink-deep);line-height:1.05;letter-spacing:-.02em}
+  .card-s{font-family:var(--sans);font-size:13px;color:var(--ink-2);margin-top:8px;line-height:1.5}
+
+  .timeline{display:flex;flex-direction:column;gap:0}
+  .week{display:flex;gap:18px;padding:14px 0;border-bottom:1px solid var(--rule)}
+  .week:last-child{border-bottom:0}
+  .week-num{font-family:var(--display);font-size:28px;font-weight:300;color:var(--sage);min-width:48px;line-height:1.1;font-variant-numeric:tabular-nums}
+  .week-num.done{color:var(--ink-2);opacity:.4}
+  .week-num.current{color:var(--side-glow);background:var(--ink-deep);width:48px;height:48px;border-radius:50%;display:grid;place-items:center;font-size:20px}
+  .week-info{flex:1}
+  .week-t{font-family:var(--sans);font-size:13.5px;color:var(--ink);margin:0}
+  .week-m{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;color:var(--ink-2);margin-top:4px;text-transform:uppercase}
+  .week-status{font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;border-radius:3px;align-self:center}
+  .week-status.done{background:rgba(15,138,95,.10);color:var(--ok)}
+  .week-status.current{background:rgba(196,244,94,.18);color:#3F5510}
+  .week-status.pending{background:rgba(110,100,90,.08);color:var(--muted)}
+
+  .results-list{display:grid;gap:0}
+  .result{display:flex;align-items:center;gap:14px;padding:14px 0;border-bottom:1px solid var(--rule);cursor:pointer;transition:background .15s}
+  .result:hover{background:rgba(239,231,214,.30)}
+  .result:last-child{border-bottom:0}
+  .result-ic{width:36px;height:36px;border-radius:4px;background:var(--paper-2);display:grid;place-items:center;color:var(--ink-2);flex-shrink:0;font-family:var(--mono);font-size:11px;font-weight:500}
+  .result-t{flex:1}
+  .result-t strong{font-family:var(--sans);font-size:13.5px;color:var(--ink);font-weight:500;display:block}
+  .result-t span{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;color:var(--muted);text-transform:uppercase;display:block;margin-top:2px}
+  .result-arr{font-family:var(--mono);color:var(--ink-2);font-size:14px}
+
+  .next-cita{background:var(--ink-deep);color:var(--paper);padding:24px 26px;border-radius:8px;display:flex;justify-content:space-between;align-items:center;gap:24px}
+  .next-cita .lab{font-family:var(--mono);font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--side-glow)}
+  .next-cita .lab::before{content:'■  ';color:var(--side-glow)}
+  .next-cita h3{font-family:var(--display);font-size:24px;font-weight:400;margin:8px 0 4px;color:var(--paper);letter-spacing:-.01em}
+  .next-cita .when{font-family:var(--mono);font-size:12px;color:#D8D0C0}
+  .next-cita .cta{display:flex;flex-direction:column;gap:8px;flex-shrink:0}
+  .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border-radius:4px;font-family:var(--sans);font-size:12.5px;font-weight:500;border:1px solid var(--rule);background:var(--paper);color:var(--ink);cursor:pointer;text-decoration:none;text-align:center;justify-content:center}
+  .btn:hover{border-color:var(--ink);background:var(--paper-2)}
+  .btn-primary{background:var(--side-glow);border-color:var(--side-glow);color:var(--ink-deep)}
+  .btn-primary:hover{background:#A5DC30;border-color:#A5DC30}
+  .btn-ghost{background:transparent;border-color:rgba(226,218,201,.2);color:#D8D0C0}
+  .btn-ghost:hover{background:rgba(255,255,255,.05);color:#fff}
+
+  .test-banner{background:rgba(196,244,94,.10);border:1px solid rgba(196,244,94,.30);padding:18px 22px;border-radius:8px;display:flex;align-items:center;gap:18px;margin-bottom:32px}
+  .test-banner .glow{width:10px;height:10px;background:var(--side-glow);border-radius:50%;box-shadow:0 0 10px var(--side-glow);animation:pulse 1.8s ease-in-out infinite;flex-shrink:0}
+  .test-banner .t{flex:1}
+  .test-banner h4{margin:0 0 4px;font-family:var(--sans);font-size:14px;color:var(--ink-deep);font-weight:500}
+  .test-banner p{margin:0;font-family:var(--sans);font-size:13px;color:var(--ink-2)}
+
+  footer{margin-top:48px;padding-top:22px;border-top:1px solid var(--rule);font-family:var(--mono);font-size:10px;letter-spacing:.10em;text-transform:uppercase;color:var(--muted);text-align:center}
+  footer::before{content:'';display:block;width:24px;height:1px;background:var(--rule);margin:0 auto 14px}
+
+  @media (max-width:768px){
+    .hero{grid-template-columns:1fr;gap:14px}
+    .program-meta{text-align:left}
+    .grid-2{grid-template-columns:1fr}
+    h1{font-size:36px}
+    .next-cita{flex-direction:column;align-items:flex-start}
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+
+    <header class="top">
+      <div class="brand">
+        <div class="brand-mark">C</div>
+        <div>
+          <div class="brand-name">Reto Health</div>
+          <div class="brand-sub">Portal Cliente · Clínica</div>
+        </div>
+      </div>
+      <div class="user-meta">
+        <div><span class="glow"></span>Carla Méndez · #cli_a47f3</div>
+        <div style="margin-top:4px;text-transform:none;letter-spacing:0;font-family:var(--sans);font-size:11px">carla.mendez@email.com</div>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div>
+        <div class="kicker">Programa 12 semanas · activo</div>
+        <h1>Buenos días, Carla.</h1>
+        <p class="dek">Vas por la semana 8 de tu protocolo. Los marcadores de inflamación han bajado un 32 % desde el inicio. Mantén la pauta una semana más.</p>
+      </div>
+      <div class="program-meta">
+        <strong>Sem 8 / 12</strong>
+        Inicio · 17 mar 2026<br>
+        Próximo hito · 12 may<br>
+        Renovación · 9 jun
+      </div>
+    </section>
+
+    <div class="test-banner">
+      <div class="glow"></div>
+      <div class="t">
+        <h4>Tu test semanal de esta semana está disponible</h4>
+        <p>5 minutos · 8 preguntas · ayuda a personalizar tu protocolo y a recomendarte upselling útil.</p>
+      </div>
+      <a class="btn btn-primary" href="./test-semanal.html?cli=cli_a47f3&sem=8">Hacer test</a>
+    </div>
+
+    <div class="kpi-strip">
+      <div class="kpi"><div class="kpi-lab">Adherencia 30 d</div><div class="kpi-val">92 %</div><div class="kpi-tre">▲ 4 pp vs sem ant.</div></div>
+      <div class="kpi"><div class="kpi-lab">Engagement test</div><div class="kpi-val">8 / 8</div><div class="kpi-tre">tests completados</div></div>
+      <div class="kpi"><div class="kpi-lab">Marcadores inflamatorios</div><div class="kpi-val">↓ 32 %</div><div class="kpi-tre">vs estudio inicial</div></div>
+      <div class="kpi"><div class="kpi-lab">Sueño profundo</div><div class="kpi-val">+ 18 %</div><div class="kpi-tre">media semanal · wearable</div></div>
+    </div>
+
+    <section class="section">
+      <div class="sec-h">
+        <span class="sec-num">01</span>
+        <h3 class="sec-t">Próxima cita</h3>
+        <span class="sec-meta">programada · 12 may · videollamada</span>
+      </div>
+      <div class="next-cita">
+        <div>
+          <div class="lab">Cita programada · resultados parciales</div>
+          <h3>Revisión semana 9 con Jessica</h3>
+          <div class="when">Mar 12 may · 16:30 (CET) · 45 min · Whereby</div>
+        </div>
+        <div class="cta">
+          <a class="btn btn-primary" href="https://whereby.com/reto-health/demo" target="_blank">Unirme a la videollamada</a>
+          <button class="btn btn-ghost" onclick="alert('Reprogramar cita · abrir Cal.com')">Reprogramar</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="sec-h">
+        <span class="sec-num">02</span>
+        <h3 class="sec-t">Mi recorrido · timeline 12 semanas</h3>
+        <span class="sec-meta">8 / 12 · semana actual destacada</span>
+      </div>
+      <div class="timeline">
+        <div class="week"><div class="week-num done">01</div><div class="week-info"><p class="week-t">Onboarding · primera dosis · sincronización wearables</p><div class="week-m">17–24 mar · test inicial completado</div></div><span class="week-status done">Completada</span></div>
+        <div class="week"><div class="week-num done">02</div><div class="week-info"><p class="week-t">Ajuste de dosis · primer feedback</p><div class="week-m">24–31 mar · sumado al programa: Club Privado</div></div><span class="week-status done">Completada</span></div>
+        <div class="week"><div class="week-num done">03</div><div class="week-info"><p class="week-t">Núcleo del protocolo · estabilización</p><div class="week-m">31 mar–7 abr</div></div><span class="week-status done">Completada</span></div>
+        <div class="week"><div class="week-num done">04</div><div class="week-info"><p class="week-t">Fin onboarding · evaluación de marcadores</p><div class="week-m">7–14 abr · sangre + HRV</div></div><span class="week-status done">Completada</span></div>
+        <div class="week"><div class="week-num done">05</div><div class="week-info"><p class="week-t">Núcleo · ajuste fino del protocolo</p><div class="week-m">14–21 abr · sumado al programa: Nutrición</div></div><span class="week-status done">Completada</span></div>
+        <div class="week"><div class="week-num done">06</div><div class="week-info"><p class="week-t">Punto medio · revisión con Jessica</p><div class="week-m">21–28 abr · videocall realizada</div></div><span class="week-status done">Completada</span></div>
+        <div class="week"><div class="week-num done">07</div><div class="week-info"><p class="week-t">Núcleo · adherencia y deportes</p><div class="week-m">28 abr–5 may</div></div><span class="week-status done">Completada</span></div>
+        <div class="week"><div class="week-num current">08</div><div class="week-info"><p class="week-t">Estás aquí · sigue con la pauta</p><div class="week-m">5–12 may · test pendiente · cita 12 may</div></div><span class="week-status current">Activa</span></div>
+        <div class="week"><div class="week-num">09</div><div class="week-info"><p class="week-t">Inicio fase renovación · análisis ROI</p><div class="week-m">12–19 may</div></div><span class="week-status pending">Próxima</span></div>
+        <div class="week"><div class="week-num">10</div><div class="week-info"><p class="week-t">Renovación · evaluación de continuidad</p><div class="week-m">19–26 may</div></div><span class="week-status pending">Próxima</span></div>
+        <div class="week"><div class="week-num">11</div><div class="week-info"><p class="week-t">Preparación decisión semana 12</p><div class="week-m">26 may–2 jun</div></div><span class="week-status pending">Próxima</span></div>
+        <div class="week"><div class="week-num">12</div><div class="week-info"><p class="week-t">Decisión · continuar (anual / mensual) o cerrar</p><div class="week-m">2–9 jun</div></div><span class="week-status pending">Próxima</span></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="sec-h">
+        <span class="sec-num">03</span>
+        <h3 class="sec-t">Resultados y grabaciones</h3>
+        <span class="sec-meta">acceso completo · descargable</span>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-t">Mis resultados</div>
+          <div class="results-list">
+            <div class="result" onclick="alert('Descargar PDF · sangre completa')"><div class="result-ic">PDF</div><div class="result-t"><strong>Analítica sangre completa</strong><span>21 abr · 12 marcadores</span></div><div class="result-arr">→</div></div>
+            <div class="result" onclick="alert('Descargar HRV')"><div class="result-ic">CSV</div><div class="result-t"><strong>HRV semana 5</strong><span>14 abr · wearable Oura</span></div><div class="result-arr">→</div></div>
+            <div class="result" onclick="alert('Descargar inicial')"><div class="result-ic">PDF</div><div class="result-t"><strong>Estudio inicial completo</strong><span>17 mar · HSIC + sangre + composición</span></div><div class="result-arr">→</div></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-t">Grabaciones de cita</div>
+          <div class="results-list">
+            <div class="result" onclick="alert('Reproducir grabación 21 abr')"><div class="result-ic">VID</div><div class="result-t"><strong>Revisión semana 6</strong><span>21 abr · 48 min · con Jessica</span></div><div class="result-arr">→</div></div>
+            <div class="result" onclick="alert('Reproducir grabación 17 mar')"><div class="result-ic">VID</div><div class="result-t"><strong>Presentación de resultados</strong><span>22 mar · 62 min · con Jaime + Jessica</span></div><div class="result-arr">→</div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="sec-h">
+        <span class="sec-num">04</span>
+        <h3 class="sec-t">Mis 3 planes activos</h3>
+        <span class="sec-meta">generados por Agente Evaluador AI tras tu estudio</span>
+      </div>
+      <div class="grid-2" style="grid-template-columns:repeat(3,1fr)">
+        <div class="card" style="border-top:3px solid #3A6FD1">
+          <div class="card-t" style="color:#3A6FD1">Plan médico · protocolo</div>
+          <div style="font-family:var(--display);font-size:20px;font-weight:400;color:var(--ink-deep);letter-spacing:-.01em;line-height:1.2">BPC-157 · 12 semanas</div>
+          <div class="card-s">Dosis 250 μg · diaria · subcutánea · mañanas en ayunas. Refill automático cada 4 semanas.</div>
+          <div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--rule);font-family:var(--mono);font-size:10.5px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase">Próximo refill · 17 may</div>
+        </div>
+        <div class="card" style="border-top:3px solid #4A6A48">
+          <div class="card-t" style="color:#4A6A48">Plan nutricional</div>
+          <div style="font-family:var(--display);font-size:20px;font-weight:400;color:var(--ink-deep);letter-spacing:-.01em;line-height:1.2">Antiinflamatorio · mediterráneo</div>
+          <div class="card-s">40 % grasas · 30 % proteínas · 30 % CH complejos. Ventana de comida 11–19h. Cross-ref tus marcadores: PCR alta + omega-6 ratio.</div>
+          <div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--rule);font-family:var(--mono);font-size:10.5px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase">Próxima revisión · sem 10</div>
+        </div>
+        <div class="card" style="border-top:3px solid #A05A1F">
+          <div class="card-t" style="color:#A05A1F">Plan de ejercicio</div>
+          <div style="font-family:var(--display);font-size:20px;font-weight:400;color:var(--ink-deep);letter-spacing:-.01em;line-height:1.2">Movilidad + Z2 + fuerza ligera</div>
+          <div class="card-s">3× movilidad/sem · 2× zona 2 (45 min) · 2× fuerza L–S (45 min). Adaptado a HRV baseline + edad. Sin HIIT en sem 1-6 (recuperación marcadores).</div>
+          <div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--rule);font-family:var(--mono);font-size:10.5px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase">Sesión hoy · 45 min movilidad</div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:18px;background:rgba(196,244,94,.05);border-color:rgba(74,106,72,.30)">
+        <div style="display:flex;align-items:center;gap:18px">
+          <div style="width:42px;height:42px;border-radius:50%;background:var(--ink-deep);color:var(--side-glow);display:grid;place-items:center;font-family:var(--display);font-weight:300;font-size:18px;flex-shrink:0">AE</div>
+          <div style="flex:1">
+            <div style="font-family:var(--mono);font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-2);margin-bottom:4px">Agente Evaluador · skill activa</div>
+            <div style="font-family:var(--sans);font-size:14px;color:var(--ink-deep);font-weight:500;margin-bottom:2px">Tus 3 planes se recalibran tras cada test semanal</div>
+            <div style="font-family:var(--sans);font-size:12.5px;color:var(--ink-2);line-height:1.5">Si tu adherencia o tus marcadores cambian, el agente ajusta el plan correspondiente y te notifica el cambio antes de aplicarlo.</div>
+          </div>
+          <div style="font-family:var(--mono);font-size:10.5px;color:var(--ink-2);text-align:right;flex-shrink:0">
+            <div>Última actualización</div>
+            <div style="color:var(--ink-deep);font-family:var(--display);font-size:14px;margin-top:2px">Sem 7 · 5 may</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:14px">
+        <div class="card-t">Último pedido REFILL · plan médico</div>
+        <div style="font-family:var(--mono);font-size:12px;color:var(--ink)">Pedido <strong>RFL-1715442013</strong> · 21 abr · 4 sem dosis</div>
+        <div class="card-s">Estado: <strong style="color:var(--ok)">En camino</strong> · tracking SEUR 1Z999AA10123456789 · entrega est. 14 may.</div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="sec-h">
+        <span class="sec-num">05</span>
+        <h3 class="sec-t">Para seguir progresando</h3>
+        <span class="sec-meta">basado en tus tests · personalizado</span>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-t">Acompañamiento nutricional</div>
+          <div class="card-v" style="font-size:22px;line-height:1.2">Sumar un plan personalizado</div>
+          <div class="card-s">Tus tests indican que mejorarías más rápido con seguimiento nutricional. Tu coach revisaría tus marcadores cada semana y ajustaría tu pauta con la alimentación.</div>
+          <button class="btn btn-primary" style="margin-top:14px" onclick="alert('Solicitar info · agenda llamada con Jessica')">Quiero saber más</button>
+          <button class="btn" style="margin-top:8px;width:100%" onclick="alert('Marcado como no relevante ahora · CRM')">Ahora no es prioridad</button>
+        </div>
+        <div class="card">
+          <div class="card-t">Revisión 1:1 con Jaime</div>
+          <div class="card-v" style="font-size:22px;line-height:1.2">Conversación de transición</div>
+          <div class="card-s">Estás cerca de la semana 12. Una conversación con Jaime te ayuda a entender qué tiene sentido como siguiente paso · revisión de marcadores y plan de continuidad.</div>
+          <button class="btn btn-primary" style="margin-top:14px" onclick="alert('Reservar 1:1 · Cal.com')">Reservar conversación</button>
+          <button class="btn" style="margin-top:8px;width:100%" onclick="alert('Marcado como no relevante ahora · CRM')">Ahora no es prioridad</button>
+        </div>
+      </div>
+    </section>
+
+    <footer>Reto Health · Portal cliente · datos cifrados · soporte@retohealth.com</footer>
+  </div>
+</body>
+</html>

@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<title>Email templates · Reto Health Clínica</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..700&family=Geist:wght@300..700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  body{margin:0;padding:40px 20px;background:#E2DAC9;font-family:'Geist',system-ui,sans-serif;color:#1B1816;font-feature-settings:'tnum'}
+  .wrap{max-width:760px;margin:0 auto}
+  h1{font-family:'Fraunces',serif;font-weight:400;font-size:36px;margin:0 0 8px;color:#0E0C0A;letter-spacing:-.02em}
+  .intro{font-family:'Fraunces',serif;font-style:italic;color:#6B645A;margin-bottom:32px;line-height:1.55}
+  .preview-h{font-family:'Geist Mono',monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:#6B645A;margin:36px 0 10px;padding:6px 10px;background:rgba(0,0,0,.04);border-radius:3px;display:flex;justify-content:space-between}
+  .preview-h .integration{color:#A05A1F}
+
+  /* === EMAIL CONTAINER (lo que se envía) === */
+  .email{background:#FAF6EE;border:1px solid #C8BFA9;border-radius:8px;overflow:hidden;font-family:'Geist',-apple-system,Helvetica,Arial,sans-serif;color:#1B1816;line-height:1.55;font-size:15px}
+  .email-h{background:#0F0E0C;color:#E2DAC9;padding:20px 28px;display:flex;align-items:center;justify-content:space-between}
+  .email-brand{display:flex;align-items:center;gap:10px}
+  .email-mark{width:24px;height:24px;background:#4A6A48;color:#fff;border-radius:3px;display:grid;place-items:center;font-family:'Fraunces',serif;font-weight:500;font-size:11px}
+  .email-brand-n{font-family:'Fraunces',serif;font-size:15px;font-weight:500;color:#fff}
+  .email-meta{font-family:'Geist Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:#C4F45E}
+  .email-body{padding:32px 32px 12px}
+  .email-body h2{font-family:'Fraunces',serif;font-size:28px;font-weight:400;color:#0E0C0A;letter-spacing:-.02em;margin:0 0 14px;line-height:1.15}
+  .email-body p{margin:0 0 14px}
+  .email-cta{display:inline-block;background:#0E0C0A;color:#C4F45E;padding:14px 26px;text-decoration:none;font-weight:500;font-size:14px;border-radius:4px;margin:14px 0}
+  .email-cta-alt{display:inline-block;background:transparent;color:#0E0C0A;padding:12px 22px;text-decoration:none;font-weight:500;font-size:13px;border:1px solid #C8BFA9;border-radius:4px;margin:14px 8px 14px 0}
+  .email-stats{display:flex;gap:20px;padding:18px 0;border-top:1px solid #E2DAC9;border-bottom:1px solid #E2DAC9;margin:18px 0}
+  .email-stat{flex:1}
+  .email-stat-l{font-family:'Geist Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:#8E867B}
+  .email-stat-v{font-family:'Fraunces',serif;font-size:22px;font-weight:400;color:#0E0C0A;margin-top:4px}
+  .email-foot{padding:24px 32px;font-size:11.5px;color:#8E867B;line-height:1.6;border-top:1px solid #E2DAC9;background:#F4EFE6}
+  .email-foot a{color:#A05A1F}
+  .email-detail{font-family:'Geist Mono',monospace;font-size:11.5px;background:rgba(0,0,0,.03);padding:8px 12px;border-radius:3px;color:#6B645A;display:inline-block;margin:0 8px 8px 0}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Email templates · Clínica</h1>
+  <p class="intro">5 plantillas listas para enviar vía SendGrid/Mailgun. Cada una indica integración y variables. La estructura HTML inline es email-safe (sin CSS variables, sin Grid). Copiar al editor de plantillas y conectar las variables {{ }}.</p>
+
+  <!-- ============ 1 · BIENVENIDA · entrada del lead ============ -->
+  <div class="preview-h"><span>01 · welcome.html · Email tras captura del lead</span><span class="integration">SendGrid · auto on lead.created</span></div>
+  <div class="email">
+    <div class="email-h">
+      <div class="email-brand"><div class="email-mark">C</div><div class="email-brand-n">Reto Health</div></div>
+      <div class="email-meta">CLÍNICA · 01</div>
+    </div>
+    <div class="email-body">
+      <h2>Hola Carla, hemos recibido tu solicitud.</h2>
+      <p>Gracias por interesarte en nuestro programa de longevidad. En las próximas <strong>24 horas</strong> nuestro equipo te enviará una propuesta personalizada basada en tu perfil inicial.</p>
+      <p>Mientras tanto, te dejamos un test rápido (5 min) que nos ayuda a entender mejor tu situación y ofrecerte una propuesta más afinada desde el primer momento.</p>
+      <a class="email-cta" href="{{TEST_LINK}}">Hacer el test inicial →</a>
+      <p style="font-size:13px;color:#6B645A">Si prefieres hablar antes, responde a este email o agenda una llamada exploratoria de 15 min sin compromiso.</p>
+      <a class="email-cta-alt" href="https://cal.com/reto-health/exploratoria">Agendar llamada exploratoria</a>
+    </div>
+    <div class="email-foot">
+      Reto Health · Calle Velázquez 142 · 28006 Madrid · contacto@retohealth.com<br>
+      <a href="{{UNSUBSCRIBE}}">Darme de baja</a> · <a href="https://retohealth.com/privacidad">Política de privacidad</a>
+    </div>
+  </div>
+
+  <!-- ============ 2 · PAGO + DOCS + TEST · paso 2 ============ -->
+  <div class="preview-h"><span>02 · paso2-core.html · Email con link de pago + firma + test</span><span class="integration">SendGrid · auto on payment.link_created</span></div>
+  <div class="email">
+    <div class="email-h">
+      <div class="email-brand"><div class="email-mark">C</div><div class="email-brand-n">Reto Health</div></div>
+      <div class="email-meta">PASO 2 · CORE</div>
+    </div>
+    <div class="email-body">
+      <h2>Carla, tu propuesta está lista.</h2>
+      <p>Hemos preparado tu protocolo inicial. Para empezar el programa solo necesitamos 3 acciones (todo desde el móvil, ~10 min):</p>
+      <div class="email-stats">
+        <div class="email-stat"><div class="email-stat-l">Pago</div><div class="email-stat-v">$ 1.480</div></div>
+        <div class="email-stat"><div class="email-stat-l">Test condicional</div><div class="email-stat-v">15 preg</div></div>
+        <div class="email-stat"><div class="email-stat-l">Firma digital</div><div class="email-stat-v">DocuSign</div></div>
+      </div>
+      <p>Una vez completes los 3 pasos, recibirás automáticamente el link para reservar tu estudio inicial en clínica.</p>
+      <a class="email-cta" href="{{STRIPE_LINK}}">1 · Realizar el pago →</a>
+      <br>
+      <a class="email-cta-alt" href="{{TEST_LINK}}">2 · Completar test (5 min)</a>
+      <a class="email-cta-alt" href="{{DOCUSIGN_LINK}}">3 · Firmar consentimiento</a>
+    </div>
+    <div class="email-foot">
+      Importe: $ 1.480 · Stripe seguro · factura electrónica auto a {{EMAIL}} · IVA exento (Art. 20.Uno.3º LIVA).<br>
+      ¿Dudas? Responde a este email o WhatsApp +34 656 789 012.
+    </div>
+  </div>
+
+  <!-- ============ 3 · RECORDATORIO DE CITA (2d antes) ============ -->
+  <div class="preview-h"><span>03 · recordatorio-cita.html · 2 días antes del estudio</span><span class="integration">SendGrid + Twilio SMS · trigger 48h before booking</span></div>
+  <div class="email">
+    <div class="email-h">
+      <div class="email-brand"><div class="email-mark">C</div><div class="email-brand-n">Reto Health</div></div>
+      <div class="email-meta">RECORDATORIO · ESTUDIO</div>
+    </div>
+    <div class="email-body">
+      <h2>Tu estudio es en 2 días.</h2>
+      <p>Te esperamos el <strong>jueves 14 de mayo a las 10:00</strong> en nuestra clínica de Velázquez 142 (Madrid).</p>
+      <p style="font-family:'Geist Mono',monospace;font-size:13px;background:rgba(0,0,0,.04);padding:14px 16px;border-radius:4px;border-left:3px solid #C4F45E">
+        <strong>Instrucciones preestudio:</strong><br>
+        · Ayuno de 12 h (puedes beber agua)<br>
+        · No tomar suplementos esa mañana<br>
+        · Si tomas algún medicamento, sigue tu pauta habitual<br>
+        · Llega 10 min antes para acomodarte<br>
+        · Duración total: ~90 min
+      </p>
+      <a class="email-cta" href="{{CALCOM_LINK}}">Ver detalles de la cita</a>
+      <a class="email-cta-alt" href="{{RESCHEDULE_LINK}}">Reprogramar</a>
+    </div>
+    <div class="email-foot">
+      ¿Imprevisto? Responde a este email o llámanos al +34 910 123 456.<br>
+      Reto Health · Calle Velázquez 142 · 28006 Madrid
+    </div>
+  </div>
+
+  <!-- ============ 4 · RESULTADOS LISTOS ============ -->
+  <div class="preview-h"><span>04 · resultados-listos.html · Notificación tras subir resultados</span><span class="integration">SendGrid + WhatsApp · auto on results.uploaded</span></div>
+  <div class="email">
+    <div class="email-h">
+      <div class="email-brand"><div class="email-mark">C</div><div class="email-brand-n">Reto Health</div></div>
+      <div class="email-meta">RESULTADOS · LISTOS</div>
+    </div>
+    <div class="email-body">
+      <h2>Tus resultados ya están en tu perfil.</h2>
+      <p>Hemos cargado en tu portal la analítica completa del estudio del 14 de mayo: <strong>HSIC, sangre, composición corporal, marcadores inflamatorios y hormonales</strong>.</p>
+      <p>El equipo médico está revisándolos. En aproximadamente <strong>2 semanas</strong> tendrás una videollamada de 1 hora con Jaime y Jessica para presentarte la interpretación y proponerte el protocolo personalizado.</p>
+      <a class="email-cta" href="{{PORTAL_LINK}}">Ver mis resultados →</a>
+      <p style="margin-top:18px;font-size:13px;color:#6B645A">La cita de presentación se programará automáticamente cuando el análisis esté listo. Recibirás el link cuando esté disponible.</p>
+    </div>
+    <div class="email-foot">
+      Tus datos están cifrados en reposo (AES-256) y en tránsito (TLS 1.3). Acceso solo con tu cuenta autenticada.<br>
+      Reto Health · soporte@retohealth.com
+    </div>
+  </div>
+
+  <!-- ============ 5 · TEST SEMANAL · sem 1-12 ============ -->
+  <div class="preview-h"><span>05 · test-semanal.html · Envío automático cada semana del programa</span><span class="integration">SendGrid · cron lunes 09:00</span></div>
+  <div class="email">
+    <div class="email-h">
+      <div class="email-brand"><div class="email-mark">C</div><div class="email-brand-n">Reto Health</div></div>
+      <div class="email-meta">SEMANA 08 · TEST</div>
+    </div>
+    <div class="email-body">
+      <h2>Carla, ¿cómo ha ido tu semana 8?</h2>
+      <p>3 minutos, 5 preguntas. Nos sirve para ajustar tu protocolo en tiempo real y recomendarte upselling solo si te encaja.</p>
+      <div class="email-stats">
+        <div class="email-stat"><div class="email-stat-l">Semana actual</div><div class="email-stat-v">08 / 12</div></div>
+        <div class="email-stat"><div class="email-stat-l">Adherencia 30d</div><div class="email-stat-v">92 %</div></div>
+        <div class="email-stat"><div class="email-stat-l">Marcadores</div><div class="email-stat-v">-32 %</div></div>
+      </div>
+      <a class="email-cta" href="{{TEST_LINK}}">Hacer test de esta semana →</a>
+      <p style="font-size:13px;color:#6B645A;margin-top:18px">El test cierra el domingo a medianoche. Si lo saltas se enviará un único recordatorio el viernes.</p>
+    </div>
+    <div class="email-foot">
+      Análisis automático con Gemini + Perplexity · recomendaciones en tu portal en &lt; 1 h.<br>
+      Reto Health · Programa 12 sem
+    </div>
+  </div>
+
+  <p class="intro" style="margin-top:48px;text-align:center">5 templates · adicionales (convocatoria videocall · tracking envío · upselling oferta · renovación sem 12) siguen el mismo patrón y se generan desde el módulo Automatizaciones del dashboard.</p>
+</div>
+</body>
+</html>

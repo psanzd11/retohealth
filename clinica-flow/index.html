@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Reto Health · Clínica · Flujo de automatizaciones</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..700&family=Geist:wght@300..700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root{--bg:#F4EFE6;--paper:#FAF6EE;--paper-2:#EFE7D6;--ink:#1B1816;--ink-2:#6B645A;--ink-deep:#0E0C0A;--muted:#8E867B;--rule:#E2DAC9;--side-glow:#C4F45E;--sage:#4A6A48;--ok:#0F8A5F;--warn:#C77A14;--err:#C72F2F;--display:'Fraunces',Georgia,serif;--sans:'Geist',system-ui,sans-serif;--mono:'Geist Mono',ui-monospace,monospace}
+  *{box-sizing:border-box}html,body{margin:0;padding:0}
+  body{font-family:var(--sans);color:var(--ink);background:var(--bg);font-feature-settings:'tnum';-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1100px;margin:0 auto;padding:32px 28px 80px}
+  header{padding:0 0 22px;border-bottom:1px solid var(--rule);margin-bottom:32px;display:flex;justify-content:space-between;align-items:center}
+  .brand{display:flex;align-items:center;gap:12px}
+  .brand-mark{width:28px;height:28px;border-radius:4px;background:var(--sage);color:#fff;display:grid;place-items:center;font-family:var(--display);font-weight:500;font-size:13px}
+  .brand-name{font-family:var(--display);font-size:18px;font-weight:500;letter-spacing:-.01em;color:var(--ink-deep)}
+  .brand-sub{font-family:var(--mono);font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
+  .live{font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-2)}
+  .live::before{content:'';display:inline-block;width:6px;height:6px;background:var(--side-glow);border-radius:50%;box-shadow:0 0 6px var(--side-glow);margin-right:6px;vertical-align:middle;animation:pulse 2.4s ease-in-out infinite}
+  @keyframes pulse{0%,100%{opacity:.7}50%{opacity:1}}
+
+  .kicker{font-family:var(--mono);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-2);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+  .kicker::before{content:'';display:inline-block;width:6px;height:6px;background:var(--sage);border-radius:50%}
+  h1{font-family:var(--display);font-size:46px;font-weight:400;letter-spacing:-.025em;line-height:1.05;margin:0;color:var(--ink-deep);font-variation-settings:"opsz" 144}
+  .dek{font-family:var(--display);font-style:italic;font-size:15px;color:var(--ink-2);margin-top:10px;line-height:1.55;max-width:680px;margin-bottom:32px}
+
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);margin-bottom:36px}
+  .stat{padding:18px 22px;border-left:1px solid var(--rule)}
+  .stat:first-child{border-left:0}
+  .stat-l{font-family:var(--mono);font-size:9.5px;letter-spacing:.20em;text-transform:uppercase;color:var(--ink-2)}
+  .stat-v{font-family:var(--display);font-size:34px;font-weight:400;color:var(--ink-deep);line-height:1;margin-top:10px;letter-spacing:-.02em;font-variation-settings:"opsz" 96}
+  .stat-d{font-family:var(--mono);font-size:11px;color:var(--ink-2);margin-top:4px}
+
+  .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-bottom:18px}
+  .card{background:var(--paper);border:1px solid var(--rule);border-radius:8px;padding:24px 26px;text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:10px;transition:border-color .2s,transform .2s,background .2s;cursor:pointer}
+  .card:hover{border-color:var(--ink-deep);background:rgba(196,244,94,.04)}
+  .card-h{display:flex;justify-content:space-between;align-items:flex-start;gap:14px}
+  .card-num{font-family:var(--display);font-size:28px;font-weight:300;color:var(--sage);line-height:1;font-variant-numeric:tabular-nums}
+  .card-stat{font-family:var(--mono);font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ok)}
+  .card-stat.warn{color:var(--warn)}
+  .card-stat.err{color:var(--err)}
+  .card-t{font-family:var(--display);font-size:22px;font-weight:400;color:var(--ink-deep);line-height:1.15;letter-spacing:-.015em;margin:6px 0 4px}
+  .card-d{font-family:var(--sans);font-size:13px;color:var(--ink-2);line-height:1.5}
+  .card-meta{margin-top:auto;padding-top:14px;border-top:1px solid var(--rule);display:flex;justify-content:space-between;font-family:var(--mono);font-size:10px;letter-spacing:.10em;text-transform:uppercase;color:var(--muted)}
+  .card-meta .arr{color:var(--ink)}
+
+  .section-h{display:flex;align-items:baseline;gap:14px;margin:42px 0 18px;padding-bottom:8px;border-bottom:1px solid var(--rule)}
+  .section-num{font-family:var(--display);font-weight:300;font-size:14px;color:var(--sage);font-variant-numeric:tabular-nums}
+  .section-t{font-family:var(--sans);font-size:14px;font-weight:500;color:var(--ink-deep);margin:0;flex:1}
+  .section-m{font-family:var(--mono);font-size:10px;letter-spacing:.10em;text-transform:uppercase;color:var(--muted)}
+
+  .file-list{background:var(--paper);border:1px solid var(--rule);border-radius:8px;overflow:hidden}
+  .file{display:flex;align-items:center;gap:14px;padding:14px 22px;border-bottom:1px solid var(--rule);text-decoration:none;color:inherit;transition:background .15s}
+  .file:hover{background:rgba(239,231,214,.4)}
+  .file:last-child{border-bottom:0}
+  .file-ic{width:36px;height:36px;background:var(--paper-2);border-radius:4px;display:grid;place-items:center;font-family:var(--mono);font-size:11px;color:var(--ink-2);flex-shrink:0;font-weight:500}
+  .file-t{flex:1}
+  .file-t strong{font-family:var(--sans);font-size:14px;color:var(--ink-deep);font-weight:500;display:block}
+  .file-t span{font-family:var(--mono);font-size:10.5px;color:var(--muted);letter-spacing:.04em;margin-top:2px;display:block}
+  .file-meta{font-family:var(--mono);font-size:10px;letter-spacing:.10em;text-transform:uppercase;color:var(--muted)}
+
+  footer{margin-top:48px;padding-top:22px;border-top:1px solid var(--rule);font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-align:center}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="brand">
+      <div class="brand-mark">C</div>
+      <div>
+        <div class="brand-name">Reto Health</div>
+        <div class="brand-sub">Clínica · Flujo de automatizaciones</div>
+      </div>
+    </div>
+    <div class="live">live · backend mock activo</div>
+  </header>
+
+  <div class="kicker">Specimen · Entrega frontend + backend mock</div>
+  <h1>Roadmap del PDF, ejecutado.</h1>
+  <p class="dek">Cada componente del flujo de 6 pasos + seguimiento 12 semanas está construido como UI funcional + función backend en <code style="font-family:var(--mono);background:rgba(0,0,0,.04);padding:2px 6px;border-radius:3px;font-size:12px">automations.js</code>. Las integraciones externas (Stripe, Cal.com, GHL, DocuSign, REFILL, WhatsApp) tienen specs documentados en <code style="font-family:var(--mono);background:rgba(0,0,0,.04);padding:2px 6px;border-radius:3px;font-size:12px">roadmap-integraciones.pdf</code> listas para wirear cuando lleguen las credenciales.</p>
+
+  <div class="stats">
+    <div class="stat"><div class="stat-l">Funciones backend mock</div><div class="stat-v">29</div><div class="stat-d">1:1 con PDF roadmap</div></div>
+    <div class="stat"><div class="stat-l">UIs / forms</div><div class="stat-v">5</div><div class="stat-d">funcionales + condicionales</div></div>
+    <div class="stat"><div class="stat-l">Email templates</div><div class="stat-v">5</div><div class="stat-d">listos para SendGrid</div></div>
+    <div class="stat"><div class="stat-l">Integraciones documentadas</div><div class="stat-v">6</div><div class="stat-d">specs en PDF</div></div>
+    <div class="stat"><div class="stat-l">Estado funnel</div><div class="stat-v">5 / 6</div><div class="stat-d">⚡ paso 4 ✋</div></div>
+  </div>
+
+  <div class="section-h"><span class="section-num">01</span><h3 class="section-t">Frontend del cliente — UIs funcionales</h3><span class="section-m">5 archivos · navegables</span></div>
+  <div class="grid">
+    <a class="card" href="./portal-cliente.html">
+      <div class="card-h"><span class="card-num">01</span><span class="card-stat">⚡ ACTIVO</span></div>
+      <h3 class="card-t">Portal cliente</h3>
+      <p class="card-d">Página self-service que ve el cliente. Hero con saludo personalizado, KPIs propios, timeline de 12 semanas con week actual destacada, resultados + grabaciones descargables, protocolo activo y sugerencias de upselling AI.</p>
+      <div class="card-meta"><span>portal-cliente.html</span><span class="arr">Abrir →</span></div>
+    </a>
+    <a class="card" href="./test-protocolo.html?lead=demo">
+      <div class="card-h"><span class="card-num">02</span><span class="card-stat">⚡ ACTIVO</span></div>
+      <h3 class="card-t">TEST de protocolo · Paso 2</h3>
+      <p class="card-d">Formulario con lógica condicional (alergias → detalle, agujas mal → alternativas). 6 preguntas, scale 1-10, opciones múltiples. Submit llama a Automations.submitProtocolTest().</p>
+      <div class="card-meta"><span>test-protocolo.html</span><span class="arr">Abrir →</span></div>
+    </a>
+    <a class="card" href="./test-semanal.html?sem=8">
+      <div class="card-h"><span class="card-num">03</span><span class="card-stat">⚡ ACTIVO</span></div>
+      <h3 class="card-t">Test semanal · Sem 1-12</h3>
+      <p class="card-d">5 preguntas cortas. Tras submit, muestra recomendaciones de upselling generadas con análisis local (fallback) o con Gemini+Perplexity vía backend (cuando se conecte).</p>
+      <div class="card-meta"><span>test-semanal.html</span><span class="arr">Abrir →</span></div>
+    </a>
+    <a class="card" href="./test-motivos.html?lead=demo">
+      <div class="card-h"><span class="card-num">04</span><span class="card-stat">⚡ ACTIVO</span></div>
+      <h3 class="card-t">Test de motivos · Rama A + Sem 12</h3>
+      <p class="card-d">Para cliente que decide no continuar (paso 6 rama A o decisión sem 12). 3 preguntas. Respuestas se guardan en CRM, respeta consentimiento de recontacto.</p>
+      <div class="card-meta"><span>test-motivos.html</span><span class="arr">Abrir →</span></div>
+    </a>
+    <a class="card" href="./factura-template.html?id=demo">
+      <div class="card-h"><span class="card-num">05</span><span class="card-stat">⚡ ACTIVO</span></div>
+      <h3 class="card-t">Plantilla de factura</h3>
+      <p class="card-d">Template HTML printable (A4) con datos auto-rellenables desde state. Style editorial premium. Botón "Imprimir/PDF" + "Enviar email". Wirea a QuickBooks vía API.</p>
+      <div class="card-meta"><span>factura-template.html</span><span class="arr">Abrir →</span></div>
+    </a>
+    <a class="card" href="./emails.html">
+      <div class="card-h"><span class="card-num">06</span><span class="card-stat">⚡ ACTIVO</span></div>
+      <h3 class="card-t">Email templates · 5 críticos</h3>
+      <p class="card-d">Welcome · Paso 2 core (pago+test+firma) · Recordatorio cita 2d · Resultados listos · Test semanal. HTML email-safe, copiar a SendGrid/Mailgun con variables {{ }}.</p>
+      <div class="card-meta"><span>emails.html</span><span class="arr">Abrir →</span></div>
+    </a>
+  </div>
+
+  <div class="section-h"><span class="section-num">02</span><h3 class="section-t">Backend mock + specs · automations.js</h3><span class="section-m">29 funciones · listas para wirear</span></div>
+
+  <div class="file-list">
+    <a class="file" href="./automations.js">
+      <div class="file-ic">JS</div>
+      <div class="file-t"><strong>automations.js</strong><span>29 funciones · event bus · state localStorage · WEBHOOKS doc · listas para backend real</span></div>
+      <div class="file-meta">Abrir →</div>
+    </a>
+    <a class="file" href="../roadmap-integraciones.pdf">
+      <div class="file-ic">PDF</div>
+      <div class="file-t"><strong>roadmap-integraciones.pdf</strong><span>Próximos pasos cuando lleguen credenciales · Stripe · Cal.com · GHL · WhatsApp · REFILL · DocuSign</span></div>
+      <div class="file-meta">Descargar</div>
+    </a>
+  </div>
+
+  <div class="section-h"><span class="section-num">03</span><h3 class="section-t">Cómo testear el flujo end-to-end</h3><span class="section-m">5 min · funcional desde localhost</span></div>
+
+  <div style="background:var(--paper);border:1px solid var(--rule);border-radius:8px;padding:24px 28px;font-family:var(--sans);font-size:14px;line-height:1.7">
+    <ol style="margin:0;padding-left:24px;color:var(--ink)">
+      <li style="margin-bottom:10px">Abre <a href="./test-protocolo.html?lead=demo" style="color:var(--sage);font-weight:500">test-protocolo.html</a> · completa las 6 preguntas (prueba la lógica condicional marcando "Sí" en alergias).</li>
+      <li style="margin-bottom:10px">Submit · guardará el test en <code style="font-family:var(--mono);background:rgba(0,0,0,.04);padding:2px 6px;border-radius:3px;font-size:12px">localStorage.reto.clinica.state</code>.</li>
+      <li style="margin-bottom:10px">Abre la consola del navegador (F12) y prueba: <code style="font-family:var(--mono);background:rgba(0,0,0,.04);padding:2px 6px;border-radius:3px;font-size:12px">Automations.createLead({nombre:'Test', email:'t@e.com', origen:'demo'})</code>.</li>
+      <li style="margin-bottom:10px">Inspecciona <code style="font-family:var(--mono);background:rgba(0,0,0,.04);padding:2px 6px;border-radius:3px;font-size:12px">AutomationLog.read()</code> · verás los eventos emitidos.</li>
+      <li style="margin-bottom:10px">Abre <a href="./portal-cliente.html" style="color:var(--sage);font-weight:500">portal-cliente.html</a> · vista del cliente con todo el contexto.</li>
+      <li>Abre el dashboard general (<code style="font-family:var(--mono);background:rgba(0,0,0,.04);padding:2px 6px;border-radius:3px;font-size:12px">../index.html</code>) · navega a Clínica · Automatizaciones para ver las 29 con su estado y links de preview.</li>
+    </ol>
+  </div>
+
+  <footer>Reto Health · Clínica flow · entrega 12 may 2026 · Specimen v1.0</footer>
+</div>
+</body>
+</html>

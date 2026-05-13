@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>¿Por qué no continúas? · Reto Health</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..700&family=Geist:wght@300..700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root{--bg:#F4EFE6;--paper:#FAF6EE;--paper-2:#EFE7D6;--ink:#1B1816;--ink-2:#6B645A;--ink-deep:#0E0C0A;--muted:#8E867B;--rule:#E2DAC9;--side-glow:#C4F45E;--sage:#4A6A48;--display:'Fraunces',Georgia,serif;--sans:'Geist',system-ui,sans-serif;--mono:'Geist Mono',ui-monospace,monospace}
+  *{box-sizing:border-box}html,body{margin:0;padding:0}
+  body{font-family:var(--sans);color:var(--ink);background:var(--bg);font-feature-settings:'tnum','lnum';-webkit-font-smoothing:antialiased}
+  .wrap{max-width:580px;margin:0 auto;padding:48px 24px 80px}
+  .brand{font-family:var(--mono);font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-2);margin-bottom:24px}
+  .brand::before{content:'';display:inline-block;width:6px;height:6px;background:var(--sage);border-radius:50%;margin-right:8px;vertical-align:middle}
+  h1{font-family:var(--display);font-size:38px;font-weight:400;letter-spacing:-.025em;line-height:1.05;margin:0 0 14px;color:var(--ink-deep);font-variation-settings:"opsz" 144}
+  .dek{font-family:var(--display);font-style:italic;font-size:14px;color:var(--ink-2);line-height:1.55;margin-bottom:32px}
+  .question{padding:20px 0;border-bottom:1px solid var(--rule)}
+  .q-t{font-family:var(--sans);font-size:15.5px;font-weight:500;color:var(--ink-deep);margin:0 0 14px;line-height:1.4}
+  .opts{display:flex;flex-direction:column;gap:6px}
+  .opt{display:flex;align-items:center;gap:12px;padding:11px 14px;border:1px solid var(--rule);border-radius:4px;cursor:pointer;font-size:13.5px;background:var(--paper)}
+  .opt:hover{background:var(--paper-2)}.opt.selected{background:rgba(196,244,94,.10);border-color:var(--side-glow)}
+  .opt input{accent-color:var(--sage);width:14px;height:14px;margin:0}
+  textarea{font-family:var(--sans);font-size:14px;background:var(--paper);border:1px solid var(--rule);border-radius:4px;padding:10px 14px;width:100%;outline:none;min-height:90px;resize:vertical;color:var(--ink)}
+  textarea:focus{border-color:var(--sage)}
+  .actions{margin-top:28px;display:flex;justify-content:flex-end}
+  .btn{padding:11px 22px;border-radius:4px;font-family:var(--sans);font-size:13px;font-weight:500;border:1px solid var(--ink-deep);background:var(--ink-deep);color:var(--paper);cursor:pointer}
+  .btn:hover{background:#000;color:var(--side-glow)}
+  .done{text-align:center;padding:48px 0}
+  .done h2{font-family:var(--display);font-size:30px;font-weight:400;margin:0 0 14px;color:var(--ink-deep)}
+  .done p{font-family:var(--display);font-style:italic;font-size:14.5px;color:var(--ink-2);line-height:1.55}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="brand">Reto Health · Clínica · Feedback</div>
+
+  <div id="form-view">
+    <h1>Cuéntanos por qué.</h1>
+    <p class="dek">Tomamos cada respuesta en serio. Lo que nos digas se usa para mejorar el programa · no para insistir. Nada de emails de re-engagement automáticos a no ser que tú lo pidas.</p>
+
+    <form id="motivos-form">
+      <div class="question">
+        <h3 class="q-t">¿Cuál es la razón principal?</h3>
+        <div class="opts" data-name="razon">
+          <label class="opt"><input type="radio" name="razon" value="precio" required><span>Precio · no me cuadran las cuentas ahora mismo</span></label>
+          <label class="opt"><input type="radio" name="razon" value="tiempo"><span>Tiempo · no puedo comprometerme</span></label>
+          <label class="opt"><input type="radio" name="razon" value="resultados"><span>No veo resultados / no me convence el protocolo</span></label>
+          <label class="opt"><input type="radio" name="razon" value="confianza"><span>Necesito más información / no termino de fiarme</span></label>
+          <label class="opt"><input type="radio" name="razon" value="logistica"><span>Logística (envíos, citas, distancia)</span></label>
+          <label class="opt"><input type="radio" name="razon" value="vida"><span>Cambio personal (mudanza, hijos, trabajo nuevo, salud familiar...)</span></label>
+          <label class="opt"><input type="radio" name="razon" value="otra"><span>Otra razón</span></label>
+        </div>
+      </div>
+
+      <div class="question">
+        <h3 class="q-t">Cuéntanos más (opcional pero MUY útil)</h3>
+        <textarea name="detalle" placeholder="Lo que sea: qué echaste en falta, qué te hubiera ayudado, si volverías más adelante, etc."></textarea>
+      </div>
+
+      <div class="question">
+        <h3 class="q-t">¿Te gustaría que te contactemos en el futuro?</h3>
+        <div class="opts" data-name="recontacto">
+          <label class="opt"><input type="radio" name="recontacto" value="no" required><span>No, prefiero no recibir más comunicación</span></label>
+          <label class="opt"><input type="radio" name="recontacto" value="3m"><span>Sí, en 3 meses</span></label>
+          <label class="opt"><input type="radio" name="recontacto" value="6m"><span>Sí, en 6 meses</span></label>
+          <label class="opt"><input type="radio" name="recontacto" value="manana"><span>Sí, mantenedme en la lista para novedades</span></label>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="btn" type="submit">Enviar feedback →</button>
+      </div>
+    </form>
+  </div>
+
+  <div id="done-view" style="display:none">
+    <div class="done">
+      <h2>Gracias por avisarnos.</h2>
+      <p>Cada respuesta se revisa por el equipo. Si has marcado contacto futuro, lo respetaremos al día exacto. Nada más por ahora — te deseamos lo mejor.</p>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+  document.querySelectorAll('.opts').forEach(g => g.querySelectorAll('input').forEach(i => i.addEventListener('change', () => g.querySelectorAll('.opt').forEach(l => l.classList.toggle('selected', l.querySelector('input').checked)))));
+  document.getElementById('motivos-form').addEventListener('submit', async e => {
+    e.preventDefault();
+    const respuestas = Object.fromEntries(new FormData(e.target).entries());
+    const id = 'test_' + Date.now().toString(36);
+    try {
+      const mod = await import('./automations.js');
+      // Decision endpoint depende del contexto (sem12 vs paso6)
+      const params = new URLSearchParams(location.search);
+      if (params.get('contexto') === 'sem12') await mod.Automations.week12Decline(params.get('cli'));
+      else if (params.get('lead')) await mod.Automations.declineProtocol(params.get('lead'));
+    } catch(e) {}
+    document.getElementById('form-view').style.display = 'none';
+    document.getElementById('done-view').style.display = 'block';
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+</script>
+</body>
+</html>
