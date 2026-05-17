@@ -1,2 +1,5 @@
 # Office lock files
 ~$*
+
+# Claude Code local config
+.claude/
